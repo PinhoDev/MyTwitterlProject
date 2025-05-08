@@ -3,7 +3,7 @@ const { findUser } = require("../utils/authHelpers");
 const router = express.Router();
 const User = require("../models/userSchema");
 
-router.post("/", async (req, res) => {
+router.post("/register", async (req, res) => {
   try {
     const { username, email, password, name } = req.body;
 

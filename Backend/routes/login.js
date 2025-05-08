@@ -2,7 +2,7 @@ const { express, jwt, bcrypt } = require("../utils/dependencies");
 const { findUser } = require("../utils/authHelpers");
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const { emailOrUsername, password } = req.body;
 

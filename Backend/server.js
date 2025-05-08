@@ -1,9 +1,5 @@
 require("dotenv").config();
 const { express, cors, mongoose } = require("./utils/dependencies");
-
-const loginRoute = require("./routes/login");
-const registerRoute = require("./routes/register");
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -19,8 +15,9 @@ mongoose
   .catch((err) => console.error("🔴 Error connecting to MongoDB:", err));
 
 // Route handling
-app.use("/login", loginRoute);
-app.use("/register", registerRoute);
+app.use("/", require("./routes/login"));
+app.use("/", require("./routes/register"));
+app.use("/", require("./routes/userDetails"));
 
 // Start the server
 app.listen(PORT, () => {
