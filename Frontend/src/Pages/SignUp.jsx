@@ -1,18 +1,33 @@
 import React, { useState } from "react";
+import "../styles/Auth.css";
+
+import image from "../Images/image.png";
 
 const SignUp = () => {
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
     username: "",
+    email: "",
+    name: "",
     about: "",
+    website: "",
     occupation: "",
     hometown: "",
-    website: "",
+    password: "",
+    confirmPassword: "",
     profileImage: null,
   });
+
+  return (
+    <>
+      <div>
+        <form>
+          <img src={image} alt="Logga" className="tweet-logo" />
+          <h1>Skapa ett konto</h1>
+          <button type="submit">Skapa konto</button>
+        </form>
+      </div>
+    </>
+  );
 };
 
 export default SignUp;
