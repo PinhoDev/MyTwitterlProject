@@ -6,11 +6,10 @@ const User = require("../models/userSchema");
 // Route to get all tweets by a specific user
 router.get("/:username/tweets", async (req, res) => {
   try {
+    // Extract the username from the request parameters
     const { username } = req.params;
     const user = await User.findOne({ username });
-    console.log(user._id);
     const userTweets = await Tweet.find({ author: user._id });
-    console.log(userTweets);
 
     // Check if for any tweets were found for the user
     if (!userTweets) {
