@@ -2,6 +2,7 @@ const { express } = require("../utils/dependencies");
 const router = express.Router();
 const User = require("../models/userSchema");
 
+// Route to get user details by username
 router.get("/:username", async (req, res) => {
   try {
     const userDetails = await User.findOne({ username: req.params.username });

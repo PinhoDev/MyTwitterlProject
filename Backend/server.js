@@ -15,9 +15,10 @@ mongoose
   .catch((err) => console.error("🔴 Error connecting to MongoDB:", err));
 
 // Route handling
-app.use("/", require("./routes/login"));
-app.use("/", require("./routes/register"));
-app.use("/", require("./routes/userDetails"));
+app.use("/", require("./routes/loginAuth"));
+app.use("/", require("./routes/registerAuth"));
+app.use("/", require("./routes/userEndpoint"));
+app.use("/", require("./routes/tweetsEndpoint"));
 
 // Start the server
 app.listen(PORT, () => {
