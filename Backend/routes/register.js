@@ -39,9 +39,11 @@ router.post("/", async (req, res) => {
       name,
     });
 
+    // Save the new user to the database and respond with success
     await newUser.save();
-
     return res.json(true);
+
+    // Respond with error if something goes wrong
   } catch (error) {
     console.error("Registration error:", error);
     return res
