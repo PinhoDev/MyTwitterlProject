@@ -28,7 +28,7 @@ function LogInPassword() {
       <form onSubmit={handleSubmit}>
         <img src={Twitterbird} alt="bild" />
         <h2>Ange ditt lösenord</h2>
-        <p className="identifierField"> {identifier}</p>
+        <input placeholder={identifier || "Användarnamn"} readOnly />
         <input
           type="password"
           placeholder="Lösenord"
