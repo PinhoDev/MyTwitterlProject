@@ -3,27 +3,36 @@ const router = express.Router();
 const Tweet = require("../models/tweetSchema");
 const User = require("../models/userSchema");
 
-// Route to get all tweets by a specific user
-router.get("/:username/tweets", async (req, res) => {
+// Route to create a New Tweet by a User
+router.post("/:username/create", async (req, res) => {
+  console.log("Route hit");
   try {
-    // Extract the username from the request parameters
+    const { content, hashtags } = req.body;
     const { username } = req.params;
-    const user = await User.findOne({ username });
-    const userTweets = await Tweet.find({ author: user._id });
 
-    // Check if for any tweets were found for the user
-    if (!userTweets) {
-      return res
-        .status(404)
-        .json({ result: false, message: "No tweets found" });
+    // Check if the user exists
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ result: false, message: "User not found" });
     }
 
-    // Respond successfully with the tweets
-    return res.json({ result: true, userTweets });
+    // Create the New Tweet
+    const newTweet = new Tweet({
+      content,
+      author: user._id,
+      hashtags,
+    });
+    await newTweet.save();
 
-    // Respond with error if something goes wrong
+    // Add the Tweet to the User
+    user.tweets.push(newTweet._id);
+    await user.save();
+
+    // Respond successfully if the tweet is created
+    return res.json(true);
+
+    // Respond unsuccessfully if the tweet is not created
   } catch (error) {
-    console.error("Error fetching user tweets:", error);
     return res
       .status(500)
       .json({ result: false, message: "Internal server error" });
