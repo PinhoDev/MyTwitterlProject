@@ -45,6 +45,7 @@ const UserSchema = new mongoose.Schema({
   },
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  tweets: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tweet" }],
 
   createdAt: {
     type: Date,
