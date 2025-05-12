@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./working.css";
 import Twitterbird from "../assets/Twitterbird.png";
-
+//lägg till error fel lösenoord
 function LogInPassword() {
   const [formdata, setFormdata] = useState({ password: "" });
   const [error, setError] = useState();

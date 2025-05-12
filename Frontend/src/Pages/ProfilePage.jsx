@@ -2,7 +2,11 @@ import Arrow from "../assets/Arrow.png";
 import Beach from "../assets/DalmationBeachImg.png";
 import ProfilePic from "../assets/manPinkShirt.png";
 import "./working.css";
-//använde emojies medan jag arbetade - ska vi köra react-icons?
+//använde emojies medan jag arbetade - ska vi köra react-icons? Svaret blev ja vi kör på react icons
+// antal tweets under namnet längst upp är hur många man har skrivit.
+// antal tweets, followre and foollowing ska uppdateras i antal efter när de ändras   . length
+
+// här ska jag bara fortsätta lägga in så att användarens egna inlägg ska visas i kronologisk ordning. senast längst upp
 function ProfilePage() {
   const user = {
     username: "daniel_feldman",

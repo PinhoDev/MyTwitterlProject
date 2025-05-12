@@ -9,6 +9,7 @@ import Home from "./Pages/Home.jsx";
 function App() {
   return (
     <>
+      <ProfilePage />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile/:id" element={<ProfilePage />} />
