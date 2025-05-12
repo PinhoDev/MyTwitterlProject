@@ -84,3 +84,9 @@ button {
     margin: 30px auto;
   }
 }
+
+/* Errormessage*/
+.errorMessage {
+  color: red;
+  font-weight: bold;
+}
