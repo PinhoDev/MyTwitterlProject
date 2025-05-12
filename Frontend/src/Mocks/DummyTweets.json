@@ -1,0 +1,35 @@
+[
+  {
+    "_id": "681bc6e0e33c63c011e0c967",
+    "content": "Just deployed my first full-stack project! 🚀",
+    "author": "681bafaa37727a19d79318a5",
+    "hashtags": ["#fullstack", "#javascript"],
+    "createdAt": "2025-05-07T20:00:00Z",
+    "comments": [
+      {
+        "userName": "681bafaa37727a19d79318a6",
+        "content": "Nice job Andre! 🔥",
+        "createdAt": "2025-05-07T20:05:00Z"
+      },
+      {
+        "userName": "681bafaa37727a19d79318a7",
+        "content": "Awesome, looking forward to the repo!",
+        "createdAt": "2025-05-07T20:06:00Z"
+      }
+    ]
+  },
+  {
+    "_id": "681bc6e0e33c63c011e0c968",
+    "content": "Design systems matter. Build for consistency. 🎨",
+    "author": "681bafaa37727a19d79318a6",
+    "hashtags": ["#design", "#uxui"],
+    "createdAt": "2025-05-07T20:10:00Z",
+    "comments": [
+      {
+        "userName": "681bafaa37727a19d79318a5",
+        "content": "100% agree with this.",
+        "createdAt": "2025-05-07T20:12:00Z"
+      }
+    ]
+  }
+]

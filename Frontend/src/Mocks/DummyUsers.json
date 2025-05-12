@@ -1,0 +1,50 @@
+[
+  {
+    "_id": "681bafaa37727a19d79318a5",
+    "username": "Andre",
+    "email": "andre@example.com",
+    "phone": "0700232425",
+    "password": "$2b$10$2bypcwdy5EApXThVIaUHZunGomm7nKcno54B19iDC4UmJjULmIOLu",
+    "name": "Andre De Pinho",
+    "about": "Full Stack Developer",
+    "image": "",
+    "imageBackground": "",
+    "location": "Portugal",
+    "website": "https://andre.dev",
+    "occupation": "Software Engineer",
+    "followers": [],
+    "following": ["66470fd726a28fa9bdf5fe3e", "66470fd726a28fa9bdf5fe3f"]
+  },
+  {
+    "_id": "681bafaa37727a19d79318a6",
+    "username": "Fredrica",
+    "email": "Fredrica@example.com",
+    "phone": "0700232436",
+    "password": "$2b$10$2bypcwdy5EApXThVIaUHZunGomm7nKcno54B19iDC4UmJjULmIOLu",
+    "name": "Maria Silva",
+    "about": "Frontend enthusiast and designer",
+    "image": "",
+    "imageBackground": "",
+    "location": "Brazil",
+    "website": "https://mariasilva.me",
+    "occupation": "UI/UX Designer",
+    "followers": ["66470fd726a28fa9bdf5fe3d"],
+    "following": ["66470fd726a28fa9bdf5fe3d"]
+  },
+  {
+    "_id": "681bafaa37727a19d79318a7",
+    "username": "Karolina",
+    "email": "Karolina@example.com",
+    "phone": "0700232447",
+    "password": "$2b$10$2bypcwdy5EApXThVIaUHZunGomm7nKcno54B19iDC4UmJjULmIOLu",
+    "name": "John Tech",
+    "about": "Building cool stuff with Node.js",
+    "image": "",
+    "imageBackground": "",
+    "location": "USA",
+    "website": "https://john.tech",
+    "occupation": "Backend Developer",
+    "followers": ["66470fd726a28fa9bdf5fe3d"],
+    "following": []
+  }
+]
