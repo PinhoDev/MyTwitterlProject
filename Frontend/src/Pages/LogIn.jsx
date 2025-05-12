@@ -1,11 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Twitterbird from "../assets/Twitterbird.png";
-import "./working.css";
+import { fetchDummyUser } from "../Mocks/FetchDummyUser.jsx";
+import "../styles/Auth.css";
 
-//To do - Lägg till if the username/mail/mobil exists proceed Man har fyllt i alla när man reggar sig
-//else error -- if you dont have - register
-//else - error use another identifier
+// dummy identifiers att skriva in när man testar att logga in:
+//Fredrica, Fredrica@example.com, 0700232436
+//Andre, andre@example.com, 0700232425,
+//Karolina, Karolina@example.com, 0700232447,
+
 function LogIn() {
   const navigate = useNavigate();
   const [formdata, setFormdata] = useState({
@@ -17,19 +20,25 @@ function LogIn() {
     setFormdata({ ...formdata, identifier: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (formdata.identifier.trim() === "") {
       setError("Fältet får inte vara tomt");
     } else {
-      navigate("/loginpassword", {
-        state: { identifier: formdata.identifier },
-      }); //använder useLocation för att det är overkill med useContext när det bara ska flyttas från login till loginPassword och det inte går att använda props
+      const user = await fetchDummyUser(formdata.identifier); //fetchDummUser();  ska senare vara fetchUser() hämta en API istället för dummysedan
+      if (!user) {
+        setError("Användaren finns inte");
+      } else {
+        setError(null);
+        navigate("/loginpassword", {
+          state: { identifier: formdata.identifier },
+        }); //använder useLocation för att det är overkill med useContext när det bara ska flyttas från login till loginPassword och det inte går att använda props
+      }
     }
   };
   return (
     <>
-      {error && <p>{error}</p>}
       <form onSubmit={handleSubmit}>
         <img src={Twitterbird} alt="bild" />
         <h1>Logga in på Twitter</h1>
@@ -39,6 +48,7 @@ function LogIn() {
           onChange={handleChange}
           placeholder="Mobil, e-postadress eller användarnamn"
         />
+        {error && <p className="errorMessage">{error}</p>}
         <p>
           Har du inget konto?
           <Link to="/signup">Registrera dig.</Link>
