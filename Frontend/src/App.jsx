@@ -1,7 +1,17 @@
-import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Signup from "./Pages/SignUp";
+
+import "./styles/App.css";
 
 function App() {
-  return <h1>Hello</h1>;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Signup />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

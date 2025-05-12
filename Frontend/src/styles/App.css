@@ -1,0 +1,80 @@
+/* Det HTML-element där React renderar hela appen */
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Allt som har med de tre vågräta prickarna och overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(91, 112, 131, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 20px;
+}
+
+.tweet-icon {
+  width: 60px;
+}
+
+.dots-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+  padding: 0 10px;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.logout-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 100px 0px 10px 0px;
+}
+
+.cancel-button {
+  background-color: transparent;
+  border: 1px solid lightgray;
+  color: black;
+  padding: 0.8rem;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 0px;
+}
