@@ -1,26 +1,24 @@
-// Server: Express.js
 require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const endpoints = require("./routes/endpoints"); // Import your endpoints
+const { express, cors, mongoose } = require("./utils/dependencies");
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-// Enable CORS for all origins (temporary for debugging)
+// Middlewares
 app.use(cors());
+app.use(express.json());
+app.use(express.static("public"));
 
-/* Connection to MongoDB Atlas */
+// MongoDB Connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("🟢 Connected to MongoDB Atlas"))
   .catch((err) => console.error("🔴 Error connecting to MongoDB:", err));
 
-app.use(express.json());
-app.use(express.static("public"));
-
-// Use endpoints
-endpoints(app);
+// Route handling
+app.use("/", require("./routes/loginAuth"));
+app.use("/", require("./routes/registerAuth"));
+app.use("/", require("./routes/userEndpoint"));
+app.use("/", require("./routes/tweetsEndpoint"));
 
 // Start the server
 app.listen(PORT, () => {
