@@ -99,11 +99,11 @@ const Home = () => {
               </div>
             </div>
           </div>
+          <div className="right-sidebar"></div>
         </div>
-
-        <div className="footer-wrapper">
-          <FooterUser />
-        </div>
+      </div>
+      <div className="footer-wrapper">
+        <FooterUser />
       </div>
     </>
   );

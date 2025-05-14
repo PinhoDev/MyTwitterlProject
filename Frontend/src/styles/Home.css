@@ -1,5 +1,6 @@
 .home-container {
   display: flex;
+  justify-content: space-between;
   background-color: white;
   margin: 0px 30px;
 }
@@ -12,7 +13,15 @@
 }
 
 .left-sidebar {
-  width: 70%;
+  flex: 1;
+  max-width: 600px;
+  padding: 1rem;
+  margin: 0 auto; /* centrerar innehållet */
+}
+
+/* Reservplats för framtida högersida */
+.right-sidebar {
+  width: 300px;
   padding: 1rem;
 }
 
