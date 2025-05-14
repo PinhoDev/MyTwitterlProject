@@ -1,6 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Twitterbird from "../assets/Twitterbird.png";
+import { handleUsername } from "../Controllers/viewModel.js";
+import { navigateToLoginPassword } from "../Controllers/viewModel.js";
 import "./working.css";
 
 //To do - Lägg till if the username/mail/mobil exists proceed Man har fyllt i alla när man reggar sig
@@ -17,14 +19,12 @@ function LogIn() {
     setFormdata({ ...formdata, identifier: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formdata.identifier.trim() === "") {
       setError("Fältet får inte vara tomt");
     } else {
-      navigate("/loginpassword", {
-        state: { identifier: formdata.identifier },
-      }); //använder useLocation för att det är overkill med useContext när det bara ska flyttas från login till loginPassword och det inte går att använda props
+      navigateToLoginPassword(formdata.identifier, navigate, setError);
     }
   };
   return (

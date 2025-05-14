@@ -2,19 +2,53 @@ const { express, jwt, bcrypt } = require("../utils/dependencies");
 const { findUser } = require("../utils/authHelpers");
 const router = express.Router();
 
+// Get User name
+router.post("/getUserName", async (req, res) => {
+  try {
+    const { emailOrUsername } = req.body;
+
+    // Validate input
+    if (!emailOrUsername || typeof emailOrUsername !== "string") {
+      return res
+        .status(400)
+        .json({ result: false, message: "Invalid email or username" });
+    }
+
+    // Find the user by email or username
+    const user = await findUser(emailOrUsername);
+    if (!user) {
+      return res.status(404).json({ result: false, message: "User not found" });
+    }
+
+    // Respond with the user's name
+    return res.json({ result: true, name: user.name });
+  } catch (error) {
+    console.error("Error in /getUserName:", error);
+    return res
+      .status(500)
+      .json({ result: false, message: "Internal server error" });
+  }
+});
+
+// Login route
 router.post("/login", async (req, res) => {
   try {
     const { emailOrUsername, password } = req.body;
 
-    // Check that all required fields are provided
-    if (!emailOrUsername || !password) {
+    // Validate input
+    if (!emailOrUsername || typeof emailOrUsername !== "string") {
       return res
         .status(400)
-        .json({ result: false, message: "All fields are required" });
+        .json({ result: false, message: "Invalid email or username" });
+    }
+
+    if (!password || typeof password !== "string") {
+      return res
+        .status(400)
+        .json({ result: false, message: "Invalid password" });
     }
 
     // Check if the user exists
-    // Assuming findUser can handle both email and username
     const user = await findUser(emailOrUsername);
     if (!user) {
       return res.status(404).json({ result: false, message: "User not found" });
@@ -33,12 +67,12 @@ router.post("/login", async (req, res) => {
       userId: user._id,
       email: user.email,
     };
-    const token = jwt.sign(payload, "your_secret_key", { expiresIn: "2h" });
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "2h",
+    });
 
     // Respond with success and the token
     return res.json({ result: true, token });
-
-    // Respond with error if something goes wrong
   } catch (error) {
     console.error("Login error:", error);
     return res
