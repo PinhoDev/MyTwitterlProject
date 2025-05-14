@@ -1,4 +1,4 @@
-import image from "../Images/image.png";
+import Twitterbird from "../assets/Twitterbird.png";
 import "../styles/Header.css";
 
 const Header = () => {
@@ -7,7 +7,7 @@ const Header = () => {
       {" "}
       <div className="header-container">
         <div className="header">
-          <img src={image} alt="Toppbild" className="home-logo" />
+          <img src={Twitterbird} alt="Toppbild" className="home-logo" />
           <div className="logo-text">TwitterClone</div>
         </div>
         <div className="user-imagecontainer">

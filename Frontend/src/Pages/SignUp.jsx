@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Auth.css";
-import image from "../Images/image.png";
+import Twitterbird from "../assets/Twitterbird.png";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -82,7 +82,7 @@ const SignUp = () => {
   return (
     <div>
       <form onSubmit={handleSignup}>
-        <img src={image} alt="Toppbild" className="tweet-logo" />
+        <img src={Twitterbird} alt="Toppbild" className="tweet-logo" />
         <h1>Skapa ett konto</h1>
 
         <input type="file" accept="image/*" onChange={handleImageChange} />
