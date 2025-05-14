@@ -6,6 +6,7 @@ import Twitterbird from "../assets/Twitterbird.png";
 
 //Password i dummydata är nu samma som username för att det ska vara enkelt att testa
 //funktion som validerar password
+//
 function LogInPassword() {
   const [formdata, setFormdata] = useState({ password: "" });
   const [error, setError] = useState();
