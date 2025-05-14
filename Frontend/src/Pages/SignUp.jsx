@@ -53,6 +53,14 @@ const SignUp = () => {
       return alert("Det angivna lösenordet stämmer inte överens");
     }
 
+    // Ersätt existingUsers med faktisk API-anrop
+    const existingUsers = ["test@example.com", "admin@example.com"];
+    if (existingUsers.includes(form.email.toLowerCase())) {
+      return alert(
+        "Det finns redan ett konto registrerat med denna e-postadress"
+      );
+    }
+
     const formData = new FormData();
     Object.entries(form).forEach(([key, value]) => formData.append(key, value));
 
