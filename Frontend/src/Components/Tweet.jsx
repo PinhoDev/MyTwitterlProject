@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { formatTweetContent } from "../utils/formatTweetContent";
 import { formatRelativeTime } from "../utils/formatRelativeTime";
+import "../styles/Home.css";
 
 const Tweet = ({
   name,
