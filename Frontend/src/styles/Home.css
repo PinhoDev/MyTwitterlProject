@@ -28,6 +28,13 @@
   resize: none;
 }
 
+.char-counter {
+  font-size: 0.8rem;
+  color: #6b7280;
+  align-self: flex-end;
+  margin-top: 0.25rem;
+}
+
 .hashtag {
   color: #1da1f2;
   cursor: pointer;

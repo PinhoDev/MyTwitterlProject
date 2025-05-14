@@ -77,7 +77,11 @@ const Home = () => {
                   placeholder="What’s happening?"
                   value={newTweet}
                   onChange={(e) => setNewTweet(e.target.value)}
+                  maxLength={140}
                 />
+                <div className="char-counter">
+                  {140 - newTweet.length} tecken kvar
+                </div>
                 <button className="tweetbutton" onClick={handleTweet}>
                   Tweet
                 </button>
