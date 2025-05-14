@@ -8,7 +8,7 @@ import "../styles/Auth.css";
 //Fredrica, Fredrica@example.com, 0700232436
 //Andre, andre@example.com, 0700232425,
 //Karolina, Karolina@example.com, 0700232447,
-// f
+
 function LogIn() {
   const navigate = useNavigate();
   const [formdata, setFormdata] = useState({
