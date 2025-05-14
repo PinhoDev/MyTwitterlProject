@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Twitterbird from "../assets/Twitterbird.png";
 import "./working.css";
+import "../styles/Auth.css";
 
 //To do - Lägg till if the username/mail/mobil exists proceed Man har fyllt i alla när man reggar sig
 //else error -- if you dont have - register
