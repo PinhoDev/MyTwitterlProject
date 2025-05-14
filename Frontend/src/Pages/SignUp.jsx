@@ -80,9 +80,9 @@ const SignUp = () => {
   ];
 
   return (
-    <div>
+    <div className="auth-container">
       <form onSubmit={handleSignup}>
-        <img src={Twitterbird} alt="Toppbild" className="tweet-logo" />
+        <img src={Twitterbird} alt="Toppbild" className="tweet-logo-signin" />
         <h1>Skapa ett konto</h1>
 
         <input type="file" accept="image/*" onChange={handleImageChange} />

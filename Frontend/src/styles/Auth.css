@@ -1,3 +1,13 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: white;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 /* Logga in - Ange ditt lösenord - Skapa konto */
 h1 {
   color: #333;
@@ -36,7 +46,13 @@ input:focus {
 }
 
 /* Loggan på Logga in - Ange ditt lösenord - Skapa konto */
-.tweet-logo {
+.tweet-logo-login {
+  display: block;
+  margin: 0px auto 0px;
+  width: 200px;
+}
+
+.tweet-logo-signin {
   display: block;
   margin: 0px auto 0px;
   width: 120px;

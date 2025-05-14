@@ -30,24 +30,26 @@ function LogIn() {
   };
   return (
     <>
-      {error && <p>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <img src={Twitterbird} alt="bild" />
-        <h1>Logga in på Twitter</h1>
-        <input
-          type="text"
-          value={formdata.identifier}
-          onChange={handleChange}
-          placeholder="Mobil, e-postadress eller användarnamn"
-        />
-        <p>
-          Har du inget konto?
-          <Link to="/signup">Registrera dig.</Link>
-        </p>
-        <button className="continue-button" type="submit">
-          Nästa
-        </button>
-      </form>
+      <div className="auth-container">
+        {error && <p>{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <img className="tweet-logo-login" src={Twitterbird} alt="bild" />
+          <h1>Logga in på Twitter</h1>
+          <input
+            type="text"
+            value={formdata.identifier}
+            onChange={handleChange}
+            placeholder="Mobil, e-postadress eller användarnamn"
+          />
+          <p>
+            Har du inget konto?
+            <Link to="/signup">Registrera dig.</Link>
+          </p>
+          <button className="continue-button" type="submit">
+            Nästa
+          </button>
+        </form>
+      </div>
     </>
   );
 }
