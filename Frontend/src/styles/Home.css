@@ -1,0 +1,119 @@
+.home-container {
+  display: flex;
+  background-color: white;
+  margin: 0px 30px;
+}
+
+.app-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+  color: #000;
+}
+
+.left-sidebar {
+  width: 70%;
+  padding: 1rem;
+}
+
+.tweet-input {
+  display: flex;
+  flex-direction: column;
+}
+.tweet-input textarea {
+  height: 100px;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  resize: none;
+}
+
+.hashtag {
+  color: #1da1f2;
+  cursor: pointer;
+}
+
+.tweetbutton {
+  margin-top: 0.5rem;
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.tweet-list {
+  margin-top: 2rem;
+}
+
+.tweet {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.right-sidebar {
+  width: 30%;
+}
+
+.left-sidebar-position {
+  width: 95%;
+}
+
+.search-input {
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid #d1d5db;
+  margin-bottom: 1rem;
+  background-color: whitesmoke;
+}
+
+.trends-section {
+  background-color: whitesmoke;
+  padding-top: 5px;
+  padding-left: 20px;
+  border-radius: 16px;
+  border: 1px solid #d1d5db;
+}
+
+.trends-section h2 {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.trend {
+  margin-bottom: 1rem;
+}
+
+.trend-location {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.trend-topic {
+  font-weight: 600;
+}
+
+.trend-tweets {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.footer-wrapper {
+  padding: 1rem;
+}
+
+.tweet-actions {
+  display: flex;
+}
+
+.comment-toggle {
+  border: none;
+  background-color: unset;
+  align-self: flex-start; /* Justerar till vänster inom flexbox */
+  margin-right: auto; /* Trycker den till vänster */
+}
