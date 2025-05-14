@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/Auth.css";
 import Twitterbird from "../assets/Twitterbird.png";
 
 const SignUp = () => {
   const navigate = useNavigate();
 
+  // Formulärdata sparas i state
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -21,9 +23,11 @@ const SignUp = () => {
 
   const [preview, setPreview] = useState(null);
 
+  // Hantera text-inputs
   const handleChange = (e) =>
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
+  // Hantera profilbild (endast för visning)
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -32,9 +36,11 @@ const SignUp = () => {
     }
   };
 
-  const handleSignup = (e) => {
+  // Hantera registrering
+  const handleSignup = async (e) => {
     e.preventDefault();
 
+    // Kontrollera obligatoriska fält
     const required = {
       username: "Användarnamn",
       email: "Epost",
@@ -49,26 +55,42 @@ const SignUp = () => {
       }
     }
 
+    // Kontrollera lösenord
     if (form.password !== form.confirmPassword) {
       return alert("Det angivna lösenordet stämmer inte överens");
     }
 
-    // Ersätt existingUsers med faktisk API-anrop
-    const existingUsers = ["test@example.com", "admin@example.com"];
-    if (existingUsers.includes(form.email.toLowerCase())) {
-      return alert(
-        "Det finns redan ett konto registrerat med denna e-postadress"
+    // Skapa data att skicka till backend
+    const postData = {
+      username: form.username,
+      email: form.email,
+      name: form.name,
+      password: form.password,
+    };
+
+    try {
+      // Skicka POST-anrop till backend
+      const response = await axios.post(
+        "http://localhost:5000/register",
+        postData
       );
+
+      // Om registreringen lyckas, vidare till inloggningssidan
+      if (response.data === true) {
+        alert("Registrering lyckades!");
+        navigate("/login");
+      } else {
+        alert("Registrering misslyckades.");
+      }
+    } catch (error) {
+      // Visa felmeddelande från backend eller logga fel
+      console.error("Registreringsfel:", error);
+      const msg = error.response?.data?.message || "Ett oväntat fel inträffade";
+      alert(`Fel: ${msg}`);
     }
-
-    const formData = new FormData();
-    Object.entries(form).forEach(([key, value]) => formData.append(key, value));
-
-    console.log("Skapar konto för:", form);
-
-    navigate("/login");
   };
 
+  // Formulärfält
   const fields = [
     { name: "username", placeholder: "Användarnamn" },
     { name: "email", placeholder: "Epost" },
@@ -85,6 +107,7 @@ const SignUp = () => {
         <img src={Twitterbird} alt="Toppbild" className="tweet-logo-signin" />
         <h1>Skapa ett konto</h1>
 
+        {/* Bilduppladdning, används bara för förhandsvisning */}
         <input type="file" accept="image/*" onChange={handleImageChange} />
         {preview && (
           <img
@@ -94,6 +117,7 @@ const SignUp = () => {
           />
         )}
 
+        {/* Generera formulärfält */}
         {fields.map(({ name, placeholder }) => (
           <input
             key={name}
@@ -104,6 +128,7 @@ const SignUp = () => {
           />
         ))}
 
+        {/* Lösenord och bekräftelse */}
         <input
           type="password"
           name="password"
