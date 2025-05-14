@@ -45,7 +45,7 @@ function LogIn() {
             Har du inget konto?
             <Link to="/signup">Registrera dig.</Link>
           </p>
-          <button className="continue-button" type="submit">
+          <button className="authbutton" type="submit">
             Nästa
           </button>
         </form>

@@ -59,7 +59,7 @@ input:focus {
 }
 
 /* Knappen på Logga in - Ange ditt lösenord - Skapa konto */
-button {
+.authbutton {
   background-color: black;
   color: white;
   border: none;

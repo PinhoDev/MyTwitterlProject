@@ -36,7 +36,7 @@ function LogInPassword() {
             value={formdata.password}
             onChange={handleAuthentication}
           />
-          <button className="continue-button" type="submit">
+          <button className="authbutton" type="submit">
             Logga in
           </button>
         </form>

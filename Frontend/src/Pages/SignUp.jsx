@@ -119,7 +119,9 @@ const SignUp = () => {
           onChange={handleChange}
         />
 
-        <button type="submit">Skapa konto</button>
+        <button className="authbutton" type="submit">
+          Skapa konto
+        </button>
       </form>
     </div>
   );
