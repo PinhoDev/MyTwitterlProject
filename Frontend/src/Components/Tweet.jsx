@@ -1,9 +1,11 @@
 import { useState } from "react";
+import axios from "axios";
 import { formatTweetContent } from "../utils/formatTweetContent";
 import { formatRelativeTime } from "../utils/formatRelativeTime";
 import "../styles/Home.css";
 
 const Tweet = ({
+  _id,
   name,
   handle,
   time,
@@ -19,10 +21,26 @@ const Tweet = ({
     setShowComments(!showComments);
   };
 
-  const handleComment = () => {
-    if (commentText.trim() !== "") {
-      onAddComment(index, commentText);
-      setCommentText("");
+  const handleComment = async () => {
+    if (commentText.trim() === "") return;
+
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/tweets/${_id}/comment`,
+        { content: commentText }
+      );
+
+      if (response.data.result) {
+        setCommentText("");
+        if (onAddComment) onAddComment(index, commentText); // valfri
+      } else {
+        alert("Kunde inte lägga till kommentar");
+      }
+    } catch (err) {
+      console.error("Kommentarfel:", err);
+      alert(
+        "Fel vid kommentar: " + (err.response?.data?.message || err.message)
+      );
     }
   };
 
