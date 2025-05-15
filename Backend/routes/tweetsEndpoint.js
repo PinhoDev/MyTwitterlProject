@@ -2,28 +2,60 @@ const { express } = require("../utils/dependencies");
 const router = express.Router();
 const Tweet = require("../models/tweetSchema");
 const User = require("../models/userSchema");
+const { findUserId } = require("../utils/authHelpers");
 
-// Route to get all tweets by a specific user
-router.get("/:username/tweets", async (req, res) => {
+// Route to create a New Tweet by a User
+router.post("/:username/create", async (req, res) => {
   try {
-    // Extract the username from the request parameters
+    const { content, hashtags } = req.body;
     const { username } = req.params;
-    const user = await User.findOne({ username });
-    const userTweets = await Tweet.find({ author: user._id });
+    const userId = await findUserId(username);
 
-    // Check if for any tweets were found for the user
-    if (!userTweets) {
-      return res
-        .status(404)
-        .json({ result: false, message: "No tweets found" });
-    }
+    // Create the New Tweet
+    const newTweet = new Tweet({
+      content,
+      author: userId,
+      hashtags,
+      createdAt: new Date(),
+      comments: [],
+    });
+    await newTweet.save();
 
-    // Respond successfully with the tweets
-    return res.json({ result: true, userTweets });
+    // Add the Tweet to the User
+    user.tweets.push(newTweet._id);
+    await user.save();
 
-    // Respond with error if something goes wrong
+    // Respond successfully if the tweet is created
+    return res.json(true);
+
+    // Respond unsuccessfully if the tweet is not created
   } catch (error) {
-    console.error("Error fetching user tweets:", error);
+    return res
+      .status(500)
+      .json({ result: false, message: "Internal server error" });
+  }
+});
+
+// Route to create a comment on a Tweet
+router.post("/:username/tweet/comment", async (req, res) => {
+  try {
+    const { tweetId, content } = req.body;
+    const { username } = req.params;
+    const userId = await findUserId(username);
+
+    // Add the comment to the Tweet
+    tweet.comments.push({
+      content,
+      userName: userId,
+      createdAt: new Date(),
+    });
+    await tweet.save();
+
+    // Respond successfully if the comment is created
+    return res.json(true);
+
+    // Respond unsuccessfully if the comment is not created
+  } catch (error) {
     return res
       .status(500)
       .json({ result: false, message: "Internal server error" });
