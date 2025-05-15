@@ -37,23 +37,23 @@ function LogInPassword() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <img src={Twitterbird} alt="bild" />
-        <h2>Ange ditt lösenord</h2>
-
-        <input placeholder={identifier || "Användarnamn"} readOnly />
-        {error && <p className="errorMessage">{error}</p>}
-        <input
-          type="password"
-          placeholder="Lösenord"
-          value={formdata.password}
-          onChange={handleAuthentication}
-        />
-
-        <button className="continue-button" type="submit">
-          Logga in
-        </button>
-      </form>
+      <div className="auth-container">
+        {error && <p>{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <img className="tweet-logo-login" src={Twitterbird} alt="bild" />
+          <h2>Ange ditt lösenord</h2>
+          <input placeholder={identifier || "Användarnamn"} readOnly />
+          <input
+            type="password"
+            placeholder="Lösenord"
+            value={formdata.password}
+            onChange={handleAuthentication}
+          />
+          <button className="authbutton" type="submit">
+            Logga in
+          </button>
+        </form>
+      </div>
     </>
   );
 }

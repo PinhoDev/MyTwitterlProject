@@ -9,6 +9,7 @@ import "../styles/Auth.css";
 //Andre, andre@example.com, 0700232425,
 //Karolina, Karolina@example.com, 0700232447,
 
+
 function LogIn() {
   const navigate = useNavigate();
   const [formdata, setFormdata] = useState({
@@ -39,24 +40,26 @@ function LogIn() {
   };
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <img src={Twitterbird} alt="bild" />
-        <h1>Logga in på Twitter</h1>
-        <input
-          type="text"
-          value={formdata.identifier}
-          onChange={handleChange}
-          placeholder="Mobil, e-postadress eller användarnamn"
-        />
-        {error && <p className="errorMessage">{error}</p>}
-        <p>
-          Har du inget konto?
-          <Link to="/signup">Registrera dig.</Link>
-        </p>
-        <button className="continue-button" type="submit">
-          Nästa
-        </button>
-      </form>
+      <div className="auth-container">
+        {error && <p>{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <img className="tweet-logo-login" src={Twitterbird} alt="bild" />
+          <h1>Logga in på Twitter</h1>
+          <input
+            type="text"
+            value={formdata.identifier}
+            onChange={handleChange}
+            placeholder="Mobil, e-postadress eller användarnamn"
+          />
+          <p>
+            Har du inget konto?
+            <Link to="/signup">Registrera dig.</Link>
+          </p>
+          <button className="authbutton" type="submit">
+            Nästa
+          </button>
+        </form>
+      </div>
     </>
   );
 }
