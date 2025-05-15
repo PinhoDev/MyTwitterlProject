@@ -12,8 +12,11 @@ router.get("/:username", async (req, res) => {
         path: "tweets",
         select: "content createdAt",
         populate: {
-          path: "comments.userName",
-          select: "username",
+          path: "comments",
+          populate: {
+            path: "userName",
+            select: "username",
+          },
         },
       });
     console.log("User Details:", userDetails);
