@@ -26,7 +26,7 @@ const Tweet = ({
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/tweets/${_id}/comment`,
+        `http://localhost:3000/tweets/${_id}/comment`,
         { content: commentText }
       );
 

@@ -45,7 +45,7 @@ const Home = () => {
     const fetchTweets = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/tweets/${currentUser.username}/tweets`
+          `http://localhost:3000/tweets/${currentUser.username}/tweets`
         );
         setTweets(res.data.userTweets || []);
       } catch (err) {
@@ -60,7 +60,7 @@ const Home = () => {
     if (newTweet.trim() === "") return;
 
     try {
-      const res = await axios.post("http://localhost:5000/tweets", {
+      const res = await axios.post("http://localhost:3000/tweets", {
         username: currentUser.username,
         content: newTweet,
       });
@@ -77,7 +77,7 @@ const Home = () => {
     if (!comment.trim()) return;
 
     try {
-      await axios.post(`http://localhost:5000/tweets/${tweetId}/comment`, {
+      await axios.post(`http://localhost:3000/tweets/${tweetId}/comment`, {
         content: comment,
       });
 
