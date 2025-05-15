@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import { formatTweetContent } from "../utils/formatTweetContent";
 import { formatRelativeTime } from "../utils/formatRelativeTime";
 import "../styles/Home.css";

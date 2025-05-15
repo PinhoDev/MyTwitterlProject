@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import "../styles/Home.css";
 import FooterUser from "../components/FooterUser.jsx";
 import Header from "../components/Header.jsx";
