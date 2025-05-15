@@ -11,7 +11,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<LogIn />} />
-        <Route path="/profile/:id" element={<ProfilePage />} />
+        <Route path="/:username" element={<ProfilePage />} />
         <Route path="home" element={<Home />} />
         <Route path="loginpassword" element={<LogInPassword />} />
         <Route path="signup" element={<SignUp />} />
