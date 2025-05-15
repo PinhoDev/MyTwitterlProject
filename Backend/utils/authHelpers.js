@@ -7,4 +7,13 @@ async function findUser(emailOrUsername) {
   });
 }
 
-module.exports = { findUser };
+// Helper to find userId by username
+async function findUserId(username) {
+  const user = await User.findOne({ username });
+  if (!user) {
+    throw new Error("User not found");
+  }
+  return user._id;
+}
+
+module.exports = { findUser, findUserId };

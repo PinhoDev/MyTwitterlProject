@@ -2,24 +2,19 @@ const { express } = require("../utils/dependencies");
 const router = express.Router();
 const Tweet = require("../models/tweetSchema");
 const User = require("../models/userSchema");
+const { findUserId } = require("../utils/authHelpers");
 
 // Route to create a New Tweet by a User
 router.post("/:username/create", async (req, res) => {
-  console.log("Route hit");
   try {
     const { content, hashtags } = req.body;
     const { username } = req.params;
-
-    // Check if the user exists
-    const user = await User.findOne({ username });
-    if (!user) {
-      return res.status(404).json({ result: false, message: "User not found" });
-    }
+    const userId = await findUserId(username);
 
     // Create the New Tweet
     const newTweet = new Tweet({
       content,
-      author: user._id,
+      author: userId,
       hashtags,
       createdAt: new Date(),
       comments: [],
@@ -46,17 +41,12 @@ router.post("/:username/tweet/comment", async (req, res) => {
   try {
     const { tweetId, content } = req.body;
     const { username } = req.params;
-
-    // Check if the user exists
-    const user = await User.findOne({ username });
-    if (!user) {
-      return res.status(404).json({ result: false, message: "User not found" });
-    }
+    const userId = await findUserId(username);
 
     // Add the comment to the Tweet
     tweet.comments.push({
       content,
-      userName: user._id,
+      userName: userId,
       createdAt: new Date(),
     });
     await tweet.save();
