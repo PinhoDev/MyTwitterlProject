@@ -1,6 +1,5 @@
 import { useState } from "react";
-import "./style.css";
-import image from "../Images/image.png";
+import "../styles/Overlay.css";
 
 const Overlay = () => {
   const [visible, setVisible] = useState(false);
@@ -17,7 +16,11 @@ const Overlay = () => {
       {visible && (
         <div className="overlay">
           <div className="overlay-content">
-            <img src={image} alt="Toppbild" className="tweet-icon" />
+            <img
+              src="https://randomuser.me/api/portraits/men/75.jpg"
+              alt="Profilbild"
+              className="footer-userimg-logout"
+            />
             <h2>Logga ut från TwitterClone?</h2>
             <div className="button-group">
               <button

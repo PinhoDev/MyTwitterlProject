@@ -1,0 +1,31 @@
+.footer-user {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1rem;
+  font-size: 0.875rem;
+  color: #0f1419;
+  gap: 0.5rem;
+}
+
+.footer-user img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.footer-user .user-info {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.footer-user .user-info .name {
+  font-weight: bold;
+  color: #0f1419;
+}
+
+.footer-user .user-info .handle {
+  color: #6b7280;
+  font-size: 0.75rem;
+}
