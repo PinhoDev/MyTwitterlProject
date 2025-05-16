@@ -1,14 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Twitterbird from "../assets/Twitterbird.png";
-import { handleUsername } from "../Controllers/viewModel.js";
 import { navigateToLoginPassword } from "../Controllers/viewModel.js";
 import "./working.css";
 import "../styles/Auth.css";
 
-//To do - Lägg till if the username/mail/mobil exists proceed Man har fyllt i alla när man reggar sig
-//else error -- if you dont have - register
-//else - error use another identifier
 function LogIn() {
   const navigate = useNavigate();
   const [formdata, setFormdata] = useState({
@@ -39,7 +35,7 @@ function LogIn() {
             type="text"
             value={formdata.identifier}
             onChange={handleChange}
-            placeholder="Mobil, e-postadress eller användarnamn"
+            placeholder="E-post eller användarnamn"
           />
           <p>
             Har du inget konto?
