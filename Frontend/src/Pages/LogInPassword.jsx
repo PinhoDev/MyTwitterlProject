@@ -15,7 +15,7 @@ function LogInPassword() {
     if (formdata.password.trim() === "") {
       setError("Du måste ange lösenord");
     } else {
-      navigate(`/profile/${identifier}`);
+      navigate("/home");
     }
   };
   const handleAuthentication = (e) => {
