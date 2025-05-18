@@ -1,3 +1,4 @@
+// App.jsx
 import "./styles/App.css";
 import { Routes, Route } from "react-router-dom";
 import ProfilePage from "./Pages/ProfilePage.jsx";
@@ -11,10 +12,10 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<LogIn />} />
-        <Route path="/profile/:id" element={<ProfilePage />} />
-        <Route path="home" element={<Home />} />
-        <Route path="loginpassword" element={<LogInPassword />} />
-        <Route path="signup" element={<SignUp />} />
+        <Route path="/profile/:username" element={<ProfilePage />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/loginpassword" element={<LogInPassword />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </>
   );
