@@ -105,7 +105,7 @@ router.get("/tweets/:username", async (req, res) => {
       result: true,
       username: user.username,
       image: user.image,
-      tweets: allTweets,
+      homeTweets: tweets,
     });
   } catch (error) {
     console.error("Error fetching tweets:", error);
