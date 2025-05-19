@@ -54,3 +54,27 @@ export async function login(emailOrUsername, password) {
     return { success: false, message: "An error occurred during login" };
   }
 }
+
+// Function to sign up a new user
+export async function signUp(userData) {
+  try {
+    const response = await fetch(`${BASE_URL}signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+
+    const dataResponse = await response.json();
+
+    if (response.ok) {
+      return { success: true, message: dataResponse.message };
+    } else {
+      return { success: false, message: dataResponse.message };
+    }
+  } catch (error) {
+    console.error("Error during sign up:", error);
+    return { success: false, message: "An error occurred during sign up" };
+  }
+}
