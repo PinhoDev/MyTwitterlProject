@@ -1,9 +1,10 @@
 const { express } = require("../utils/dependencies");
 const router = express.Router();
 const User = require("../models/userSchema");
+const Tweet = require("../models/tweetSchema");
 
 // Route to get user details by username
-router.get("/:username", async (req, res) => {
+router.get("/profile/:username", async (req, res) => {
   try {
     const userDetails = await User.findOne({ username: req.params.username })
       .populate("followers", "username")
@@ -19,7 +20,6 @@ router.get("/:username", async (req, res) => {
           },
         },
       });
-    console.log("User Details:", userDetails);
 
     if (!userDetails) {
       return res.status(404).json({ result: false, message: "User not found" });
@@ -70,6 +70,45 @@ router.post("/:username/following", async (req, res) => {
     });
   } catch (error) {
     console.error("Error updating following:", error);
+    return res
+      .status(500)
+      .json({ result: false, message: "Internal server error" });
+  }
+});
+
+// Route to get tweets of a user and their following users
+router.get("/tweets/:username", async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username }).select(
+      "_id username image following"
+    );
+    if (!user) {
+      return res.status(404).json({ result: false, message: "User not found" });
+    }
+
+    const usersToQuery = [user._id, ...user.following];
+    console.log("Users to query:", usersToQuery);
+
+    const tweets = await Tweet.find({ author: { $in: usersToQuery } })
+      .select("content createdAt")
+      .populate("author", "username image")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "userName",
+          select: "username image",
+        },
+      })
+      .sort({ createdAt: -1 });
+
+    return res.json({
+      result: true,
+      username: user.username,
+      image: user.image,
+      tweets: allTweets,
+    });
+  } catch (error) {
+    console.error("Error fetching tweets:", error);
     return res
       .status(500)
       .json({ result: false, message: "Internal server error" });
