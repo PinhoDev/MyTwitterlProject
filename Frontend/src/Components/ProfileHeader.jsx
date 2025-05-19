@@ -1,32 +1,21 @@
 import { useEffect, useState } from "react";
+import { loadUserDetails } from "../Controllers/userController";
 
 function ProfileHeader({ username }) {
   const [user, setUser] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    async function fetchUser() {
-      try {
-        const response = await fetch(`/api/users/${username}`);
-        const data = await response.json();
-        if (data.result) {
-          setUser(data.userDetails);
-        } else {
-          console.error("Kunde inte hämta användare");
-        }
-      } catch (error) {
-        console.error("Fel vid hämtning:", error);
-      }
-    }
-
-    fetchUser();
+    loadUserDetails(username, setUser, setError);
   }, [username]);
+  if (error) return <p>{error}</p>;
   if (!user) return <p>Laddar profil...</p>;
 
   return (
     <div className="profileHeaderContainer">
       <div className="topBox">
         <h2>{user.fullName}</h2>
-        <p>{user.Tweets.length} Tweets</p>
+        <p>{user.tweets?.length || 0} Tweets</p>
       </div>
 
       <div className="imgWrapper">
