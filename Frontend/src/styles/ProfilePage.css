@@ -82,6 +82,7 @@
   margin-right: 15px;
 }
 .follow-button {
+  display: none;
   float: right;
   margin-right: 20px;
   padding: 8px 16px;
