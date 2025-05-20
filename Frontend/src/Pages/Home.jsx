@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../styles/Home.css";
 import FooterUser from "../components/FooterUser.jsx";
+import Trend from "../Components/Trend.jsx";
 import Header from "../components/Header.jsx";
 import Tweet from "../components/Tweet.jsx";
 
@@ -98,6 +99,21 @@ const Home = () => {
                   />
                 ))}
               </div>
+            </div>
+          </div>
+          <div className="right-sidebar">
+            <input
+              type="text"
+              placeholder="Search Twitter"
+              className="search-input"
+            />
+            <div className="trends-section">
+              <h2>Trends for you</h2>
+              <Trend topic="Samt" tweets="2,640" />
+              <Trend topic="China" tweets="527K" />
+              <Trend topic="#finland" tweets="10.4K" />
+              <Trend topic="#babygirl" />
+              <Trend topic="Newzorf" tweets="60.4K" />
             </div>
           </div>
         </div>
