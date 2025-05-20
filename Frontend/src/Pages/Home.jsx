@@ -6,8 +6,10 @@ import Header from "../Components/Header.jsx";
 import Tweet from "../Components/Tweet.jsx";
 
 const Home = () => {
+  // Skapar en state-variabel som innehåller vilka användare man följer
   const [following] = useState(["@ezyang", "@elonmusk"]);
 
+  // Skapar en lista med exempel-tweets (förifyllda) - ska utgå ifrån de man följer
   const [tweets, setTweets] = useState([
     {
       name: "Edward Z. Yang",
@@ -33,38 +35,46 @@ const Home = () => {
     },
   ]);
 
+  // Håller reda på innehållet i den nya tweeten användaren skriver
   const [newTweet, setNewTweet] = useState("");
 
+  // Funktion för att posta en ny tweet
   const handleTweet = () => {
+    // Kontrollera att tweeten inte är tom
     if (newTweet.trim() !== "") {
       const newTweetObj = {
-        ...currentUser,
-        time: new Date().toISOString(),
-        content: newTweet,
-        comments: [],
+        ...currentUser, // Kopierar namn och handle från nuvarande användare
+        time: new Date().toISOString(), // Sätter nuvarande tid
+        content: newTweet, // Innehållet från inputfältet
+        comments: [], // Inga kommentarer till en början
       };
+      // Lägger till den nya tweeten överst i listan
       setTweets([newTweetObj, ...tweets]);
+      // Tömmer inputfältet
       setNewTweet("");
     }
   };
 
+  // Funktion för att lägga till en kommentar på en tweet
   const addComment = (index, comment) => {
-    const updatedTweets = [...tweets];
-    updatedTweets[index].comments.push(comment);
-    setTweets(updatedTweets);
+    const updatedTweets = [...tweets]; // Skapar en kopia av tweets
+    updatedTweets[index].comments.push(comment); // Lägger till kommentaren
+    setTweets(updatedTweets); // Uppdaterar state
   };
 
+  // Information om den inloggade användaren
   const currentUser = {
     name: "Ditt Namn",
     handle: "@dittkonto",
   };
 
+  // Filtrerar och sorterar tweets: visar endast tweets från personer man följer eller sig själv
   const filteredAndSortedTweets = [...tweets]
     .filter(
       (tweet) =>
         following.includes(tweet.handle) || tweet.handle === currentUser.handle
     )
-    .sort((a, b) => new Date(b.time) - new Date(a.time));
+    .sort((a, b) => new Date(b.time) - new Date(a.time)); // Sorterar från nyast till äldst
 
   return (
     <>
