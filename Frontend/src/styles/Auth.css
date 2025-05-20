@@ -93,6 +93,10 @@ input:focus {
   margin-top: 70px;
 }
 
+.blue-link {
+  color: #1a91da;
+}
+
 /* Responsivitet */
 @media (max-width: 480px) {
   .tweet-logo {

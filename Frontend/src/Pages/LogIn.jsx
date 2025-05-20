@@ -48,7 +48,10 @@ function LogIn() {
             Nästa
           </button>
           <p className="noaccount">
-            Har du inget konto? <Link to="/signup">Registrera dig.</Link>
+            Har du inget konto?{" "}
+            <Link to="/signup" className="blue-link">
+              Registrera dig.
+            </Link>
           </p>
         </form>
       </div>
