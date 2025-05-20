@@ -5,7 +5,7 @@ const User = require("../models/userSchema");
 const { findUserId } = require("../utils/authHelpers");
 
 // Route to create a New Tweet by a User
-// Endpoint to create a new tweet
+// Endpoint to create a new tweet and it use in the Home Page
 // The request parameter should contain the username of the user
 // The request body should contain the content and hashtags of the tweet
 router.post("/:username/create", async (req, res) => {
@@ -40,7 +40,7 @@ router.post("/:username/create", async (req, res) => {
 });
 
 // Route to create a comment on a Tweet
-// Endpoint to create a comment on a tweet
+// Endpoint to create a comment on a tweet and it use in the Home Page
 // The request parameter should contain the username of the user
 // The request body should contain the tweetId and content of the comment
 router.post("/:username/tweet/comment", async (req, res) => {
