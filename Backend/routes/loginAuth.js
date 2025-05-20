@@ -2,7 +2,9 @@ const { express, jwt, bcrypt } = require("../utils/dependencies");
 const { findUser } = require("../utils/authHelpers");
 const router = express.Router();
 
-// Get User name
+// Route to get User name
+// Endpoint to get the user's name by email or username and it use in the Login Page
+// The request body should contain the email or username
 router.post("/getUserName", async (req, res) => {
   try {
     const { emailOrUsername } = req.body;
@@ -22,6 +24,8 @@ router.post("/getUserName", async (req, res) => {
 
     // Respond with the user's name
     return res.json({ result: true, name: user.name });
+
+    // Respond with error if something goes wrong
   } catch (error) {
     console.error("Error in /getUserName:", error);
     return res
@@ -30,7 +34,9 @@ router.post("/getUserName", async (req, res) => {
   }
 });
 
-// Login route
+// Route to login authenticate a user
+// Endpoint to authenticate a user and it use in the LoginPassword Page
+// The request body should contain the email or username and password
 router.post("/login", async (req, res) => {
   try {
     const { emailOrUsername, password } = req.body;
@@ -73,6 +79,8 @@ router.post("/login", async (req, res) => {
 
     // Respond with success and the token
     return res.json({ result: true, token });
+
+    // Respond with error if something goes wrong
   } catch (error) {
     console.error("Login error:", error);
     return res
