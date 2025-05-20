@@ -75,7 +75,7 @@ const Home = () => {
             <div className="left-sidebar-position">
               <div className="tweet-input">
                 <textarea
-                  placeholder="What’s happening?"
+                  placeholder="Vad vill du säga?"
                   value={newTweet}
                   onChange={(e) => setNewTweet(e.target.value)}
                   maxLength={140}
@@ -104,11 +104,11 @@ const Home = () => {
           <div className="right-sidebar">
             <input
               type="text"
-              placeholder="Search Twitter"
+              placeholder="Sök efter användare eller #hashtags"
               className="search-input"
             />
             <div className="trends-section">
-              <h2>Trends for you</h2>
+              <h2>Populärt för dig</h2>
               <Trend topic="Samt" tweets="2,640" />
               <Trend topic="China" tweets="527K" />
               <Trend topic="#finland" tweets="10.4K" />

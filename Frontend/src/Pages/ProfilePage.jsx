@@ -75,11 +75,11 @@ function ProfilePage() {
           <div className="right-sidebar" data-page="a">
             <input
               type="text"
-              placeholder="Search Twitter"
+              placeholder="Sök efter användare eller #hashtags"
               className="search-input"
             />
             <div className="trends-section">
-              <h2>Trends for you</h2>
+              <h2>Populärt för dig</h2>
               <Trend topic="Samt" tweets="2,640" />
               <Trend topic="China" tweets="527K" />
               <Trend topic="#finland" tweets="10.4K" />
