@@ -1,6 +1,7 @@
 import Beach from "../assets/DalmationBeachImg.png";
 import Trend from "../Components/Trend.jsx";
 import ProfilePic from "../assets/manPinkShirt.png";
+import { Link } from "react-router-dom";
 import "../styles/ProfilePage.css";
 import "../styles/Home.css";
 
@@ -31,10 +32,12 @@ function ProfilePage() {
             <div className="profilePageContainer">
               <div className="topBox">
                 <div className="arrowNameTweetsNumberBox">
-                  <div class="back-arrow">&#8592;</div>
-                  <div class="user-info">
-                    <div class="name">{user.fullName}</div>
-                    <div class="tweets">27.3K Tweets</div>
+                  <Link to="/home">
+                    <div className="back-arrow">&#8592;</div>
+                  </Link>
+                  <div className="user-info">
+                    <div className="name">{user.fullName}</div>
+                    <div className="tweets">27.3K Tweets</div>
                   </div>
                 </div>
 
