@@ -50,7 +50,7 @@ function LogIn() {
           <p className="noaccount">
             Har du inget konto?{" "}
             <Link to="/signup" className="blue-link">
-              Registrera dig.
+              Registrera dig
             </Link>
           </p>
         </form>
