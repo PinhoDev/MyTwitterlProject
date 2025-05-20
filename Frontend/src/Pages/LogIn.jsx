@@ -3,7 +3,6 @@ import { useState } from "react";
 import Twitterbird from "../assets/Twitterbird.png";
 import { handleUsername } from "../Controllers/LoginControllers.js";
 import { navigateToLoginPassword } from "../Controllers/LoginControllers.js";
-import "./working.css";
 import "../styles/Auth.css";
 
 //To do - Lägg till if the username/mail/mobil exists proceed Man har fyllt i alla när man reggar sig
@@ -35,19 +34,22 @@ function LogIn() {
         <form onSubmit={handleSubmit}>
           <img className="tweet-logo-login" src={Twitterbird} alt="bild" />
           <h1>Logga in på Twitter</h1>
-          <input
-            type="text"
-            value={formdata.identifier}
-            onChange={handleChange}
-            placeholder="Mobil, e-postadress eller användarnamn"
-          />
-          <p>
-            Har du inget konto?
-            <Link to="/signup">Registrera dig.</Link>
-          </p>
+          <div className="input-wrapper">
+            <input
+              className="login-input"
+              type="text"
+              value={formdata.identifier}
+              onChange={handleChange}
+              placeholder="E-postadress eller användarnamn"
+            />
+          </div>
+
           <button className="authbutton" type="submit">
             Nästa
           </button>
+          <p className="noaccount">
+            Har du inget konto? <Link to="/signup">Registrera dig.</Link>
+          </p>
         </form>
       </div>
     </>
