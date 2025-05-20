@@ -96,6 +96,11 @@
   margin-bottom: 1rem;
 }
 
+.trend-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .trend {
   margin-bottom: 1rem;
 }
@@ -120,6 +125,14 @@
 
 .tweet-actions {
   display: flex;
+}
+
+/*tre menu prickar på trenderna*/
+.trend-menu {
+  font-size: 20px;
+  color: gray;
+  cursor: pointer;
+  margin-right: 20px;
 }
 
 /*pratbubban med antal kommentater*/
