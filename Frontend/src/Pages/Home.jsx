@@ -2,8 +2,8 @@ import { useState } from "react";
 import "../styles/Home.css";
 import FooterUser from "../components/FooterUser.jsx";
 import Trend from "../Components/Trend.jsx";
-import Header from "../components/Header.jsx";
-import Tweet from "../components/Tweet.jsx";
+import Header from "../Components/Header.jsx";
+import Tweet from "../Components/Tweet.jsx";
 
 const Home = () => {
   const [following] = useState(["@ezyang", "@elonmusk"]);
