@@ -8,7 +8,7 @@ const { findUserId } = require("../utils/authHelpers");
 // Endpoint to create a new tweet and it use in the Home Page
 // The request parameter should contain the username of the user
 // The request body should contain the content and hashtags of the tweet
-router.post("/:username/create", async (req, res) => {
+router.post("/:username/tweet", async (req, res) => {
   try {
     const { content, hashtags } = req.body;
     const { username } = req.params;

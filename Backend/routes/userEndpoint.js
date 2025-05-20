@@ -3,36 +3,47 @@ const router = express.Router();
 const User = require("../models/userSchema");
 const Tweet = require("../models/tweetSchema");
 
-// Route to get user details by username
-// Endpoint to Display the user details in Profile page
+// Route to get tweets of a user and their following users
+// Endpoint to to Display in the Home Page
+// This endpoint return username, username.image and also the tweets of the user
+// and the tweets of the users that the user is following. The tweets should be
+// sorted by createdAt in descending order.
 // The request parameter should contain the username of the user
-router.get("/profile/:username", async (req, res) => {
+router.get("/home/:username", async (req, res) => {
   try {
-    const userDetails = await User.findOne({ username: req.params.username })
-      .populate("followers", "username")
-      .populate("following", "username")
-      .populate({
-        path: "tweets",
-        select: "content createdAt",
-        populate: {
-          path: "comments",
-          populate: {
-            path: "userName",
-            select: "username",
-          },
-        },
-      });
-
-    if (!userDetails) {
+    const user = await User.findOne({ username: req.params.username }).select(
+      "_id username image following"
+    );
+    if (!user) {
       return res.status(404).json({ result: false, message: "User not found" });
     }
 
-    // Respond with success and user details
-    return res.json({ result: true, userDetails });
+    const usersToQuery = [user._id, ...user.following];
+    console.log("Users to query:", usersToQuery);
+
+    const tweets = await Tweet.find({ author: { $in: usersToQuery } })
+      .select("content createdAt")
+      .populate("author", "username image")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "userName",
+          select: "username image",
+        },
+      })
+      .sort({ createdAt: -1 });
+
+    // Respond with success and the username, image, and tweets of the user and their following users
+    return res.json({
+      result: true,
+      username: user.username,
+      image: user.image,
+      homeTweets: tweets,
+    });
 
     // Respond with error if something goes wrong
   } catch (error) {
-    console.error("Error fetching user details:", error);
+    console.error("Error fetching tweets:", error);
     return res
       .status(500)
       .json({ result: false, message: "Internal server error" });
@@ -88,46 +99,36 @@ router.post("/:username/following", async (req, res) => {
   }
 });
 
-// Route to get tweets of a user and their following users
-// Endpoint to to Display  username username.image and also the tweets of the user
-// and the tweets of the users that the user is following. The tweets should be
-// sorted by createdAt in descending order.
+// Route to get user details by username
+// Endpoint to Display the user details in Profile page
 // The request parameter should contain the username of the user
-router.get("/tweets/:username", async (req, res) => {
+router.get("/profile/:username", async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username }).select(
-      "_id username image following"
-    );
-    if (!user) {
+    const userDetails = await User.findOne({ username: req.params.username })
+      .populate("followers", "username image")
+      .populate("following", "username image")
+      .populate({
+        path: "tweets",
+        select: "content createdAt",
+        populate: {
+          path: "comments",
+          populate: {
+            path: "userName",
+            select: "username",
+          },
+        },
+      });
+
+    if (!userDetails) {
       return res.status(404).json({ result: false, message: "User not found" });
     }
 
-    const usersToQuery = [user._id, ...user.following];
-    console.log("Users to query:", usersToQuery);
-
-    const tweets = await Tweet.find({ author: { $in: usersToQuery } })
-      .select("content createdAt")
-      .populate("author", "username image")
-      .populate({
-        path: "comments",
-        populate: {
-          path: "userName",
-          select: "username image",
-        },
-      })
-      .sort({ createdAt: -1 });
-
-    // Respond with success and the username, image, and tweets of the user and their following users
-    return res.json({
-      result: true,
-      username: user.username,
-      image: user.image,
-      homeTweets: tweets,
-    });
+    // Respond with success and user details
+    return res.json({ result: true, userDetails });
 
     // Respond with error if something goes wrong
   } catch (error) {
-    console.error("Error fetching tweets:", error);
+    console.error("Error fetching user details:", error);
     return res
       .status(500)
       .json({ result: false, message: "Internal server error" });
