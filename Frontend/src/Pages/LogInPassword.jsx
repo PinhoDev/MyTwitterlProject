@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "./working.css";
+import "../styles/Auth.css";
 import Twitterbird from "../assets/Twitterbird.png";
+
 //lägg till error fel lösenoord
 function LogInPassword() {
   const [formdata, setFormdata] = useState({ password: "" });
@@ -29,13 +30,20 @@ function LogInPassword() {
         <form onSubmit={handleSubmit}>
           <img className="tweet-logo-login" src={Twitterbird} alt="bild" />
           <h2>Ange ditt lösenord</h2>
-          <input placeholder={identifier || "Användarnamn"} readOnly />
-          <input
-            type="password"
-            placeholder="Lösenord"
-            value={formdata.password}
-            onChange={handleAuthentication}
-          />
+          <div className="input-wrapper">
+            <input
+              className="login-input"
+              placeholder={identifier || "Användarnamn"}
+              readOnly
+            />
+            <input
+              className="login-input"
+              type="password"
+              placeholder="Lösenord"
+              value={formdata.password}
+              onChange={handleAuthentication}
+            />
+          </div>
           <button className="authbutton" type="submit">
             Logga in
           </button>
