@@ -104,6 +104,9 @@ const Home = () => {
         tweet.author?.username === currentUser.username
     )
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  //Jag bara testar för att navigera vidare och det växte från en link till att vara en del av tweeten eftersom det är namnet man trycker på. /Karolina :)
+  const latestFiveFriendTweets = filteredAndSortedTweets.slice(0, 5);
+  //
 
   return (
     <>
@@ -143,6 +146,13 @@ const Home = () => {
                   />
                 ))}
               </div>
+            </div>
+
+            <div>
+              <h3>5 senaste från dina vänner</h3>
+              {latestFiveFriendTweets.map((tweet) => (
+                <TweetCard key={tweet._id} tweet={tweet} />
+              ))}
             </div>
           </div>
           <div className="right-sidebar"></div>
