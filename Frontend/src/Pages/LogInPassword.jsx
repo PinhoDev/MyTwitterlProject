@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/Auth.css";
 import Twitterbird from "../assets/Twitterbird.png";
-import { navigateToHomePage } from "../Controllers/LoginControllers.js";
+import { navigateToHomePage } from "../Controllers/LoginController.js";
 
 //lägg till error fel lösenoord
 function LogInPassword() {

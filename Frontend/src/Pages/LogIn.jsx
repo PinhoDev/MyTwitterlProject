@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Twitterbird from "../assets/Twitterbird.png";
-import { navigateToLoginPassword } from "../Controllers/LoginControllers.js";
+import { navigateToLoginPassword } from "../Controllers/LoginController.js";
 import "../styles/Auth.css";
 
 function LogIn() {
