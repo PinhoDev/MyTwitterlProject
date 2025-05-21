@@ -78,3 +78,9 @@ export async function signUp(userData) {
     return { success: false, message: "An error occurred during sign up" };
   }
 }
+
+// Function to get user details
+export async function getUserdetails(username) {}
+
+// Function to get user tweets
+export async function getUserOwnTweets(username) {}

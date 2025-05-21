@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { loadUserDetails } from "../Controllers/userController";
+import { loadUserDetails } from "../Controllers/ProfileController";
 
 function ProfileHeader({ username }) {
   const [user, setUser] = useState(null);

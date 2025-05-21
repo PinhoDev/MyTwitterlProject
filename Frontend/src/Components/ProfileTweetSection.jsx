@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { loadUserTweets } from "../Controllers/tweetController";
+import { loadUserTweets } from "../Controllers/ProfileController";
 import TweetCard from "./TweetCard";
 
 //personens tweets rangordnade efter datum - mappa som divar i lista
