@@ -31,6 +31,7 @@ export async function navigateToLoginPassword(identifier, navigate, setError) {
 
 // Function to handle user login
 async function handleLogin(emailOrUsername, password) {
+export async function handleLogin(emailOrUsername, password) {
   const response = await login(emailOrUsername, password);
 
   if (response.success) {

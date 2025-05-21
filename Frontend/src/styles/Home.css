@@ -1,6 +1,5 @@
 .home-container {
   display: flex;
-  justify-content: space-between;
   background-color: white;
   margin: 0px 30px;
 }
@@ -13,15 +12,7 @@
 }
 
 .left-sidebar {
-  flex: 1;
-  max-width: 600px;
-  padding: 1rem;
-  margin: 0 auto; /* centrerar innehållet */
-}
-
-/* Reservplats för framtida högersida */
-.right-sidebar {
-  width: 300px;
+  width: 70%;
   padding: 1rem;
 }
 
@@ -71,6 +62,63 @@
   margin-bottom: 1rem;
 }
 
+.right-sidebar {
+  width: 30%;
+}
+
+.right-sidebar[data-page="a"] {
+  margin-top: 35px;
+}
+
+.left-sidebar-position {
+  width: 95%;
+}
+
+.search-input {
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid #d1d5db;
+  margin-bottom: 1rem;
+  background-color: whitesmoke;
+}
+
+.trends-section {
+  background-color: whitesmoke;
+  padding-top: 5px;
+  padding-left: 20px;
+  border-radius: 16px;
+  border: 1px solid #d1d5db;
+}
+
+.trends-section h2 {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.trend-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.trend {
+  margin-bottom: 1rem;
+}
+
+.trend-location {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.trend-topic {
+  font-weight: 600;
+}
+
+.trend-tweets {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
 .footer-wrapper {
   padding: 1rem;
 }
@@ -79,7 +127,55 @@
   display: flex;
 }
 
+/*tre menu prickar på trenderna*/
+.trend-menu {
+  font-size: 20px;
+  color: gray;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+/*pratbubban med antal kommentater*/
 .comment-toggle {
   border: none;
   background-color: unset;
+}
+
+/*kommentarer*/
+.tweet-comments {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.tweet-comments textarea {
+  resize: none;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  min-height: 60px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.tweet-comments textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.tweet-comments button {
+  align-self: flex-end;
+  margin-top: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tweet-comments button:hover {
+  background-color: #0056b3;
 }

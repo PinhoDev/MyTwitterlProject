@@ -12,7 +12,13 @@
 h1 {
   color: #333;
   font-size: 2rem;
-  margin-bottom: 10px;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+h2 {
+  color: #333;
+  margin-left: 75px;
 }
 
 /* Form innehåller alla input */
@@ -26,7 +32,7 @@ form {
 }
 
 /* Alla input-fält */
-input {
+.login-input {
   font-size: 14px;
   padding: 12px;
   margin-top: 10px;
@@ -34,9 +40,17 @@ input {
   border: 2px solid rgb(182, 182, 182);
   border-radius: 5px;
   width: 100%;
+  max-width: 400px;
   box-sizing: border-box;
   outline: none;
   transition: border-color 0.3s;
+}
+
+/* Input-fält centrerat */
+.input-wrapper {
+  display: flex;
+  flex-direction: column; /* stapla elementen vertikalt */
+  align-items: center; /* centrera dem horisontellt */
 }
 
 /* Input-fält som är "aktivt" */
@@ -69,7 +83,18 @@ input:focus {
   width: 100%;
   max-width: 400px;
   display: block;
-  margin: 40px auto;
+  margin: 20px auto;
+  font-weight: bold;
+  font-size: unset;
+}
+
+.noaccount {
+  text-align: center;
+  margin-top: 70px;
+}
+
+.blue-link {
+  color: #1a91da;
 }
 
 /* Responsivitet */
