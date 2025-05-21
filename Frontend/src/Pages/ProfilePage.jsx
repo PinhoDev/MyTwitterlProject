@@ -1,7 +1,11 @@
-import Arrow from "../assets/Arrow.png";
 import Beach from "../assets/DalmationBeachImg.png";
+import Trend from "../Components/Trend.jsx";
 import ProfilePic from "../assets/manPinkShirt.png";
-import "./working.css";
+import { Link } from "react-router-dom";
+import "../styles/ProfilePage.css";
+import "../styles/Home.css";
+
+//import "./working.css";
 //använde emojies medan jag arbetade - ska vi köra react-icons? Svaret blev ja vi kör på react icons
 // antal tweets under namnet längst upp är hur många man har skrivit.
 // antal tweets, followre and foollowing ska uppdateras i antal efter när de ändras   . length
@@ -22,37 +26,70 @@ function ProfilePage() {
   };
   return (
     <>
-      <div className="profilePageContainer">
-        <div className="topBox">
-          <div className="arrowNameTweetsNumberBox">
-            <h2>
-              <img className="arrowImg" src={Arrow} alt="" /> Daniel feldman
-            </h2>
-            <p className="topBoxP">27.3K Tweets</p>
+      <div className="sidebars">
+        <div className="home-container">
+          <div className="left-sidebar">
+            <div className="profilePageContainer">
+              <div className="topBox">
+                <div className="arrowNameTweetsNumberBox">
+                  <Link to="/home">
+                    <div className="back-arrow">&#8592;</div>
+                  </Link>
+                  <div className="user-info">
+                    <div className="name">{user.fullName}</div>
+                    <div className="tweets">27.3K Tweets</div>
+                  </div>
+                </div>
+
+                <div className="profile-header">
+                  <img
+                    className="cover-photo"
+                    src={Beach}
+                    alt="Background image"
+                  />
+                  <img
+                    className="profile-pic"
+                    src={ProfilePic}
+                    alt="Profile picture"
+                  />
+                  <button class="follow-button">Follow</button>
+                </div>
+              </div>
+              <div className="profile-container" action="">
+                <div className="name">{user.fullName}</div>
+                <div className="handle">{user.email}</div>
+                <div className="bio">{user.about}</div>
+
+                <div className="meta">
+                  <div>💼{user.occupation}</div>
+                  <div>🏠{user.location}</div>
+                  <div>🔗{user.website}</div>
+                  <div>🗓️{user.joinDate}</div>
+                </div>
+
+                <div className="stats">
+                  <span>{user.following}</span>
+                  <span>{user.followers}</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="imgWrapper">
-            <img className="bannerImg" src={Beach} alt="Background image" />
-            <img className="avatarPic" src={ProfilePic} alt="Profile picture" />
+          <div className="right-sidebar" data-page="a">
+            <input
+              type="text"
+              placeholder="Sök efter användare eller #hashtags"
+              className="search-input"
+            />
+            <div className="trends-section">
+              <h2>Populärt för dig</h2>
+              <Trend topic="Samt" tweets="2,640" />
+              <Trend topic="China" tweets="527K" />
+              <Trend topic="#finland" tweets="10.4K" />
+              <Trend topic="#babygirl" />
+              <Trend topic="Newzorf" tweets="60.4K" />
+            </div>
           </div>
-        </div>
-        <div className="formProfilePage" action="">
-          <div>
-            <h2> {user.fullName}</h2>
-            <p>{user.email}</p>
-            <p>{user.about}</p>
-            <p>💼{user.occupation}</p>
-            <p>🏠{user.location}</p>
-            <p>🔗{user.website}</p>
-            <p>🗓️{user.joinDate}</p>
-            <p>{user.following}</p>
-            <p> {user.followers}</p>
-          </div>
-        </div>
-        <div>
-          <ul>
-            <li></li>
-          </ul>
         </div>
       </div>
     </>

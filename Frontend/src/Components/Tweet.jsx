@@ -3,8 +3,8 @@ import { formatTweetContent } from "../utils/formatTweetContent";
 import { formatRelativeTime } from "../utils/formatRelativeTime";
 import "../styles/Home.css";
 
+// Tweet-komponenten tar emot props (värden) från föräldrakomponent
 const Tweet = ({
-  _id,
   name,
   handle,
   time,
@@ -16,30 +16,14 @@ const Tweet = ({
   const [commentText, setCommentText] = useState("");
   const [showComments, setShowComments] = useState(false);
 
-  const handleToggleComments = () => {
-    setShowComments(!showComments);
-  };
-
-  const handleComment = async () => {
-    if (commentText.trim() === "") return;
-
-    try {
-      const response = await axios.post(
-        `http://localhost:3000/tweets/${_id}/comment`,
-        { content: commentText }
-      );
-
-      if (response.data.result) {
-        setCommentText("");
-        if (onAddComment) onAddComment(index, commentText); // valfri
-      } else {
-        alert("Kunde inte lägga till kommentar");
-      }
-    } catch (err) {
-      console.error("Kommentarfel:", err);
-      alert(
-        "Fel vid kommentar: " + (err.response?.data?.message || err.message)
-      );
+  // Funktion som anropas när användaren klickar "Comment"
+  const handleComment = () => {
+    // Om kommentaren inte är tom
+    if (commentText.trim() !== "") {
+      // Anropa funktionen som lägger till kommentaren (skickar index och text)
+      onAddComment(index, commentText);
+      // Töm textfältet efter kommentar lagts till
+      setCommentText("");
     }
   };
 
@@ -52,11 +36,12 @@ const Tweet = ({
         </span>
       </div>
       <div className="tweet-content">{formatTweetContent(content)}</div>
-      <div className="tweet-actions">
-        <button className="comment-toggle" onClick={handleToggleComments}>
-          💬 Kommentera
-        </button>
-      </div>
+      <button
+        onClick={() => setShowComments(!showComments)}
+        className="comment-toggle"
+      >
+        💬 {comments.length}
+      </button>
 
       {showComments && (
         <div className="tweet-comments">
