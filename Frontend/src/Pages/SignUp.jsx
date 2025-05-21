@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Auth.css";
+import "../styles/Signup.css";
 import Twitterbird from "../assets/Twitterbird.png";
 
 const SignUp = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // För att navigera till inloggningssidan efter lyckad registrering
 
   // Formulärdata sparas i state
   const [form, setForm] = useState({
@@ -20,6 +20,7 @@ const SignUp = () => {
     profileImage: null,
   });
 
+  // Bildförhandsvisning (preview) lagras separat
   const [preview, setPreview] = useState(null);
 
   // Hantera text-inputs
@@ -30,8 +31,8 @@ const SignUp = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setForm((prev) => ({ ...prev, profileImage: file }));
-      setPreview(URL.createObjectURL(file));
+      setForm((prev) => ({ ...prev, profileImage: file })); // Sparar filen i state
+      setPreview(URL.createObjectURL(file)); // Skapar en temporär URL för förhandsvisning
     }
   };
 
@@ -48,6 +49,7 @@ const SignUp = () => {
       confirmPassword: "Bekräfta lösenord",
     };
 
+    // Går igenom de obligatoriska fälten och varnar om något saknas
     for (const [key, label] of Object.entries(required)) {
       if (!form[key].trim()) {
         return alert(`${label} måste fyllas i`);
@@ -70,7 +72,7 @@ const SignUp = () => {
     try {
       // Skicka POST-anrop till backend
       const response = await axios.post(
-        "http://localhost:5000/register",
+        "http://localhost:3000/register",
         postData
       );
 

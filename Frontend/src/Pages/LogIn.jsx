@@ -31,19 +31,24 @@ function LogIn() {
         <form onSubmit={handleSubmit}>
           <img className="tweet-logo-login" src={Twitterbird} alt="bild" />
           <h1>Logga in på Twitter</h1>
-          <input
-            type="text"
-            value={formdata.identifier}
-            onChange={handleChange}
-            placeholder="E-post eller användarnamn"
-          />
-          <p>
-            Har du inget konto?
-            <Link to="/signup">Registrera dig.</Link>
-          </p>
+          <div className="input-wrapper">
+            <input
+              className="login-input"
+              type="text"
+              value={formdata.identifier}
+              onChange={handleChange}
+              placeholder="E-postadress eller användarnamn"
+            />
+          </div>
           <button className="authbutton" type="submit">
             Nästa
           </button>
+          <p className="noaccount">
+            Har du inget konto?{" "}
+            <Link to="/signup" className="blue-link">
+              Registrera dig
+            </Link>
+          </p>
         </form>
       </div>
     </>

@@ -2,9 +2,6 @@ const BASE_URL = " http://127.0.0.1:3000/";
 const ENDPOINTS = {
   GET_USERNAME: `${BASE_URL}getUserName`,
   LOGIN: `${BASE_URL}login`,
-  GET_USERNAME: `${BASE_URL}login`,
-  GET_USER_TWEETS: (username) => `${BASE_URL}api/users/${username}`,
-  GET_FRIENDS_TWEETS: (userId) => `${BASE_URL}api/tweets/friends/${userId}`,
 };
 
 // Function to handle userName or email
@@ -58,28 +55,26 @@ export async function login(emailOrUsername, password) {
   }
 }
 
-//Function to get user details
-export async function getUserDetails(username) {
+// Function to sign up a new user
+export async function signUp(userData) {
   try {
-    const response = await fetch(`${BASE_URL}api/users/${username}`, {
-      method: "GET",
+    const response = await fetch(`${BASE_URL}signup`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(userData),
     });
 
     const dataResponse = await response.json();
 
     if (response.ok) {
-      return { success: true, userDetails: dataResponse.userDetails };
+      return { success: true, message: dataResponse.message };
     } else {
       return { success: false, message: dataResponse.message };
     }
   } catch (error) {
-    console.error("Error fetching user details:", error);
-    return {
-      success: false,
-      message: "An error occurred while fetching user details",
-    };
+    console.error("Error during sign up:", error);
+    return { success: false, message: "An error occurred during sign up" };
   }
 }

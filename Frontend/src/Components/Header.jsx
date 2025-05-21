@@ -1,4 +1,5 @@
 import Twitterbird from "../assets/Twitterbird.png";
+import { Link } from "react-router-dom";
 import "../styles/Header.css";
 
 const Header = () => {
@@ -11,11 +12,13 @@ const Header = () => {
           <div className="logo-text">TwitterClone</div>
         </div>
         <div className="user-imagecontainer">
-          <img
-            src="https://randomuser.me/api/portraits/men/75.jpg"
-            alt="Profilbild"
-            className="user-image"
-          />
+          <Link to="/profile/:id">
+            <img
+              src="https://randomuser.me/api/portraits/men/75.jpg"
+              alt="Profilbild"
+              className="user-image"
+            />
+          </Link>
         </div>
       </div>
     </>

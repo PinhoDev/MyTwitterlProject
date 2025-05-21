@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "../styles/Home.css";
 import FooterUser from "../components/FooterUser.jsx";
-import Header from "../components/Header.jsx";
-import Tweet from "../components/Tweet.jsx";
+import Trend from "../Components/Trend.jsx";
+import Header from "../Components/Header.jsx";
+import Tweet from "../Components/Tweet.jsx";
 
 const Home = () => {
-  //tester för att se något på Home
+  // Skapar en state-variabel som innehåller vilka användare man följer
   const [following] = useState(["@ezyang", "@elonmusk"]);
+
+  // Skapar en lista med exempel-tweets (förifyllda) - ska utgå ifrån de man följer
   const [tweets, setTweets] = useState([
     {
       name: "Edward Z. Yang",
@@ -32,81 +35,46 @@ const Home = () => {
     },
   ]);
 
+  // Håller reda på innehållet i den nya tweeten användaren skriver
   const [newTweet, setNewTweet] = useState("");
 
+  // Funktion för att posta en ny tweet
+  const handleTweet = () => {
+    // Kontrollera att tweeten inte är tom
+    if (newTweet.trim() !== "") {
+      const newTweetObj = {
+        ...currentUser, // Kopierar namn och handle från nuvarande användare
+        time: new Date().toISOString(), // Sätter nuvarande tid
+        content: newTweet, // Innehållet från inputfältet
+        comments: [], // Inga kommentarer till en början
+      };
+      // Lägger till den nya tweeten överst i listan
+      setTweets([newTweetObj, ...tweets]);
+      // Tömmer inputfältet
+      setNewTweet("");
+    }
+  };
+
+  // Funktion för att lägga till en kommentar på en tweet
+  const addComment = (index, comment) => {
+    const updatedTweets = [...tweets]; // Skapar en kopia av tweets
+    updatedTweets[index].comments.push(comment); // Lägger till kommentaren
+    setTweets(updatedTweets); // Uppdaterar state
+  };
+
+  // Information om den inloggade användaren
   const currentUser = {
     name: "Ditt Namn",
     handle: "@dittkonto",
-    username: "dittkonto",
   };
 
-  useEffect(() => {
-    const fetchTweets = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3000/tweets/${currentUser.username}/tweets`
-        );
-        setTweets(res.data.userTweets || []);
-      } catch (err) {
-        console.error("Fel vid hämtning av tweets:", err);
-      }
-    };
-
-    fetchTweets();
-  }, [currentUser.username]);
-
-  const handleTweet = async () => {
-    if (newTweet.trim() === "") return;
-
-    try {
-      const res = await axios.post("http://localhost:3000/tweets", {
-        username: currentUser.username,
-        content: newTweet,
-      });
-
-      setTweets([res.data.savedTweet, ...tweets]);
-      setNewTweet("");
-    } catch (err) {
-      console.log("Fel vid tweet post:", err);
-    }
-  };
-
-  // Lägg till kommentar till en tweet
-  const addComment = async (tweetId, comment) => {
-    if (!comment.trim()) return;
-
-    try {
-      await axios.post(`http://localhost:3000/tweets/${tweetId}/comment`, {
-        content: comment,
-      });
-
-      // Uppdatera kommentarlista lokalt (enkel variant)
-      setTweets((prevTweets) =>
-        prevTweets.map((tweet) =>
-          tweet._id === tweetId
-            ? {
-                ...tweet,
-                comments: [...tweet.comments, { content: comment }],
-              }
-            : tweet
-        )
-      );
-    } catch (err) {
-      console.error("Fel vid kommentar:", err);
-    }
-  };
-
-  // Sortera och filtrera
+  // Filtrerar och sorterar tweets: visar endast tweets från personer man följer eller sig själv
   const filteredAndSortedTweets = [...tweets]
     .filter(
       (tweet) =>
-        following.includes(`@${tweet.author?.username}`) ||
-        tweet.author?.username === currentUser.username
+        following.includes(tweet.handle) || tweet.handle === currentUser.handle
     )
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  //Jag bara testar för att navigera vidare och det växte från en link till att vara en del av tweeten eftersom det är namnet man trycker på. /Karolina :)
-  const latestFiveFriendTweets = filteredAndSortedTweets.slice(0, 5);
-  //
+    .sort((a, b) => new Date(b.time) - new Date(a.time)); // Sorterar från nyast till äldst
 
   return (
     <>
@@ -117,11 +85,12 @@ const Home = () => {
             <div className="left-sidebar-position">
               <div className="tweet-input">
                 <textarea
-                  placeholder="What’s happening?"
+                  placeholder="Vad vill du säga?"
                   value={newTweet}
                   onChange={(e) => setNewTweet(e.target.value)}
                   maxLength={140}
                 />
+
                 <div className="char-counter">
                   {140 - newTweet.length} tecken kvar
                 </div>
@@ -131,18 +100,12 @@ const Home = () => {
               </div>
 
               <div className="tweet-list">
-                {filteredAndSortedTweets.map((tweet) => (
+                {filteredAndSortedTweets.map((tweet, index) => (
                   <Tweet
-                    key={tweet._id}
-                    _id={tweet._id}
-                    name={tweet.author?.name}
-                    handle={`@${tweet.author?.username}`}
-                    time={tweet.createdAt}
-                    content={tweet.content}
-                    comments={tweet.comments}
-                    onAddComment={(_, comment) =>
-                      addComment(tweet._id, comment)
-                    }
+                    key={index}
+                    index={index}
+                    {...tweet}
+                    onAddComment={addComment}
                   />
                 ))}
               </div>
@@ -155,11 +118,26 @@ const Home = () => {
               ))}
             </div>
           </div>
-          <div className="right-sidebar"></div>
+          <div className="right-sidebar">
+            <input
+              type="text"
+              placeholder="Sök efter användare eller #hashtags"
+              className="search-input"
+            />
+            <div className="trends-section">
+              <h2>Populärt för dig</h2>
+              <Trend topic="Samt" tweets="2,640" />
+              <Trend topic="China" tweets="527K" />
+              <Trend topic="#finland" tweets="10.4K" />
+              <Trend topic="#babygirl" />
+              <Trend topic="Newzorf" tweets="60.4K" />
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="footer-wrapper">
-        <FooterUser />
+
+        <div className="footer-wrapper">
+          <FooterUser />
+        </div>
       </div>
     </>
   );

@@ -1,7 +1,7 @@
 import { getUsername, login } from "../Model/requestApi.js";
 
 // Function to handle userName or email login
-export async function handleUsername(emailOrUsername) {
+async function handleUsername(emailOrUsername) {
   const response = await getUsername(emailOrUsername);
 
   if (response.success) {
@@ -30,6 +30,7 @@ export async function navigateToLoginPassword(identifier, navigate, setError) {
 }
 
 // Function to handle user login
+async function handleLogin(emailOrUsername, password) {
 export async function handleLogin(emailOrUsername, password) {
   const response = await login(emailOrUsername, password);
 
@@ -38,5 +39,20 @@ export async function handleLogin(emailOrUsername, password) {
     return { success: true };
   } else {
     return { success: false, message: response.message };
+  }
+}
+
+// Function to Navigate to Home page
+export async function navigateToHomePage(
+  identifier,
+  password,
+  navigate,
+  setError
+) {
+  const loginResponse = await handleLogin(identifier, password);
+  if (loginResponse.success) {
+    navigate(`/home`);
+  } else {
+    setError(loginResponse.message);
   }
 }

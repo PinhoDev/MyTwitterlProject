@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "./working.css";
+import "../styles/Auth.css";
 import Twitterbird from "../assets/Twitterbird.png";
+import { navigateToHomePage } from "../Controllers/LoginControllers.js";
 
+//lägg till error fel lösenoord
 function LogInPassword() {
   const [formdata, setFormdata] = useState({ password: "" });
   const [error, setError] = useState();
@@ -15,7 +17,7 @@ function LogInPassword() {
     if (formdata.password.trim() === "") {
       setError("Du måste ange lösenord");
     } else {
-      navigate("/home"); // ← detta var ursprungliga steget vidare efter lösenord
+      navigateToHomePage(identifier, formdata.password, navigate, setError);
     }
   };
 
@@ -24,23 +26,32 @@ function LogInPassword() {
   };
 
   return (
-    <div className="auth-container">
-      {error && <p>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <img className="tweet-logo-login" src={Twitterbird} alt="bild" />
-        <h2>Ange ditt lösenord</h2>
-        <input placeholder={identifier || "Användarnamn"} readOnly />
-        <input
-          type="password"
-          placeholder="Lösenord"
-          value={formdata.password}
-          onChange={handleAuthentication}
-        />
-        <button className="authbutton" type="submit">
-          Logga in
-        </button>
-      </form>
-    </div>
+    <>
+      <div className="auth-container">
+        {error && <p>{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <img className="tweet-logo-login" src={Twitterbird} alt="bild" />
+          <h2>Ange ditt lösenord</h2>
+          <div className="input-wrapper">
+            <input
+              className="login-input"
+              placeholder={identifier || "Användarnamn"}
+              readOnly
+            />
+            <input
+              className="login-input"
+              type="password"
+              placeholder="Lösenord"
+              value={formdata.password}
+              onChange={handleAuthentication}
+            />
+          </div>
+          <button className="authbutton" type="submit">
+            Logga in
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
 

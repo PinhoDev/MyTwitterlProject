@@ -3,6 +3,9 @@ const { findUser } = require("../utils/authHelpers");
 const router = express.Router();
 const User = require("../models/userSchema");
 
+// Route to register a New User
+// Endpoint to register a new user and it use in the Register Page
+// The request body should contain the username, email, password, and name
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password, name } = req.body;
@@ -41,6 +44,8 @@ router.post("/register", async (req, res) => {
 
     // Save the new user to the database and respond with success
     await newUser.save();
+
+    // Respond with success if the user is created
     return res.json(true);
 
     // Respond with error if something goes wrong
