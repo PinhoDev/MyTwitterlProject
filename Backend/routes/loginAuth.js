@@ -69,11 +69,12 @@ router.post("/login", async (req, res) => {
     }
 
     // Generate a JWT token
+    const jwtSecret = `${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const payload = {
       userId: user._id,
       email: user.email,
     };
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+    const token = jwt.sign(payload, jwtSecret, {
       expiresIn: "2h",
     });
 
