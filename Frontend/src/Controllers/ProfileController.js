@@ -17,7 +17,7 @@ export async function loadUserDetails(username, setUser, setError) {
 }
 
 //Function to get tweets
-export async function loadUserTweets(username, setTwets, setError) {
+export async function loadUserTweets(username, setTweets, setError) {
   try {
     const result = await getUserOwnTweets(username);
     if (result.success) {
