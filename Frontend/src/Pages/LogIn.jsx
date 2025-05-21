@@ -5,9 +5,6 @@ import { navigateToLoginPassword } from "../Controllers/LoginControllers.js";
 import "./working.css";
 import "../styles/Auth.css";
 
-//To do - Lägg till if the username/mail/mobil exists proceed Man har fyllt i alla när man reggar sig
-//else error -- if you dont have - register
-//else - error use another identifier
 function LogIn() {
   const navigate = useNavigate();
   const [formdata, setFormdata] = useState({
@@ -43,7 +40,6 @@ function LogIn() {
               placeholder="E-postadress eller användarnamn"
             />
           </div>
-
           <button className="authbutton" type="submit">
             Nästa
           </button>

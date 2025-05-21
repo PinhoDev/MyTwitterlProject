@@ -8,10 +8,10 @@ import { navigateToHomePage } from "../Controllers/LoginControllers.js";
 function LogInPassword() {
   const [formdata, setFormdata] = useState({ password: "" });
   const [error, setError] = useState();
-  const [auth, setAuth] = useState();
   const navigate = useNavigate();
   const location = useLocation();
   const identifier = location.state?.identifier;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formdata.password.trim() === "") {
@@ -20,6 +20,7 @@ function LogInPassword() {
       navigateToHomePage(identifier, formdata.password, navigate, setError);
     }
   };
+
   const handleAuthentication = (e) => {
     setFormdata({ ...formdata, password: e.target.value });
   };
@@ -53,4 +54,5 @@ function LogInPassword() {
     </>
   );
 }
+
 export default LogInPassword;

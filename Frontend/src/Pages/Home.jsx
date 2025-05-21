@@ -110,6 +110,13 @@ const Home = () => {
                 ))}
               </div>
             </div>
+
+            <div>
+              <h3>5 senaste från dina vänner</h3>
+              {latestFiveFriendTweets.map((tweet) => (
+                <TweetCard key={tweet._id} tweet={tweet} />
+              ))}
+            </div>
           </div>
           <div className="right-sidebar">
             <input

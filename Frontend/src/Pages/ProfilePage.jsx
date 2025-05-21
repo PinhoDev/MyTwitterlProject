@@ -1,3 +1,8 @@
+
+import { useParams, useLocation } from "react-router-dom";
+import ProfileHeader from "../components/Profileheader";
+import ProfileTweetSection from "../Components/ProfileTweetSection";
+import FollowButton from "../Components/FollowButton";
 import Beach from "../assets/DalmationBeachImg.png";
 import Trend from "../Components/Trend.jsx";
 import ProfilePic from "../assets/manPinkShirt.png";
@@ -10,8 +15,29 @@ import "../styles/Home.css";
 // antal tweets under namnet längst upp är hur många man har skrivit.
 // antal tweets, followre and foollowing ska uppdateras i antal efter när de ändras   . length
 
-// här ska jag bara fortsätta lägga in så att användarens egna inlägg ska visas i kronologisk ordning. senast längst upp
+
 function ProfilePage() {
+  const { username } = useParams();
+  const location = useLocation();
+  const currentUser = location.state?.currentUser;
+
+  if (!currentUser || !currentUser.username) {
+    return <p>Ingen inloggad användare.</p>;
+  }
+
+  const isOwnProfile = username === currentUser.username;
+
+  return (
+    <div className="profilePageContainer">
+      <ProfileHeader username={username} currentUser={currentUser} />
+      {!isOwnProfile && (
+        <div className="followButtonWrapper">
+          <FollowButton profileUsername={username} currentUser={currentUser} />
+        </div>
+      )}
+      <ProfileTweetSection username={username} />
+    </div>
+
   const user = {
     username: "daniel_feldman",
     fullName: "Daniel Feldman",
@@ -95,4 +121,5 @@ function ProfilePage() {
     </>
   );
 }
+
 export default ProfilePage;
