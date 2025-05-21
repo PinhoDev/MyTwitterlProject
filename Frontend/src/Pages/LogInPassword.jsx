@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/Auth.css";
 import Twitterbird from "../assets/Twitterbird.png";
+import { navigateToHomePage } from "../Controllers/LoginControllers.js";
+
 //lägg till error fel lösenoord
 function LogInPassword() {
   const [formdata, setFormdata] = useState({ password: "" });
@@ -15,7 +17,7 @@ function LogInPassword() {
     if (formdata.password.trim() === "") {
       setError("Du måste ange lösenord");
     } else {
-      navigate("/home");
+      navigateToHomePage(identifier, formdata.password, navigate, setError);
     }
   };
   const handleAuthentication = (e) => {

@@ -19,6 +19,7 @@ app.use("/", require("./routes/loginAuth"));
 app.use("/", require("./routes/registerAuth"));
 app.use("/", require("./routes/userEndpoint"));
 app.use("/", require("./routes/tweetsEndpoint"));
+app.use("/", require("./routes/searchEndpoint"));
 
 // Start the server
 app.listen(PORT, () => {
