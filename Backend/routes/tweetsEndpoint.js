@@ -1,7 +1,7 @@
 const { express } = require("../utils/dependencies");
 const router = express.Router();
-const Tweet = require("../models/tweetSchema");
-const User = require("../models/userSchema");
+const tweet = require("../models/tweetSchema");
+const user = require("../models/userSchema");
 const { findUserId } = require("../utils/authHelpers");
 
 // Route to create a New Tweet by a User
@@ -15,7 +15,7 @@ router.post("/:username/tweet", async (req, res) => {
     const userId = await findUserId(username);
 
     // Create the New Tweet
-    const newTweet = new Tweet({
+    const newTweet = new tweet({
       content,
       author: userId,
       hashtags,

@@ -84,3 +84,29 @@ export async function getUserdetails(username) {}
 
 // Function to get user tweets
 export async function getUserOwnTweets(username) {}
+//Function to create new tweet
+export async function createNewTweet(username, content, hashtags = []) {
+  try {
+    const response = await fetch(`${BASE_URL}api/users/${username}/tweet`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content, hashtags }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data === true) {
+      return { success: true };
+    } else {
+      return { success: false, message: "Tweet kunde inte skapas." };
+    }
+  } catch (error) {
+    console.error("Error creating tweet:", error);
+    return {
+      success: false,
+      message: "Ett fel uppstod vid skapande av tweet.",
+    };
+  }
+}
