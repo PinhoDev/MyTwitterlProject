@@ -84,6 +84,7 @@ export async function getUserdetails(username) {}
 
 // Function to get user tweets
 export async function getUserOwnTweets(username) {}
+
 //Function to create new tweet
 export async function createNewTweet(username, content, hashtags = []) {
   try {
