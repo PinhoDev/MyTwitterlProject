@@ -4,25 +4,27 @@ import "../styles/Signup.css";
 import Twitterbird from "../assets/Twitterbird.png";
 import userData from "../Model/userData";
 import { validateForm } from "../Controllers/SignUpController";
-import { registerUser } from "../Controllers/SignUpController";
+import { createNewUser } from "../Controllers/SignUpController";
 
 const SignUp = () => {
   const navigate = useNavigate();
   // Formulärdata sparas i state
-  const [form, setForm] = useState(userData);
+  const [newUser, setNewUser] = useState(userData);
   // Bildförhandsvisning (preview) lagras separat
   const [preview, setPreview] = useState(userData.image);
   const [error, setError] = useState("");
 
   // Hantera text-inputs
-  const handleChange = (e) =>
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewUser((prev) => ({ ...prev, [name]: value }));
+  };
 
   // Hantera profilbild (endast för visning)
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setForm((prev) => ({ ...prev, profileImage: file })); // Sparar filen i state
+      setNewUser((prev) => ({ ...prev, profileImage: file })); // Sparar filen i state
       setPreview(URL.createObjectURL(file)); // Skapar en temporär URL för förhandsvisning
     }
   };
@@ -30,19 +32,19 @@ const SignUp = () => {
   // Hantera registrering
   const handleSignup = async (e) => {
     e.preventDefault();
-    const errorMsg = validateForm(form);
+    const errorMsg = validateForm(newUser);
     if (errorMsg) {
       setError(errorMsg);
       return;
     }
     setError("");
 
-    const result = await registerUser(form);
+    const result = await createNewUser(newUser, setError);
     if (result.success) {
+      navigate("/");
       alert("Registrering lyckades!");
-      navigate("/login");
     } else {
-      setError(result.message);
+      setError(result.message || "Registrering misslyckades");
     }
   };
 
@@ -84,7 +86,7 @@ const SignUp = () => {
             key={name}
             name={name}
             placeholder={placeholder}
-            value={form[name] || ""}
+            value={newUser[name] || ""}
             onChange={handleChange}
           />
         ))}
@@ -94,14 +96,14 @@ const SignUp = () => {
           type="password"
           name="password"
           placeholder="Lösenord"
-          value={form.password}
+          value={newUser.password}
           onChange={handleChange}
         />
         <input
           type="password"
           name="confirmPassword"
           placeholder="Bekräfta lösenord"
-          value={form.confirmPassword}
+          value={newUser.confirmPassword}
           onChange={handleChange}
         />
         {error && <div className="error-message">{error}</div>}

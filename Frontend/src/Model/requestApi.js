@@ -2,6 +2,8 @@ const BASE_URL = " http://127.0.0.1:3000/";
 const ENDPOINTS = {
   GET_USERNAME: `${BASE_URL}getUserName`,
   LOGIN: `${BASE_URL}login`,
+  SIGNUP: `${BASE_URL}signup`,
+  REGISTER: `${BASE_URL}register`,
 };
 
 // Function to handle userName or email
@@ -58,7 +60,7 @@ export async function login(emailOrUsername, password) {
 // Function to sign up a new user
 export async function signUp(userData) {
   try {
-    const response = await fetch(`${BASE_URL}signup`, {
+    const response = await fetch(ENDPOINTS.SIGNUP, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -84,3 +86,27 @@ export async function getUserdetails(username) {}
 
 // Function to get user tweets
 export async function getUserOwnTweets(username) {}
+
+// Function to register a new user
+export async function registerUser(newUser) {
+  try {
+    const response = await fetch(ENDPOINTS.REGISTER, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    });
+
+    const dataResponse = await response.json();
+
+    if (response.ok) {
+      return { success: true, message: dataResponse.message };
+    } else {
+      return { success: false, message: dataResponse.message };
+    }
+  } catch (error) {
+    console.error("Error during user registration:", error);
+    return { success: false, message: "An error occurred during registration" };
+  }
+}
