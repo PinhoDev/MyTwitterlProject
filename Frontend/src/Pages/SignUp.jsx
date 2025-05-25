@@ -13,6 +13,8 @@ const SignUp = () => {
   // Bildförhandsvisning (preview) lagras separat
   const [preview, setPreview] = useState(userData.image);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   // Hantera text-inputs
   const handleChange = (e) => {
@@ -38,12 +40,20 @@ const SignUp = () => {
       return;
     }
     setError("");
+    setLoading(true);
 
     const result = await createNewUser(newUser, setError);
     if (result.success) {
-      navigate("/");
-      alert("Registrering lyckades!");
+      setLoading(false);
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+        setTimeout(() => {
+          navigate("/");
+        }, 500);
+      }, 500);
     } else {
+      setLoading(false);
       setError(result.message || "Registrering misslyckades");
     }
   };
@@ -107,7 +117,10 @@ const SignUp = () => {
           onChange={handleChange}
         />
         {error && <div className="error-message">{error}</div>}
-        <button className="authbutton" type="submit">
+        {loading && <div className="loading-message">Registering...</div>}
+        {success && <div className="success-message">Account created!</div>}
+
+        <button className="authbutton" type="submit" disabled={loading}>
           Skapa konto
         </button>
       </form>
