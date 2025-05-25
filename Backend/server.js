@@ -8,6 +8,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
+// Serve static files from the "upload" directory
+app.use("/userImage", express.static("upload/userImage"));
+app.use("/background", express.static("upload/background"));
+
 // MongoDB Connection
 mongoose
   .connect(process.env.MONGO_URI)
@@ -20,6 +24,7 @@ app.use("/", require("./routes/registerAuth"));
 app.use("/", require("./routes/userEndpoint"));
 app.use("/", require("./routes/tweetsEndpoint"));
 app.use("/", require("./routes/searchEndpoint"));
+app.use("/", require("./routes/uploadEndpoint"));
 
 // Start the server
 app.listen(PORT, () => {
