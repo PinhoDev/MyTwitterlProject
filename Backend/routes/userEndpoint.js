@@ -1,5 +1,4 @@
-const { express } = require("../utils/dependencies");
-const router = express.Router();
+const { express, router } = require("../utils/dependencies");
 const User = require("../models/userSchema");
 const Tweet = require("../models/tweetSchema");
 

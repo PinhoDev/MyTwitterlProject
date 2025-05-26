@@ -1,6 +1,5 @@
-const { express, jwt, bcrypt } = require("../utils/dependencies");
+const { express, jwt, bcrypt, router } = require("../utils/dependencies");
 const { findUser } = require("../utils/authHelpers");
-const router = express.Router();
 
 // Route to get User name
 // Endpoint to get the user's name by email or username and it use in the Login Page

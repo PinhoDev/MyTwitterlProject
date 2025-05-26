@@ -1,4 +1,4 @@
-const express = require("express");
+const { express } = require("../utils/dependencies");
 const multer = require("multer");
 const path = require("path");
 const router = express.Router();
