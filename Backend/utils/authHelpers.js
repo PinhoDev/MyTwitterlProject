@@ -10,6 +10,7 @@ async function findUser(emailOrUsername) {
 // Helper to find userId by username
 async function findUserId(username) {
   const user = await User.findOne({ username });
+  console.log("Hittad användare:", user);
   if (!user) {
     throw new Error("User not found");
   }
