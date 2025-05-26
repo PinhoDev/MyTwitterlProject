@@ -1,57 +1,56 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import "../styles/Home.css";
 import FooterUser from "../components/FooterUser.jsx";
 import Trend from "../Components/Trend.jsx";
 import Header from "../Components/Header.jsx";
 import Tweet from "../Components/Tweet.jsx";
+import { loadHomeTweets, postTweet } from "../Controllers/HomeController.js";
 
 const Home = () => {
-  // Skapar en state-variabel som innehåller vilka användare man följer
-  const [following] = useState(["@ezyang", "@elonmusk"]);
+  // Information om den inloggade användaren
+  const [currentUser, setCurrentUser] = useState({
+    // Här kan du hämta aktuell användare från en global state eller context
+    name: "",
+    handle: "",
+  });
 
   // Skapar en lista med exempel-tweets (förifyllda) - ska utgå ifrån de man följer
-  const [tweets, setTweets] = useState([
-    {
-      name: "Edward Z. Yang",
-      handle: "@ezyang",
-      time: "2024-05-12T15:30:00Z",
-      content: "new from beta: cloud.youtube.com/watch?v=3yLq...",
-      comments: [],
-    },
-    {
-      name: "Edward Z. Yang",
-      handle: "@ezyang",
-      time: "2024-03-20T08:00:00Z",
-      content:
-        "Where were you at Bitcoin 3.0? … Show Q gives you feature capabilities … but is there a better term here?",
-      comments: [],
-    },
-    {
-      name: "Elon Musk",
-      handle: "@elonmusk",
-      time: "2024-05-13T10:00:00Z",
-      content: "Just launched a rocket 🚀",
-      comments: [],
-    },
-  ]);
-
+  const [tweets, setTweets] = useState([]);
   // Håller reda på innehållet i den nya tweeten användaren skriver
   const [newTweet, setNewTweet] = useState("");
 
+  useEffect(() => {
+    const username = localStorage.getItem("username"); // Hämtar användarnamn från localStorage
+    // Om användarnamn finns i localStorage, sätt currentUser och hämta tweets
+
+    if (username) {
+      setCurrentUser({
+        name: username,
+        handle: "@" + username,
+      });
+      loadHomeTweets(username, setTweets, console.error);
+    }
+  }, []);
+
   // Funktion för att posta en ny tweet
-  const handleTweet = () => {
-    // Kontrollera att tweeten inte är tom
+  const handleTweet = async () => {
+    const username = currentUser.handle.replace("@", "");
+    if (!username) {
+      console.error("Ingen användare är inloggad.");
+      return;
+    }
+
     if (newTweet.trim() !== "") {
-      const newTweetObj = {
-        ...currentUser, // Kopierar namn och handle från nuvarande användare
-        time: new Date().toISOString(), // Sätter nuvarande tid
-        content: newTweet, // Innehållet från inputfältet
-        comments: [], // Inga kommentarer till en början
-      };
-      // Lägger till den nya tweeten överst i listan
-      setTweets([newTweetObj, ...tweets]);
-      // Tömmer inputfältet
-      setNewTweet("");
+      await postTweet(
+        username,
+        newTweet,
+        () => {
+          loadHomeTweets(username, setTweets, console.error);
+          setNewTweet("");
+        },
+        console.error
+      );
     }
   };
 
@@ -62,17 +61,12 @@ const Home = () => {
     setTweets(updatedTweets); // Uppdaterar state
   };
 
-  // Information om den inloggade användaren
-  const currentUser = {
-    name: "Ditt Namn",
-    handle: "@dittkonto",
-  };
-
   // Filtrerar och sorterar tweets: visar endast tweets från personer man följer eller sig själv
   const filteredAndSortedTweets = [...tweets]
     .filter(
       (tweet) =>
-        following.includes(tweet.handle) || tweet.handle === currentUser.handle
+        tweet.handle === currentUser.handle ||
+        tweets.some((t) => t.handle === tweet.handle)
     )
     .sort((a, b) => new Date(b.time) - new Date(a.time)); // Sorterar från nyast till äldst
 
