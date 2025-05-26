@@ -49,6 +49,13 @@ router.post("/:username/tweet/comment", async (req, res) => {
     const { username } = req.params;
     const userId = await findUserId(username);
 
+    // Hämtar tweeten med tweetId
+    const tweet = await Tweet.findById(tweetId); // ⬅️ Nödvändigt!
+    if (!tweet) {
+      return res
+        .status(404)
+        .json({ result: false, message: "Tweet not found" });
+    }
     // Add the comment to the Tweet
     tweet.comments.push({
       content,
