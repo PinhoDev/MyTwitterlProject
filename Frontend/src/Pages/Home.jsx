@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import "../styles/Home.css";
 import FooterUser from "../components/FooterUser.jsx";
 import Trend from "../Components/Trend.jsx";
 import Header from "../Components/Header.jsx";
 import Tweet from "../Components/Tweet.jsx";
-import { loadHomeTweets, postTweet } from "../Controllers/HomeController.js";
+import {
+  loadHomeTweets,
+  postTweet,
+  postComment,
+} from "../Controllers/HomeController.js";
 
 const Home = () => {
   // Information om den inloggade användaren
@@ -55,10 +58,19 @@ const Home = () => {
   };
 
   // Funktion för att lägga till en kommentar på en tweet
-  const addComment = (index, comment) => {
-    const updatedTweets = [...tweets]; // Skapar en kopia av tweets
-    updatedTweets[index].comments.push(comment); // Lägger till kommentaren
-    setTweets(updatedTweets); // Uppdaterar state
+  const addComment = (index, commentText) => {
+    const tweet = tweets[index];
+    const username = currentUser.handle.replace("@", "");
+
+    postComment(
+      username,
+      tweet._id, // tweetens id behövs av backend
+      commentText,
+      () => {
+        loadHomeTweets(username, setTweets, console.error); // uppdatera tweets från server
+      },
+      console.error
+    );
   };
 
   // Filtrerar och sorterar tweets: visar endast tweets från personer man följer eller sig själv
