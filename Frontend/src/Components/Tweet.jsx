@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { formatTweetContent } from "../utils/formatTweetContent";
 import { formatRelativeTime } from "../utils/formatRelativeTime";
 import "../styles/Home.css";
@@ -15,6 +15,24 @@ const Tweet = ({
 }) => {
   const [commentText, setCommentText] = useState("");
   const [showComments, setShowComments] = useState(false);
+  const commentRef = useRef(null); // <== referens till kommentarsruta
+
+  // Stänger kommentarsrutan om man klickar utanför
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (commentRef.current && !commentRef.current.contains(event.target)) {
+        setShowComments(false);
+      }
+    }
+
+    if (showComments) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showComments]);
 
   // Funktion som anropas när användaren klickar "Comment"
   const handleComment = () => {
@@ -37,23 +55,25 @@ const Tweet = ({
       </div>
       <div className="tweet-content">{formatTweetContent(content)}</div>
       <button
-        onClick={() => setShowComments(!showComments)}
+        onClick={() => setShowComments((prev) => !prev)}
         className="comment-toggle"
       >
         💬 {comments.length}
       </button>
 
       {showComments && (
-        <div className="tweet-comments">
+        <div ref={commentRef} className="tweet-comments">
           <textarea
-            placeholder="Write a comment..."
+            placeholder="Skriv en kommentar..."
             value={commentText}
             onChange={(e) => setCommentText(e.target.value)}
           />
-          <button onClick={handleComment}>Comment</button>
+          <button onClick={handleComment}>Skicka</button>
           {comments.map((comment, i) => (
             <div key={i} className="comment-bubble">
-              💬 {comment}
+              <strong>{comment.user}</strong>: •{" "}
+              {formatRelativeTime(comment.time)}
+              <br /> {comment.content}
             </div>
           ))}
         </div>
