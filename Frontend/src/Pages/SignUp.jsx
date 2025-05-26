@@ -50,8 +50,8 @@ const SignUp = () => {
         setSuccess(false);
         setTimeout(() => {
           navigate("/");
-        }, 500);
-      }, 500);
+        }, 1000);
+      }, 1000);
     } else {
       setLoading(false);
       setError(result.message || "Registrering misslyckades");
