@@ -142,7 +142,7 @@ const Home = () => {
         </div>
 
         <div className="footer-wrapper">
-          <FooterUser />
+          <FooterUser name={currentUser.name} handle={currentUser.handle} />
         </div>
       </div>
     </>
