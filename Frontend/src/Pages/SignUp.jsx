@@ -26,7 +26,7 @@ const SignUp = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setNewUser((prev) => ({ ...prev, profileImage: file })); // Sparar filen i state
+      setNewUser((prev) => ({ ...prev, image: file })); // Sparar filen i state
       setPreview(URL.createObjectURL(file)); // Skapar en temporär URL för förhandsvisning
     }
   };

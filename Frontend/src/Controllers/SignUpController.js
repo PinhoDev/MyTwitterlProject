@@ -1,4 +1,8 @@
-import { getUsername, registerUser } from "../Model/requestApi.js";
+import {
+  getUsername,
+  postNewUser,
+  postUserImage,
+} from "../Model/requestApi.js";
 
 //Validation for the form
 export function validateForm(newUser) {
@@ -40,13 +44,31 @@ export async function createNewUser(newUser, setError) {
   }
 
   // If neither exists, register the user
-  const response = await registerUser(newUser);
+  const response = await postNewUser(newUser);
   if (response.success) {
+    // If new user have image, upload into Backend
+    if (newUser.image) {
+      uploadUserImage(newUser.image, newUser.username);
+    }
+    // Response for successful registration
     return { success: true, message: "The user has been registered" };
   } else {
+    // Response for failed registration
     return {
       success: false,
       message: response.message || "Registration failed",
+    };
+  }
+}
+
+async function uploadUserImage(image, username) {
+  const response = await postUserImage(image, username);
+  if (response.success) {
+    return { success: true, message: "Image uploaded successfully" };
+  } else {
+    return {
+      success: false,
+      message: response.message || "Image upload failed",
     };
   }
 }
