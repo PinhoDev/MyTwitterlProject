@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/Signup.css";
 import Twitterbird from "../assets/Twitterbird.png";
 
