@@ -6,6 +6,7 @@ export async function loadHomeTweets(username, setTweets, setError) {
     const response = await axios.get(`http://localhost:3000/home/${username}`);
     if (response.data.result) {
       const tweetsFromServer = response.data.homeTweets.map((t) => ({
+        _id: t._id, // LAGT TILL tweetens ID (krävs för kommentarer)
         name: t.author.username,
         handle: "@" + t.author.username,
         time: t.createdAt,
@@ -39,5 +40,32 @@ export async function postTweet(username, content, onSuccess, onError) {
       error.response?.data || error.message
     );
     onError("Misslyckades att posta tweeten.");
+  }
+}
+
+// Posta kommentar
+export async function postComment(
+  username,
+  tweetId,
+  content,
+  onSuccess,
+  onError
+) {
+  try {
+    const res = await axios.post(
+      `http://localhost:3000/${username}/tweet/comment`,
+      {
+        tweetId,
+        content,
+      }
+    );
+    console.log("Kommentar postad:", res.data);
+    onSuccess();
+  } catch (error) {
+    console.error(
+      "Kunde inte posta kommentaren:",
+      error.response?.data || error.message
+    );
+    onError("Misslyckades att posta kommentaren.");
   }
 }
