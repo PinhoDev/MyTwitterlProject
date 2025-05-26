@@ -50,6 +50,7 @@ export async function navigateToHomePage(
 ) {
   const loginResponse = await handleLogin(identifier, password);
   if (loginResponse.success) {
+    localStorage.setItem("username", identifier); // Lagra inloggad användare
     navigate(`/home`);
   } else {
     setError(loginResponse.message);
