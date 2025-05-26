@@ -47,7 +47,14 @@ router.post("/:username/tweet/comment", async (req, res) => {
   try {
     const { tweetId, content } = req.body;
     const { username } = req.params;
-    const userId = await findUserId(username);
+
+    // Behövs ha med för att kunna göra tweets oavsett inloggad användare
+    const user = await User.findOne({ username });
+    if (!user) {
+      console.error("Användare ej hittad:", username);
+      return res.status(404).json({ result: false, message: "User not found" });
+    }
+    const userId = user._id;
 
     // Hämtar tweeten med tweetId
     const tweet = await Tweet.findById(tweetId); // ⬅️ Nödvändigt!
