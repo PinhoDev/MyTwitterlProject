@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { loadUserDetails } from "../Controllers/ProfileController";
+import "../styles/Home.css";
 
 function ProfileHeader({ username }) {
-  const [user, setUser] = useState(null);
+  //const [user, setUser] = useState(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -10,14 +11,20 @@ function ProfileHeader({ username }) {
   }, [username]);
   if (error) return <p>{error}</p>;
   if (!user) return <p>Laddar profil...</p>;
-
+  //
   return (
     <div className="profileHeaderContainer">
       <div className="topBox">
-        <h2>{user.fullName}</h2>
-        <p>{user.tweets?.length || 0} Tweets</p>
+        <div className="arrowNameTweetsNumberBox">
+          <Link to="/home">
+            <div className="back-arrow">&#8592;</div>
+          </Link>
+          <div className="user-info">
+            <div className="name">{user.fullName}</div>
+            <div className="tweets">{user.tweets?.length || 0} Tweets</div>
+          </div>
+        </div>
       </div>
-
       <div className="imgWrapper">
         <img
           className="bannerImg"
@@ -26,7 +33,6 @@ function ProfileHeader({ username }) {
         />
         <img className="avatarPic" src="/placeholder/avatar.jpg" alt="Avatar" />
       </div>
-
       <div className="formProfilePage">
         <p>﹫{user.username}</p>
         <p>{user.about}</p>

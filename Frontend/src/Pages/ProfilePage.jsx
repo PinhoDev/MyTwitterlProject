@@ -1,9 +1,13 @@
 import { useParams, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { fetchSearchResults } from "../Controllers/HomeController.js";
 import ProfileHeader from "../components/Profileheader";
 import ProfileTweetSection from "../Components/ProfileTweetSection";
 import FollowButton from "../Components/FollowButton";
-import Beach from "../assets/DalmationBeachImg.png";
+import Searchbar from "../Components/Searchbar.jsx";
+import SearchOverlay from "../Components/SearchOverlay.jsx";
 import Trend from "../Components/Trend.jsx";
+import Beach from "../assets/DalmationBeachImg.png";
 import ProfilePic from "../assets/manPinkShirt.png";
 import { Link } from "react-router-dom";
 import "../styles/ProfilePage.css";
@@ -18,24 +22,54 @@ function ProfilePage() {
   const { username } = useParams();
   const location = useLocation();
   const currentUser = location.state?.currentUser;
-
+  const [searchResults, setSearchResults] = useState({ users: [], tweets: [] });
+  const [showOverlay, setShowOverlay] = useState(false);
+  const isOwnProfile = username === currentUser.username;
   if (!currentUser || !currentUser.username) {
     return <p>Ingen inloggad användare.</p>;
   }
-
-  const isOwnProfile = username === currentUser.username;
+  const handleSearch = (query) => {
+    fetchSearchResults(
+      query,
+      (data) => {
+        setSearchResults({ users: data.users, tweets: data.tweets });
+        setShowOverlay(true);
+      },
+      (errorMsg) => {
+        alert(errorMsg);
+      }
+    );
+  };
 
   return (
-    <div className="profilePageContainer">
-      <ProfileHeader username={username} currentUser={currentUser} />
-      {!isOwnProfile && (
-        <div className="followButtonWrapper">
-          <FollowButton profileUsername={username} currentUser={currentUser} />
+    <>
+      <div className="left-sidebar">
+        <div className="profilePageContainer">
+          <ProfileHeader username={username} currentUser={currentUser} />
+          {!isOwnProfile && (
+            <div className="followButtonWrapper">
+              <FollowButton
+                profileUsername={username}
+                currentUser={currentUser}
+              />
+            </div>
+          )}
+          <ProfileTweetSection username={username} />
         </div>
-      )}
-      <ProfileTweetSection username={username} />
-    </div>
+      </div>
 
+      <div className="right-sidebar">
+        <Searchbar onSearch={handleSearch} />
+        {showOverlay && (
+          <SearchOverlay
+            users={searchResults.users}
+            tweets={searchResults.tweets}
+            onClose={() => setShowOverlay(false)}
+          />
+        )}
+        <Trend />
+      </div>
+    </>
     // const user = {
     //   username: "daniel_feldman",
     //   fullName: "Daniel Feldman",
@@ -55,15 +89,6 @@ function ProfilePage() {
     //         <div className="left-sidebar">
     //           <div className="profilePageContainer">
     //             <div className="topBox">
-    //               <div className="arrowNameTweetsNumberBox">
-    //                 <Link to="/home">
-    //                   <div className="back-arrow">&#8592;</div>
-    //                 </Link>
-    //                 <div className="user-info">
-    //                   <div className="name">{user.fullName}</div>
-    //                   <div className="tweets">27.3K Tweets</div>
-    //                 </div>
-    //               </div>
 
     //               <div className="profile-header">
     //                 <img

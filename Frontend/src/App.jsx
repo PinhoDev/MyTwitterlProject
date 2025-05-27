@@ -6,17 +6,20 @@ import LogIn from "./Pages/LogIn";
 import LogInPassword from "./Pages/LogInPassword.jsx";
 import SignUp from "./Pages/SignUp";
 import Home from "./Pages/Home.jsx";
-
+//import Searchbar from "./Components/Searchbar.jsx";
+import ProfileHeader from "./Components/ProfileHeader.jsx";
 function App() {
   return (
     <>
+      <ProfileHeader />
+      {/*
       <Routes>
         <Route path="/" element={<LogIn />} />
         <Route path="/profile/:username" element={<ProfilePage />} />
         <Route path="/home" element={<Home />} />
         <Route path="/loginpassword" element={<LogInPassword />} />
         <Route path="/signup" element={<SignUp />} />
-      </Routes>
+      </Routes> */}
     </>
   );
 }

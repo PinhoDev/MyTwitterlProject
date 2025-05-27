@@ -1,10 +1,10 @@
 // components/SearchOverlay.jsx
-import "../styles/SearchOverlay.css";
+import "../styles/Search.css";
 
 const SearchOverlay = ({ users, tweets, onClose }) => {
   return (
     <div className="search-overlay">
-      <button className="close-btn" onClick={onClose}>
+      <button className="close-button" onClick={onClose}>
         Stäng
       </button>
 
