@@ -11,6 +11,7 @@ export async function loadHomeTweets(username, setTweets, setError) {
         handle: "@" + t.author.username,
         time: t.createdAt,
         content: t.content,
+        hashtags: t.hashtags || [],
         comments: t.comments.map((c) => ({
           user: c.userName.username,
           content: c.content,
@@ -25,13 +26,59 @@ export async function loadHomeTweets(username, setTweets, setError) {
   }
 }
 
-// Posta ny tweet
-export async function postTweet(username, content, onSuccess, onError) {
+// Hämta alla tweets (för trender)
+export async function loadAllTweets(setTweets, setError) {
   try {
-    const res = await axios.post(`http://localhost:3000/${username}/tweet`, {
+    const res = await axios.get("http://localhost:3000/tweets");
+    if (res.data.result) {
+      const tweets = res.data.tweets.map((t) => ({
+        _id: t._id,
+        name: t.author.username,
+        handle: "@" + t.author.username,
+        time: t.createdAt,
+        content: t.content,
+        hashtags: t.hashtags || [],
+        comments: t.comments.map((c) => ({
+          user: c.userName.username,
+          content: c.content,
+          time: c.createdAt,
+        })),
+      }));
+      setTweets(tweets);
+    }
+  } catch (error) {
+    console.error("Kunde inte hämta alla tweets:", error);
+    setError?.("Fel vid hämtning av alla tweets");
+  }
+}
+
+// Posta ny tweet
+export async function postTweet(
+  username,
+  content,
+  rawHashtags,
+  onSuccess,
+  onError
+) {
+  try {
+    const hashtags = Array.isArray(rawHashtags)
+      ? rawHashtags.filter(
+          (tag) => typeof tag === "string" && tag.trim().startsWith("#")
+        )
+      : [];
+
+    const payload = {
       content,
-      hashtags: [],
-    });
+      ...(hashtags.length > 0 && { hashtags }), // ⬅️ bara skicka om de finns
+    };
+
+    console.log("Skickar till backend:", payload);
+
+    const res = await axios.post(
+      `http://localhost:3000/${username}/tweet`,
+      payload
+    );
+
     console.log("Tweet postad:", res.data);
     onSuccess();
   } catch (error) {
