@@ -22,6 +22,8 @@ const Home = () => {
   const [tweets, setTweets] = useState([]);
   // Håller reda på innehållet i den nya tweeten användaren skriver
   const [newTweet, setNewTweet] = useState("");
+  //Behövs för att uppdatera tweets när en ny tweet postas eller en kommentar läggs till
+  const [refreshTrendTrigger, setRefreshTrendTrigger] = useState(0);
 
   useEffect(() => {
     const username = localStorage.getItem("username"); // Hämtar användarnamn från localStorage
@@ -36,6 +38,11 @@ const Home = () => {
     }
   }, []);
 
+  // Extrahera hashtags från text
+  const extractHashtags = (text) => {
+    return text.match(/#[a-zA-ZåäöÅÄÖ0-9]+/g) || [];
+  };
+
   // Funktion för att posta en ny tweet
   const handleTweet = async () => {
     const username = currentUser.handle.replace("@", "");
@@ -43,14 +50,18 @@ const Home = () => {
       console.error("Ingen användare är inloggad.");
       return;
     }
-
+    // Om tweeten inte är tom, posta den
     if (newTweet.trim() !== "") {
+      const hashtags = extractHashtags(newTweet);
+
       await postTweet(
         username,
         newTweet,
+        hashtags,
         () => {
-          loadHomeTweets(username, setTweets, console.error);
+          loadHomeTweets(username, setTweets, console.error, setCurrentUser);
           setNewTweet("");
+          setRefreshTrendTrigger((prev) => prev + 1); // Uppdatera trender
         },
         console.error
       );
@@ -132,11 +143,7 @@ const Home = () => {
             />
             <div className="trends-section">
               <h2>Populärt för dig</h2>
-              <Trend topic="Samt" tweets="2,640" />
-              <Trend topic="China" tweets="527K" />
-              <Trend topic="#finland" tweets="10.4K" />
-              <Trend topic="#babygirl" />
-              <Trend topic="Newzorf" tweets="60.4K" />
+              <Trend refreshTrendTrigger={refreshTrendTrigger} />
             </div>
           </div>
         </div>
