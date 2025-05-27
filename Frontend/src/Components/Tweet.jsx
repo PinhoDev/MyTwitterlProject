@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { formatTweetContent } from "../utils/formatTweetContent";
-import { formatRelativeTime } from "../utils/formatRelativeTime";
+import { formatTweetContent } from "../utils/formatTweetContent.jsx";
+import { formatRelativeTime } from "../utils/formatRelativeTime.jsx";
 import "../styles/Home.css";
 
 // Tweet-komponenten tar emot props (värden) från föräldrakomponent

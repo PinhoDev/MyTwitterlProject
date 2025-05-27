@@ -33,7 +33,7 @@ function FollowButton({ profileUsername, currentUser }) {
     }
   }
   return (
-    <button onClick={toggleFollow}>
+    <button className="follow-button" onClick={toggleFollow}>
       {isFollowing ? "Sluta följa" : "Följ"}
     </button>
   );

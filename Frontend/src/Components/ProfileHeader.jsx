@@ -1,10 +1,9 @@
-// ProfileHeader.jsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { loadUserDetails } from "../Controllers/ProfileController";
-import FollowButton from "../Components/FollowButton";
+import { loadUserDetails } from "../Controllers/ProfileController.js";
+import FollowButton from "../Components/FollowButton.jsx";
 import ProfilePic from "../assets/manPinkShirt.png";
-import "../styles/ProfilePage.css";
+import "../styles/ProfileComponents.css";
 
 function ProfileHeader({ username, currentUser }) {
   const [user, setUser] = useState(null);
@@ -42,12 +41,7 @@ function ProfileHeader({ username, currentUser }) {
         <img className="profile-pic" src={ProfilePic} alt="Profile picture" />
 
         {!isOwnProfile && (
-          <div className="followButtonWrapper">
-            <FollowButton
-              profileUsername={username}
-              currentUser={currentUser}
-            />
-          </div>
+          <FollowButton profileUsername={username} currentUser={currentUser} />
         )}
       </div>
 

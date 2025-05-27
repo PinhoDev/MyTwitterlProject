@@ -1,8 +1,7 @@
-// ProfileTweetSection.jsx
 import { useEffect, useState } from "react";
-import { loadUserTweets } from "../Controllers/ProfileController";
-import TweetCard from "./TweetCard";
-import "../styles/ProfilePage.css";
+import { loadUserTweets } from "../Controllers/ProfileController.js";
+import TweetCard from "./TweetCard.jsx";
+import "../styles/ProfileComponents.css";
 
 function ProfileTweetSection({ username }) {
   const [tweets, setTweets] = useState([]);

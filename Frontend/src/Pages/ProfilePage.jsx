@@ -1,7 +1,7 @@
 import { useParams, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { fetchSearchResults } from "../Controllers/HomeController.js";
-import ProfileHeader from "../components/ProfileHeader.jsx";
+import ProfileHeader from "../Components/ProfileHeader.jsx";
 import ProfileTweetSection from "../Components/ProfileTweetSection.jsx";
 import Searchbar from "../Components/Searchbar.jsx";
 import SearchOverlay from "../Components/SearchOverlay.jsx";
@@ -11,7 +11,9 @@ import "../styles/Home.css";
 function ProfilePage() {
   const { username } = useParams();
   const location = useLocation();
-  const currentUser = location.state?.currentUser;
+  const currentUser = location.state?.currentUser || getUserFromLocalStorage();
+  const viewedUser = location.state?.viewedUser || currentUser;
+  const isOwnProfile = viewedUser.username === currentUser.username;
   const [searchResults, setSearchResults] = useState({ users: [], tweets: [] });
   const [showOverlay, setShowOverlay] = useState(false);
 
