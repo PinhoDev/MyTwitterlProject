@@ -1,4 +1,4 @@
-.arrowNameTweetsNumberBox {
+.back-arrow-box {
   display: flex;
   align-items: center;
   padding: 10px 16px;
@@ -18,7 +18,7 @@ a {
   color: black;
 }
 
-.profilePageContainer {
+.profile-page-container {
   margin-right: 40px;
 }
 .user-info {

@@ -1,5 +1,5 @@
-// components/SearchOverlay.jsx
 import "../styles/Search.css";
+import { Link } from "react-router-dom";
 
 const SearchOverlay = ({ users, tweets, onClose }) => {
   return (
@@ -9,18 +9,35 @@ const SearchOverlay = ({ users, tweets, onClose }) => {
       </button>
 
       <h3>Användare</h3>
-      {users.length === 0 ? (
-        <p>Inga användare hittades.</p>
-      ) : (
-        users.map((user) => <div key={user._id}>{user.username}</div>)
-      )}
+      <div className="search-users-section">
+        {users.length === 0 ? (
+          <p>Inga användare hittades.</p>
+        ) : (
+          users.map((user) => (
+            <div key={user._id} className="search-result-user">
+              <Link
+                to={`/profile/${user.username}`}
+                state={{ currentUser: user }}
+              >
+                @{user.username}
+              </Link>
+            </div>
+          ))
+        )}
+      </div>
 
       <h3>Tweets</h3>
-      {tweets.length === 0 ? (
-        <p>Inga tweets hittades.</p>
-      ) : (
-        tweets.map((tweet) => <div key={tweet._id}>{tweet.content}</div>)
-      )}
+      <div className="search-tweets-section">
+        {tweets.length === 0 ? (
+          <p>Inga tweets hittades.</p>
+        ) : (
+          tweets.map((tweet) => (
+            <div key={tweet._id} className="search-result-tweet">
+              {tweet.content}
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };

@@ -1,15 +1,10 @@
+// ProfileTweetSection.jsx
 import { useEffect, useState } from "react";
 import { loadUserTweets } from "../Controllers/ProfileController";
 import TweetCard from "./TweetCard";
-
-//personens tweets rangordnade efter datum - mappa som divar i lista
-
-//innehåll - avatar - namn mail createdat
-// content
-//kommentarer - antalet kommentarer
+import "../styles/ProfilePage.css";
 
 function ProfileTweetSection({ username }) {
-  //hämta user.profilepic user.username user.useremail  user.tweet  user.tweet.comment
   const [tweets, setTweets] = useState([]);
   const [error, setError] = useState("");
 
@@ -21,13 +16,11 @@ function ProfileTweetSection({ username }) {
   if (tweets.length === 0) return <p>Inga tweets än.</p>;
 
   return (
-    <>
-      <div className="tweetList">
-        {tweets.map((tweet) => (
-          <TweetCard key={tweet._id} tweet={tweet} />
-        ))}
-      </div>
-    </>
+    <div className="tweetList">
+      {tweets.map((tweet) => (
+        <TweetCard key={tweet._id} tweet={tweet} />
+      ))}
+    </div>
   );
 }
 
