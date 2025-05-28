@@ -1,6 +1,6 @@
 import "./styles/App.css";
 import { Routes, Route } from "react-router-dom";
-import ProfilePage from "./Pages/ProfilePage.jsx";
+import Profile from "./Pages/Profile.jsx";
 import LogIn from "./Pages/LogIn";
 import LogInPassword from "./Pages/LogInPassword.jsx";
 import SignUp from "./Pages/SignUp";
@@ -11,7 +11,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<LogIn />} />
-        <Route path="/profile/:user" element={<ProfilePage />} />
+        <Route path="/profile/:user" element={<Profile />} />
         <Route path="/home/:user" element={<Home />} />
         <Route path="/loginpassword" element={<LogInPassword />} />
         <Route path="/signup" element={<SignUp />} />
