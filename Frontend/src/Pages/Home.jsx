@@ -10,7 +10,7 @@ import {
   loadHomeTweets,
   postTweet,
   postComment,
-  handleSearch, // NYTT: import  ///Karolina_5
+  fetchSearchResults, // NYTT: import  ///Karolina_5
 } from "../Controllers/HomeController.js";
 import { useParams } from "react-router-dom";
 
@@ -117,6 +117,22 @@ const Home = () => {
     setSearchActive(true);
     setSearchError("");
     await handleSearch(query, setSearchResults, setSearchError);
+  };
+  // NYTT: 2. Hämtar data från backend och uppdaterar state
+  const handleSearch = async (query) => {
+    await fetchSearchResults(
+      query,
+      (data) => {
+        setUsers(data.users);
+        setTweets(data.tweets);
+        setSearchError("");
+      },
+      (errorMsg) => {
+        setSearchError(errorMsg);
+        setUsers([]);
+        setTweets([]);
+      }
+    );
   };
 
   // Filtrerar och sorterar tweets: visar endast tweets från personer man följer eller sig själv

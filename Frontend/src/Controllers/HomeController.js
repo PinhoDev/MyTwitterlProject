@@ -149,6 +149,7 @@ export async function fetchSearchResults(query) {
   }
 }
 */
+/*
 // Hämtar sökresultat från servern
 export async function fetchSearchResults(query, onSuccess, onError) {
   try {
@@ -174,5 +175,16 @@ export async function handleSearch(query, setUsers, setTweets, setError) {
     setError(result.message);
     setUsers([]);
     setTweets([]);
+  }
+}
+*/
+export async function fetchSearchResults(query, onSuccess, onError) {
+  try {
+    const res = await axios.get(
+      `http://localhost:3000/search/${encodeURIComponent(query)}`
+    );
+    onSuccess(res.data);
+  } catch (error) {
+    onError("Misslyckades att hämta sökresultat.");
   }
 }

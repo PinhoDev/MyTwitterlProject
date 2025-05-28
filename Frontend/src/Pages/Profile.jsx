@@ -9,21 +9,24 @@ import FollowButton from "../Components/FollowButton.jsx";
 import SearchBar from "../Components/SearchBar.jsx";
 import SearchOverlay from "../Components/SearchOverlay.jsx";
 import { loadUserDetails } from "../Controllers/ProfileController.js";
-import { handleSearch } from "../Controllers/HomeController.js";
+import { fetchSearchResults } from "../Controllers/HomeController.js";
 
-const ProfilePage = () => {
+const Profile = () => {
   const { user } = useParams();
   const username = user;
   const [userDetails, setUserDetails] = useState(null);
   const [error, setError] = useState("");
-  const [searchActive, setSearchActive] = useState(false);
-  const [searchResults, setSearchResults] = useState({ users: [], tweets: [] });
   const [refreshTrendTrigger, setRefreshTrendTrigger] = useState(0);
   const [currentUser, setCurrentUser] = useState({
     name: "",
     handle: "",
     username: "",
   });
+
+  // Samma sökfunktionalitet som i Home
+  const [searchActive, setSearchActive] = useState(false);
+  const [searchResults, setSearchResults] = useState({ users: [], tweets: [] });
+  const [searchError, setSearchError] = useState("");
 
   useEffect(() => {
     const localUsername = localStorage.getItem("username");
@@ -44,15 +47,21 @@ const ProfilePage = () => {
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
-  const handleSearchQuery = async (query) => {
+  const handleSearchSubmit = async (query) => {
     setSearchActive(true);
-    await handleSearch(
+    setSearchError("");
+    await handleSearch(query);
+  };
+
+  const handleSearch = async (query) => {
+    await fetchSearchResults(
       query,
-      (results) => {
-        setSearchResults(results);
+      (data) => {
+        setSearchResults({ users: data.users, tweets: data.tweets });
+        setSearchError("");
       },
-      (errMsg) => {
-        setError(errMsg);
+      (errorMsg) => {
+        setSearchError(errorMsg);
         setSearchResults({ users: [], tweets: [] });
       }
     );
@@ -139,7 +148,7 @@ const ProfilePage = () => {
         </div>
 
         <div className="right-sidebar">
-          <SearchBar onSearch={handleSearchQuery} />
+          <SearchBar onSearch={handleSearchSubmit} />
           {searchActive && (
             <SearchOverlay
               users={searchResults.users}
@@ -157,11 +166,11 @@ const ProfilePage = () => {
         <FooterUser
           name={currentUser.name}
           handle={currentUser.handle}
-          userImage={userDetails?.profileImage || "/placeholder/avatar.png"}
+          userImage={userDetails?.image || "/placeholder/avatar.png"}
         />
       </div>
     </div>
   );
 };
 
-export default ProfilePage;
+export default Profile;
