@@ -67,18 +67,19 @@ router.post("/login", async (req, res) => {
         .json({ result: false, message: "Incorrect password" });
     }
 
-    // Generate a JWT token
-    const jwtSecret = `${Date.now()}_${Math.random().toString(36).slice(2)}`;
-    const payload = {
-      userId: user._id,
-      email: user.email,
-    };
-    const token = jwt.sign(payload, jwtSecret, {
-      expiresIn: "2h",
-    });
+    // // Generate a JWT token
+    // const jwtSecret = `${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    // const payload = {
+    //   userId: user._id,
+    //   email: user.email,
+    // };
+    // const token = jwt.sign(payload, jwtSecret, {
+    //   expiresIn: "2h",
+    // });
 
     // Respond with success and the token
-    return res.json({ result: true, token });
+    // return res.json({ result: true, token });
+    return res.json({ result: true });
 
     // Respond with error if something goes wrong
   } catch (error) {
