@@ -14,7 +14,8 @@ describe("Register Authentication Tests", () => {
       email: "testuser@mail.com",
       password: "testpassword", // plain text password
     });
-    expect(res.statusCode).toBe(201);
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toBe(true);
   });
 
   it("should return 400 for missing fields", async () => {
@@ -27,7 +28,7 @@ describe("Register Authentication Tests", () => {
     expect(res.body).toHaveProperty("message", "All fields are required");
   });
 
-  it("should return 400 for duplicate username", async () => {
+  it("should return 409 for duplicate username", async () => {
     await User.create({
       name: "Existing User",
       username: "existinguser",
@@ -40,7 +41,7 @@ describe("Register Authentication Tests", () => {
       email: "newuser@mail.com",
       password: "newpassword",
     });
-    expect(res.statusCode).toBe(400);
-    expect(res.body).toHaveProperty("message", "Username already exists");
+    expect(res.statusCode).toBe(409);
+    expect(res.body).toHaveProperty("message", "Username is already taken");
   });
 });
