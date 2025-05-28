@@ -50,7 +50,7 @@ const ProfilePage = () => {
           <div className="profile-page-container">
             <div className="topBox">
               <div className="back-arrow-box">
-                <Link to="/home">
+                <Link to={`/home/${currentUser.username}`}>
                   <div className="back-arrow">&#8592;</div>
                 </Link>
                 <div className="user-info">
@@ -60,45 +60,51 @@ const ProfilePage = () => {
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="profile-header">
-              <img
-                className="cover-photo"
-                src={userDetails?.imageBackground || "/placeholder/banner.jpg"}
-                alt="Bakgrundsbild"
-              />
-              <img
-                className="profile-pic"
-                src={userDetails?.image || "/placeholder/avatar.png"}
-                alt="Profilbild"
-              />
-
-              {!isOwnProfile && (
-                <FollowButton
-                  profileUsername={username}
-                  currentUser={currentUser}
+              <div className="profile-header">
+                <img
+                  className="cover-photo"
+                  src={
+                    userDetails?.imageBackground || "/placeholder/banner.jpg"
+                  }
+                  alt="Bakgrundsbild"
                 />
-              )}
-            </div>
+                <img
+                  className="profile-pic"
+                  src={userDetails?.image || "/placeholder/avatar.png"}
+                  alt="Profilbild"
+                />
 
-            <div className="profile-container">
-              <div className="name">{userDetails?.fullName}</div>
-              <div className="handle">@{userDetails?.username}</div>
-              <div className="bio">{userDetails?.about}</div>
-
-              <div className="meta">
-                {userDetails?.occupation && (
-                  <div>💼 {userDetails.occupation}</div>
+                {!isOwnProfile && (
+                  <FollowButton
+                    profileUsername={username}
+                    currentUser={currentUser}
+                  />
                 )}
-                {userDetails?.location && <div>🏠 {userDetails.location}</div>}
-                {userDetails?.website && <div> 🔗{userDetails.website}</div>}
-                {userDetails?.joinDate && <div>🗓️ {userDetails.joinDate}</div>}
               </div>
 
-              <div className="stats">
-                <span>{userDetails?.following?.length || 0} följer</span>
-                <span>{userDetails?.followers?.length || 0} följare</span>
+              <div className="profile-container">
+                <div className="name">{userDetails?.fullName}</div>
+                <div className="handle">@{userDetails?.username}</div>
+                <div className="bio">{userDetails?.about}</div>
+
+                <div className="meta">
+                  {userDetails?.occupation && (
+                    <div>💼 {userDetails.occupation}</div>
+                  )}
+                  {userDetails?.location && (
+                    <div>🏠 {userDetails.location}</div>
+                  )}
+                  {userDetails?.website && <div> 🔗{userDetails.website}</div>}
+                  {userDetails?.joinDate && (
+                    <div>🗓️ {userDetails.joinDate}</div>
+                  )}
+                </div>
+
+                <div className="stats">
+                  <span>{userDetails?.following?.length || 0} följer</span>
+                  <span>{userDetails?.followers?.length || 0} följare</span>
+                </div>
               </div>
             </div>
           </div>
@@ -134,14 +140,19 @@ const ProfilePage = () => {
             </div>
           </div>
         </div>
+        {/*
 
-        <div className="footer-wrapper">
+ <div className="footer-wrapper">
           <FooterUser
             name={currentUser.name}
             handle={currentUser.handle}
             userImage={userDetails?.profileImage || "/placeholder/avatar.png"}
           />
         </div>
+
+
+
+*/}
       </div>
     </>
   );
