@@ -1,4 +1,4 @@
-import { getUserdetails } from "../Model/requestApi.js";
+import { getUserDetails } from "../Model/requestApi.js";
 import { getUserOwnTweets } from "../Model/requestApi.js";
 
 // Function to get userinfo

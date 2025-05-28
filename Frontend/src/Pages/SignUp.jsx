@@ -2,36 +2,31 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Signup.css";
 import Twitterbird from "../assets/Twitterbird.png";
+import userData from "../Model/userData";
+import { validateForm } from "../Controllers/SignUpController";
+import { createNewUser } from "../Controllers/SignUpController";
 
 const SignUp = () => {
-  const navigate = useNavigate(); // För att navigera till inloggningssidan efter lyckad registrering
-
+  const navigate = useNavigate();
   // Formulärdata sparas i state
-  const [form, setForm] = useState({
-    username: "",
-    email: "",
-    name: "",
-    about: "",
-    website: "",
-    occupation: "",
-    hometown: "",
-    password: "",
-    confirmPassword: "",
-    profileImage: null,
-  });
-
+  const [newUser, setNewUser] = useState(userData);
   // Bildförhandsvisning (preview) lagras separat
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState(userData.image);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   // Hantera text-inputs
-  const handleChange = (e) =>
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewUser((prev) => ({ ...prev, [name]: value }));
+  };
 
   // Hantera profilbild (endast för visning)
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setForm((prev) => ({ ...prev, profileImage: file })); // Sparar filen i state
+      setNewUser((prev) => ({ ...prev, image: file })); // Sparar filen i state
       setPreview(URL.createObjectURL(file)); // Skapar en temporär URL för förhandsvisning
     }
   };
@@ -39,55 +34,27 @@ const SignUp = () => {
   // Hantera registrering
   const handleSignup = async (e) => {
     e.preventDefault();
-
-    // Kontrollera obligatoriska fält
-    const required = {
-      username: "Användarnamn",
-      email: "Epost",
-      name: "Namn",
-      password: "Lösenord",
-      confirmPassword: "Bekräfta lösenord",
-    };
-
-    // Går igenom de obligatoriska fälten och varnar om något saknas
-    for (const [key, label] of Object.entries(required)) {
-      if (!form[key].trim()) {
-        return alert(`${label} måste fyllas i`);
-      }
+    const errorMsg = validateForm(newUser);
+    if (errorMsg) {
+      setError(errorMsg);
+      return;
     }
+    setError("");
+    setLoading(true);
 
-    // Kontrollera lösenord
-    if (form.password !== form.confirmPassword) {
-      return alert("Det angivna lösenordet stämmer inte överens");
-    }
-
-    // Skapa data att skicka till backend
-    const postData = {
-      username: form.username,
-      email: form.email,
-      name: form.name,
-      password: form.password,
-    };
-
-    try {
-      // Skicka POST-anrop till backend
-      const response = await axios.post(
-        "http://localhost:3000/register",
-        postData
-      );
-
-      // Om registreringen lyckas, vidare till inloggningssidan
-      if (response.data === true) {
-        alert("Registrering lyckades!");
-        navigate("/login");
-      } else {
-        alert("Registrering misslyckades.");
-      }
-    } catch (error) {
-      // Visa felmeddelande från backend eller logga fel
-      console.error("Registreringsfel:", error);
-      const msg = error.response?.data?.message || "Ett oväntat fel inträffade";
-      alert(`Fel: ${msg}`);
+    const result = await createNewUser(newUser, setError);
+    if (result.success) {
+      setLoading(false);
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      }, 1000);
+    } else {
+      setLoading(false);
+      setError(result.message || "Registrering misslyckades");
     }
   };
 
@@ -114,7 +81,12 @@ const SignUp = () => {
           <img
             src={preview}
             alt="Preview"
-            style={{ width: "200px", margin: "40px auto", display: "block" }}
+            style={{
+              height: "250px",
+              width: "250px",
+              margin: "40px auto",
+              display: "block",
+            }}
           />
         )}
 
@@ -124,7 +96,7 @@ const SignUp = () => {
             key={name}
             name={name}
             placeholder={placeholder}
-            value={form[name] || ""}
+            value={newUser[name] || ""}
             onChange={handleChange}
           />
         ))}
@@ -134,18 +106,21 @@ const SignUp = () => {
           type="password"
           name="password"
           placeholder="Lösenord"
-          value={form.password}
+          value={newUser.password}
           onChange={handleChange}
         />
         <input
           type="password"
           name="confirmPassword"
           placeholder="Bekräfta lösenord"
-          value={form.confirmPassword}
+          value={newUser.confirmPassword}
           onChange={handleChange}
         />
+        {error && <div className="error-message">{error}</div>}
+        {loading && <div className="loading-message">Registering...</div>}
+        {success && <div className="success-message">Account created!</div>}
 
-        <button className="authbutton" type="submit">
+        <button className="authbutton" type="submit" disabled={loading}>
           Skapa konto
         </button>
       </form>

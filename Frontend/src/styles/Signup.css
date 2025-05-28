@@ -49,3 +49,23 @@ h1 {
   display: block;
   margin: 40px auto;
 }
+
+.error-message {
+  color: red;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.loading-message {
+  color: #007bff;
+  font-weight: bold;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+  margin: 10px 0;
+  text-align: center;
+}
