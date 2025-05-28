@@ -1,4 +1,3 @@
-// App.jsx
 import "./styles/App.css";
 import { Routes, Route } from "react-router-dom";
 import ProfilePage from "./Pages/ProfilePage.jsx";

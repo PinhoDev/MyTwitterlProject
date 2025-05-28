@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "axios"; //// koppat från Fredrica sprint 4
 
 // Ladda tweets från backend
 export async function loadHomeTweets(username, setTweets, setError) {
@@ -116,3 +116,18 @@ export async function postComment(
     onError("Misslyckades att posta kommentaren.");
   }
 }
+
+// Hämta sökresultat för Searchbar.      Karolina har kollat att det inte krockar.
+export async function fetchSearchResults(query, onSuccess, onError) {
+  try {
+    const res = await axios.get(
+      `http://localhost:3000/api/search/${encodeURIComponent(query)}` //encodeURIComponent(query) skyddar URL från att gå sönder om användaren skriver mellanslag, specialtecken, svenska bokstäver
+    );
+    console.log("Sökresultat:", res.data);
+    onSuccess(res.data);
+  } catch (error) {
+    console.error("Sökfel:", error.response?.data || error.message);
+    onError("Misslyckades att hämta sökresultat.");
+  }
+}
+

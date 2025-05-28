@@ -86,12 +86,6 @@ export async function signUp(userData) {
   }
 }
 
-// Function to get user details
-export async function getUserDetails(username) {}
-
-// Function to get user tweets
-export async function getUserOwnTweets(username) {}
-
 // Function to register a new user
 export async function postNewUser(newUser) {
   try {
