@@ -38,9 +38,7 @@ export async function navigateToHomePage(
 ) {
   const loginResponse = await handleLogin(identifier, password);
   if (loginResponse.success) {
-    navigate("/home", {
-      state: { identifier }, // skickar med användaren som state
-    });
+    navigate(`/home/${identifier}`);
   } else {
     setError(loginResponse.message);
   }

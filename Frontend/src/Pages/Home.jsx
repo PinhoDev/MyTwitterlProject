@@ -9,8 +9,10 @@ import {
   postTweet,
   postComment,
 } from "../Controllers/HomeController.js";
+import { useParams } from "react-router-dom";
 
 const Home = () => {
+  const { user } = useParams();
   // Information om den inloggade användaren
   const [currentUser, setCurrentUser] = useState({
     // Här kan du hämta aktuell användare från en global state eller context
@@ -26,9 +28,9 @@ const Home = () => {
   const [refreshTrendTrigger, setRefreshTrendTrigger] = useState(0);
 
   useEffect(() => {
-    const username = localStorage.getItem("username"); // Hämtar användarnamn från localStorage
+    // const username = localStorage.getItem("username"); // Hämtar användarnamn från localStorage
     // Om användarnamn finns i localStorage, sätt currentUser och hämta tweets
-
+    const username = user;
     if (username) {
       setCurrentUser({
         name: username,
