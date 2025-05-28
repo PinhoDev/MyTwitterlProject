@@ -1,4 +1,5 @@
-import axios from "axios"; //// koppat från Fredrica sprint 4
+import axios from "axios";
+import { fetchSearchResults } from "../Model/requestApi"; /// hör till Sökresultat
 
 // Ladda tweets från backend
 export async function loadHomeTweets(
@@ -123,16 +124,17 @@ export async function postComment(
   }
 }
 
-// Hämta sökresultat för Searchbar.      Karolina har kollat att det inte krockar.
-export async function fetchSearchResults(query, onSuccess, onError) {
-  try {
-    const res = await axios.get(
-      `http://localhost:3000/api/search/${encodeURIComponent(query)}` //encodeURIComponent(query) skyddar URL från att gå sönder om användaren skriver mellanslag, specialtecken, svenska bokstäver
-    );
-    console.log("Sökresultat:", res.data);
-    onSuccess(res.data);
-  } catch (error) {
-    console.error("Sökfel:", error.response?.data || error.message);
-    onError("Misslyckades att hämta sökresultat.");
+// Hämta sökresultat   ny Karolina_5
+export async function handleSearch(query, setUsers, setTweets, setError) {
+  const result = await fetchSearchResults(query);
+
+  if (result.success) {
+    setUsers(result.data.users);
+    setTweets(result.data.tweets);
+    setError("");
+  } else {
+    setError(result.message);
+    setUsers([]);
+    setTweets([]);
   }
 }

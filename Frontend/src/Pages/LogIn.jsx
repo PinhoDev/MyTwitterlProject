@@ -7,20 +7,20 @@ import "../styles/Auth.css";
 function LogIn() {
   const navigate = useNavigate();
   const [formdata, setFormdata] = useState({
-    identifier: "",
+    emailOrUsername: "",
   });
   const [error, setError] = useState();
 
   const handleChange = (e) => {
-    setFormdata({ ...formdata, identifier: e.target.value });
+    setFormdata({ ...formdata, emailOrUsername: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formdata.identifier.trim() === "") {
+    if (formdata.emailOrUsername.trim() === "") {
       setError("Fältet får inte vara tomt");
     } else {
-      navigateToLoginPassword(formdata.identifier, navigate, setError);
+      navigateToLoginPassword(formdata.emailOrUsername, navigate, setError);
     }
   };
   return (
@@ -34,7 +34,7 @@ function LogIn() {
             <input
               className="login-input"
               type="text"
-              value={formdata.identifier}
+              value={formdata.emailOrUsername}
               onChange={handleChange}
               placeholder="E-postadress eller användarnamn"
             />

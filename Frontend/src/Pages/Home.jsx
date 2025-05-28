@@ -4,10 +4,13 @@ import FooterUser from "../components/FooterUser.jsx";
 import Trend from "../Components/Trend.jsx";
 import Header from "../Components/Header.jsx";
 import Tweet from "../Components/Tweet.jsx";
+import SearchBar from "../Components/SearchBar.jsx"; // NYTT: import  Karolina_5
+import SearchOverlay from "../Components/SearchOverlay.jsx"; // NYTT: import   Karolina_5
 import {
   loadHomeTweets,
   postTweet,
   postComment,
+  handleSearch, // NYTT: import  ///Karolina_5
 } from "../Controllers/HomeController.js";
 import { useParams } from "react-router-dom";
 
@@ -27,6 +30,11 @@ const Home = () => {
   //Behövs för att uppdatera tweets när en ny tweet postas eller en kommentar läggs till
   const [refreshTrendTrigger, setRefreshTrendTrigger] = useState(0);
   const [userImage, setUserImage] = useState({});
+
+  // NYTT: State för sök        ///Karolina_5
+  const [searchActive, setSearchActive] = useState(false);
+  const [searchResults, setSearchResults] = useState({ users: [], tweets: [] });
+  const [searchError, setSearchError] = useState("");
 
   useEffect(() => {
     // const username = localStorage.getItem("username"); // Hämtar användarnamn från localStorage
@@ -57,7 +65,8 @@ const Home = () => {
     if (newTweet.trim() !== "") {
       const hashtags = extractHashtags(newTweet);
 
-      await postTweet(
+      /*                          Fredricas ursprungliga kod
+   await postTweet(
         username,
         newTweet,
         hashtags,
@@ -65,6 +74,22 @@ const Home = () => {
           loadHomeTweets(username, setTweets, console.error, setCurrentUser);
           setNewTweet("");
           setRefreshTrendTrigger((prev) => prev + 1); // Uppdatera trender
+        },
+        console.error
+      );
+    }
+  };
+  */
+
+      //testar smått ändrad ände på funktionen handleTweet  ///Karolina_5
+      await postTweet(
+        username,
+        newTweet,
+        hashtags,
+        () => {
+          loadHomeTweets(username, setTweets, console.error, setUserImage);
+          setNewTweet("");
+          setRefreshTrendTrigger((prev) => prev + 1);
         },
         console.error
       );
@@ -85,6 +110,13 @@ const Home = () => {
       },
       console.error
     );
+  };
+
+  // NYTT: Funktion för att hantera sök
+  const handleSearchSubmit = async (query) => {
+    setSearchActive(true);
+    setSearchError("");
+    await handleSearch(query, setSearchResults, setSearchError);
   };
 
   // Filtrerar och sorterar tweets: visar endast tweets från personer man följer eller sig själv
@@ -130,7 +162,6 @@ const Home = () => {
                 ))}
               </div>
             </div>
-
             {/* <div>
               <h3>5 senaste från dina vänner</h3>
               {latestFiveFriendTweets.map((tweet) => (
@@ -138,12 +169,16 @@ const Home = () => {
               ))}
             </div> */}
           </div>
+
           <div className="right-sidebar">
-            <input
-              type="text"
-              placeholder="Sök efter användare eller #hashtags"
-              className="search-input"
-            />
+            <SearchBar onSearch={handleSearchSubmit} /> {/* NYTT */}
+            {searchActive && (
+              <SearchOverlay
+                users={searchResults.users}
+                tweets={searchResults.tweets}
+                onClose={() => setSearchActive(false)}
+              />
+            )}
             <div className="trends-section">
               <h2>Populärt för dig</h2>
               <Trend refreshTrendTrigger={refreshTrendTrigger} />

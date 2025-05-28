@@ -1,4 +1,4 @@
-const BASE_URL = " http://127.0.0.1:3000/";
+const BASE_URL = "http://127.0.0.1:3000/";
 const ENDPOINTS = {
   GET_USERNAME: `${BASE_URL}getUserName`,
   LOGIN: `${BASE_URL}login`,
@@ -157,6 +157,32 @@ export async function postUserBackground(imageFile, username) {
     return {
       success: false,
       message: "An error occurred during background image upload",
+    };
+  }
+}
+
+// Hämta sökresultat för Searchbar.      Karolina har kollat att det inte krockar.
+
+export async function fetchSearchResults(query) {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/api/search/${encodeURIComponent(query)}` //encodeURIComponent(query) skyddar URL från att gå sönder om användaren skriver mellanslag, specialtecken, svenska bokstäver
+    );
+    const data = await response.json();
+
+    if (response.ok) {
+      return { success: true, data };
+    } else {
+      return {
+        success: false,
+        message: data.message || "Misslyckades att hämta sökresultat.",
+      };
+    }
+  } catch (error) {
+    console.error("Error during search:", error);
+    return {
+      success: false,
+      message: "Ett fel uppstod vid sökning.",
     };
   }
 }

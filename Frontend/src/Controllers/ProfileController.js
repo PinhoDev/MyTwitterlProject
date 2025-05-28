@@ -1,7 +1,7 @@
 // Function to get userinfo
 export async function loadUserDetails(username, setUser, setError) {
   try {
-    const response = await fetch(`/profile/${username}`);
+    const response = await fetch(`http://localhost:3000/profile/${username}`); ///Ändring 28 kl 15.10 bytt från const response = await fetch(`/profile/${username}`);
     const data = await response.json();
 
     if (response.ok) {
