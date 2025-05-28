@@ -42,6 +42,10 @@ const ProfilePage = () => {
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
+  if (!userDetails) {
+    return <p>Laddar profil...</p>;
+  }
+
   return (
     <>
       {/* PROFILE HEADER */}
@@ -84,7 +88,7 @@ const ProfilePage = () => {
               </div>
 
               <div className="profile-container">
-                <div className="name">{userDetails?.fullName}</div>
+                <div className="name">{userDetails?.name}</div>
                 <div className="handle">@{userDetails?.username}</div>
                 <div className="bio">{userDetails?.about}</div>
 
