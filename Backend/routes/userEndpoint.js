@@ -49,6 +49,42 @@ router.get("/home/:username", async (req, res) => {
   }
 });
 
+// Route to get user details by username
+// Endpoint to Display the user details in Profile page
+// The request parameter should contain the username of the user
+router.get("/profile/:username", async (req, res) => {
+  try {
+    const userDetails = await User.findOne({ username: req.params.username })
+      .populate("followers", "username image")
+      .populate("following", "username image")
+      .populate({
+        path: "tweets",
+        select: "content createdAt",
+        populate: {
+          path: "comments",
+          populate: {
+            path: "userName",
+            select: "username",
+          },
+        },
+      });
+
+    if (!userDetails) {
+      return res.status(404).json({ result: false, message: "User not found" });
+    }
+
+    // Respond with success and user details
+    return res.json({ result: true, userDetails });
+
+    // Respond with error if something goes wrong
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+    return res
+      .status(500)
+      .json({ result: false, message: "Internal server error" });
+  }
+});
+
 // Route to Add or Delete a following to a user
 // Endpoint to add or delete a following to a user and it use in the Home Page
 // The request parameter should contain the username of the user
@@ -92,42 +128,6 @@ router.post("/:username/following", async (req, res) => {
     // Respond with error if something goes wrong
   } catch (error) {
     console.error("Error updating following:", error);
-    return res
-      .status(500)
-      .json({ result: false, message: "Internal server error" });
-  }
-});
-
-// Route to get user details by username
-// Endpoint to Display the user details in Profile page
-// The request parameter should contain the username of the user
-router.get("/profile/:username", async (req, res) => {
-  try {
-    const userDetails = await User.findOne({ username: req.params.username })
-      .populate("followers", "username image")
-      .populate("following", "username image")
-      .populate({
-        path: "tweets",
-        select: "content createdAt",
-        populate: {
-          path: "comments",
-          populate: {
-            path: "userName",
-            select: "username",
-          },
-        },
-      });
-
-    if (!userDetails) {
-      return res.status(404).json({ result: false, message: "User not found" });
-    }
-
-    // Respond with success and user details
-    return res.json({ result: true, userDetails });
-
-    // Respond with error if something goes wrong
-  } catch (error) {
-    console.error("Error fetching user details:", error);
     return res
       .status(500)
       .json({ result: false, message: "Internal server error" });
