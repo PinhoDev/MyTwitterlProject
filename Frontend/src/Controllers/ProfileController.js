@@ -1,6 +1,3 @@
-
-import { getUserdetails, getUserOwnTweets } from "../Model/requestApi.js";
-
 // Function to get userinfo
 export async function loadUserDetails(username, setUser, setError) {
   try {
