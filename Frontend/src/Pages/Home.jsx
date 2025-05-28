@@ -62,13 +62,7 @@ const Home = () => {
         newTweet,
         hashtags,
         () => {
-          loadHomeTweets(
-            username,
-            setTweets,
-            console.error,
-            setCurrentUser,
-            setUserDetails
-          );
+          loadHomeTweets(username, setTweets, console.error, setCurrentUser);
           setNewTweet("");
           setRefreshTrendTrigger((prev) => prev + 1); // Uppdatera trender
         },
