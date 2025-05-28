@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"; ////Koppat frå Fredrica sprint 4
+import { useEffect, useState } from "react";
 import { loadAllTweets } from "../Controllers/HomeController.js";
 import "../styles/Home.css";
 

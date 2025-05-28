@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"; //// koppat Fredricas sprint 4
+import { useEffect, useState } from "react";
 import "../styles/Home.css";
 import FooterUser from "../components/FooterUser.jsx";
 import Trend from "../Components/Trend.jsx";

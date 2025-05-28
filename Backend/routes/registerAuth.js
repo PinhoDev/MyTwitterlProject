@@ -1,6 +1,5 @@
-const { express, bcrypt } = require("../utils/dependencies");
+const { express, bcrypt, router } = require("../utils/dependencies");
 const { findUser } = require("../utils/authHelpers");
-const router = express.Router();
 const User = require("../models/userSchema");
 
 // Route to register a New User

@@ -1,3 +1,4 @@
+
 import { getUserdetails, getUserOwnTweets } from "../Model/requestApi.js";
 
 // Function to get userinfo

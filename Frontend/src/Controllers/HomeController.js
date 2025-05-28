@@ -130,3 +130,4 @@ export async function fetchSearchResults(query, onSuccess, onError) {
     onError("Misslyckades att hämta sökresultat.");
   }
 }
+
