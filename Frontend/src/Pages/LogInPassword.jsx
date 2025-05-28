@@ -36,11 +36,14 @@ function LogInPassword() {
 
       <form onSubmit={handleSubmit}>
         <img className="tweet-logo-login" src={Twitterbird} alt="Logotyp" />
-        <h1>Välkommen tillbaka</h1>
-        <p className="login-username-info">
-          Loggar in som <strong>{emailOrUsername}</strong>
-        </p>
+        <h1>Ange ditt lösenord</h1>
+
         <div className="input-wrapper">
+          <input
+            className="login-input"
+            placeholder={emailOrUsername || "Användarnamn"}
+            readOnly
+          />
           <input
             className="login-input"
             type="password"
