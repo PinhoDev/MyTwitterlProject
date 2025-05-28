@@ -57,7 +57,8 @@ const Home = () => {
     if (newTweet.trim() !== "") {
       const hashtags = extractHashtags(newTweet);
 
-      await postTweet(
+      /*                          Fredricas ursprungliga kod
+   await postTweet(
         username,
         newTweet,
         hashtags,
@@ -71,6 +72,23 @@ const Home = () => {
           );
           setNewTweet("");
           setRefreshTrendTrigger((prev) => prev + 1); // Uppdatera trender
+        },
+        console.error
+      );
+    }
+  };
+  */
+
+      //testar smått ändrad ände på funktionen handleTweet
+
+      await postTweet(
+        username,
+        newTweet,
+        hashtags,
+        () => {
+          loadHomeTweets(username, setTweets, console.error, setUserImage);
+          setNewTweet("");
+          setRefreshTrendTrigger((prev) => prev + 1);
         },
         console.error
       );
