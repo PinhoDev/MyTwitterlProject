@@ -26,6 +26,7 @@ const Home = () => {
   const [newTweet, setNewTweet] = useState("");
   //Behövs för att uppdatera tweets när en ny tweet postas eller en kommentar läggs till
   const [refreshTrendTrigger, setRefreshTrendTrigger] = useState(0);
+  const [userImage, setUserImage] = useState({});
 
   useEffect(() => {
     // const username = localStorage.getItem("username"); // Hämtar användarnamn från localStorage
@@ -36,7 +37,7 @@ const Home = () => {
         name: username,
         handle: "@" + username,
       });
-      loadHomeTweets(username, setTweets, console.error);
+      loadHomeTweets(username, setTweets, console.error, setUserImage);
     }
   }, []);
 
@@ -61,7 +62,13 @@ const Home = () => {
         newTweet,
         hashtags,
         () => {
-          loadHomeTweets(username, setTweets, console.error, setCurrentUser);
+          loadHomeTweets(
+            username,
+            setTweets,
+            console.error,
+            setCurrentUser,
+            setUserDetails
+          );
           setNewTweet("");
           setRefreshTrendTrigger((prev) => prev + 1); // Uppdatera trender
         },
@@ -97,7 +104,7 @@ const Home = () => {
 
   return (
     <>
-      <Header />
+      <Header userImage={userImage} />
       <div className="sidebars">
         <div className="home-container">
           <div className="left-sidebar">
@@ -151,7 +158,11 @@ const Home = () => {
         </div>
 
         <div className="footer-wrapper">
-          <FooterUser name={currentUser.name} handle={currentUser.handle} />
+          <FooterUser
+            name={currentUser.name}
+            handle={currentUser.handle}
+            userImage={userImage}
+          />
         </div>
       </div>
     </>

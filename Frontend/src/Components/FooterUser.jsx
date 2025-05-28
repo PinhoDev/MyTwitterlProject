@@ -1,15 +1,11 @@
 import "../styles/FooterUser.css";
 import Overlay from "./Overlay";
 
-const FooterUser = ({ name, handle }) => {
+const FooterUser = ({ name, handle, userImage }) => {
   return (
     <div className="footer-user">
       <div className="profil-pic">
-        <img
-          src="https://randomuser.me/api/portraits/men/75.jpg"
-          alt="Profilbild"
-          className="footer-user img"
-        />
+        <img src={userImage} alt="Profilbild" className="footer-user img" />
       </div>
       <div className="user-info">
         <div className="name">{name}</div>
