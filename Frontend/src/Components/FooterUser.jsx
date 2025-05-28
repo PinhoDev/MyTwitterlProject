@@ -1,7 +1,7 @@
 import "../styles/FooterUser.css";
 import Overlay from "./Overlay";
 
-const FooterUser = () => {
+const FooterUser = ({ name, handle }) => {
   return (
     <div className="footer-user">
       <div className="profil-pic">
@@ -12,8 +12,8 @@ const FooterUser = () => {
         />
       </div>
       <div className="user-info">
-        <div className="name">Patrik Nygren</div>
-        <div className="handle">@patriknygren82</div>
+        <div className="name">{name}</div>
+        <div className="handle">{handle}</div>
       </div>
       <div className="overlay-position-info">
         <Overlay />
