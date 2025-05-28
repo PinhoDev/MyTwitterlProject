@@ -9,7 +9,6 @@ export async function loadHomeTweets(
 ) {
   try {
     const response = await axios.get(`http://localhost:3000/home/${username}`);
-    console.log("Svar från servern:", response.data.image);
     if (response.data.result) {
       const tweetsFromServer = response.data.homeTweets.map((t) => ({
         _id: t._id, // LAGT TILL tweetens ID (krävs för kommentarer)

@@ -1,15 +1,17 @@
 // Function to get userinfo
 export async function loadUserDetails(username, setUser, setError) {
   try {
-    const result = await getUserdetails(username);
-    if (result.success) {
-      setUser(result.userDetails);
+    const response = await fetch(`/profile/${username}`);
+    const data = await response.json();
+
+    if (response.ok) {
+      setUser(data.userDetails);
     } else {
-      setError(result.message);
+      setError(data.message || "Kunde inte hämta användarinfo.");
     }
-  } catch (err) {
-    console.error("Fel vid hämtning av användardata:", err);
-    setError("Kunde inte hämta användardata.");
+  } catch (error) {
+    console.error("Error loading user details:", error);
+    setError("Något gick fel när användarinfo skulle hämtas.");
   }
 }
 

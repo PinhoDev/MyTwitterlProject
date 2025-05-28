@@ -9,17 +9,17 @@ import Trend from "../Components/Trend.jsx";
 import "../styles/Home.css";
 
 function ProfilePage() {
-  const { username } = useParams();
+  const { user } = useParams();
   const location = useLocation();
-  const currentUser = location.state?.currentUser || getUserFromLocalStorage();
+  const currentUser = user;
   const viewedUser = location.state?.viewedUser || currentUser;
   const isOwnProfile = viewedUser.username === currentUser.username;
   const [searchResults, setSearchResults] = useState({ users: [], tweets: [] });
   const [showOverlay, setShowOverlay] = useState(false);
 
-  if (!currentUser || !currentUser.username) {
-    return <p>Ingen inloggad användare.</p>;
-  }
+  // if (!currentUser || !currentUser.username) {
+  //   return <p>Ingen inloggad användare.</p>;
+  // }
 
   const handleSearch = (query) => {
     fetchSearchResults(
@@ -38,8 +38,8 @@ function ProfilePage() {
     <div className="siderbars">
       <div className="homecontainer">
         <div className="left-sidebar">
-          <ProfileHeader username={username} currentUser={currentUser} />
-          <ProfileTweetSection username={username} />
+          <ProfileHeader username={user} currentUser={currentUser} />
+          <ProfileTweetSection username={user} />
         </div>
 
         <div className="right-sidebar">

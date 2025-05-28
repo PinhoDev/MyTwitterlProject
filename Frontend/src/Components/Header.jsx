@@ -2,7 +2,7 @@ import Twitterbird from "../assets/Twitterbird.png";
 import { Link } from "react-router-dom";
 import "../styles/Header.css";
 
-const Header = ({ userImage }) => {
+const Header = ({ user, userImage }) => {
   return (
     <>
       {" "}
@@ -12,7 +12,7 @@ const Header = ({ userImage }) => {
           <div className="logo-text">TwitterClone</div>
         </div>
         <div className="user-imagecontainer">
-          <Link to="/profile/:id">
+          <Link to={`/profile/${user}`}>
             <img src={userImage} alt="Profilbild" className="user-image" />
           </Link>
         </div>

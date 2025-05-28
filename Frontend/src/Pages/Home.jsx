@@ -104,7 +104,7 @@ const Home = () => {
 
   return (
     <>
-      <Header userImage={userImage} />
+      <Header user={user} userImage={userImage} />
       <div className="sidebars">
         <div className="home-container">
           <div className="left-sidebar">
