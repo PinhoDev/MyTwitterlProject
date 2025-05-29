@@ -1,16 +1,18 @@
 import axios from "axios";
 
-// Ladda tweets från backend
-export async function loadHomeTweets(
+// Ladda tweets från backend !!!!!!! Den här är felaktig Karolinas Final --- HHär ska vi Ha Fredrikas loadhome tweets!s
+/* export async function loadHomeTweets(
   username,
   setTweets,
   setError,
-  setUserImage
+  setUserImage,
+  setCurrentUser
 ) {
   try {
-    const response = await axios.get(`http://localhost:3000/home/${username}`);
+    const response = await axios.get(`http://localhost:3000/home/${username}`); ///HÄr stod förut felaktigt axios.get("http://localhost:3000/tweets/");
     if (response.data.result) {
       const tweetsFromServer = response.data.homeTweets.map((t) => ({
+        //// HÄr stod felaktigt  response.data.tweets.map(...)
         _id: t._id, // LAGT TILL tweetens ID (krävs för kommentarer)
         name: t.author?.username || "Okänd",
         handle: "@" + (t.author?.username || "Okänd"),
@@ -25,13 +27,56 @@ export async function loadHomeTweets(
       }));
       setTweets(tweetsFromServer);
       setUserImage(response.data.image);
+      // ⬅️ Lägg till denna rad!
+      setCurrentUser({
+        name: response.data.username,
+        handle: "@" + response.data.username,
+        following: response.data.following || [],
+      });
     }
   } catch (error) {
     console.error("Kunde inte hämta tweets:", error);
     setError("Kunde inte hämta tweets.");
   }
 }
+ */
 
+export async function loadHomeTweets(
+  username,
+  setTweets,
+  setError,
+  setUserImage,
+  setCurrentUser
+) {
+  try {
+    const response = await axios.get(`http://localhost:3000/home/${username}`);
+    if (response.data.result) {
+      const tweetsFromServer = response.data.homeTweets.map((t) => ({
+        _id: t._id,
+        name: t.author?.name || "Okänd",
+        handle: "@" + (t.author?.username || "Okänd"),
+        time: t.createdAt,
+        content: t.content,
+        hashtags: t.hashtags || [],
+        comments: t.comments.map((c) => ({
+          user: c.userName?.username || "Okänd",
+          content: c.content,
+          time: c.createdAt,
+        })),
+      }));
+      setTweets(tweetsFromServer);
+      setUserImage(response.data.image);
+      setCurrentUser({
+        name: response.data.username,
+        handle: "@" + response.data.username,
+        following: response.data.following?.map((f) => f.username) || [], // bytte ut detta till det som ligger KarolinaFinal following: response.data.following || [],
+      });
+    }
+  } catch (error) {
+    console.error("Kunde inte hämta tweets:", error);
+    setError("Kunde inte hämta tweets.");
+  }
+}
 // Hämta alla tweets (för trender)
 export async function loadAllTweets(setTweets, setError) {
   try {
@@ -122,57 +167,14 @@ export async function postComment(
     onError("Misslyckades att posta kommentaren.");
   }
 }
-
-// Hämta sökresultat för Searchbar.      Karolina har kollat att det inte krockar.
-/*
-export async function fetchSearchResults(query) {
-  try {
-    const response = await fetch(
-      `http://localhost:3000/search/${encodeURIComponent(query)}` //encodeURIComponent(query) skyddar URL från att gå sönder om användaren skriver mellanslag, specialtecken, svenska bokstäver
-    );
-    const data = await response.json();
-
-    if (response.ok) {
-      return { success: true, data };
-    } else {
-      return {
-        success: false,
-        message: data.message || "Misslyckades att hämta sökresultat.",
-      };
-    }
-  } catch (error) {
-    console.error("Error during search:", error);
-    return {
-      success: false,
-      message: "Ett fel uppstod vid sökning.",
-    };
-  }
-}
-*/
-// Hämtar sökresultat från servern
+// Hämta sökresultat
 export async function fetchSearchResults(query, onSuccess, onError) {
   try {
     const res = await axios.get(
       `http://localhost:3000/search/${encodeURIComponent(query)}`
     );
-    console.log("Sökresultat från servern:", res.data);
     onSuccess(res.data);
   } catch (error) {
-    console.error("Sökfel:", error.response?.data || error.message);
     onError("Misslyckades att hämta sökresultat.");
-  }
-}
-// Hämta sökresultat från fetchresult ovan --  ny Karolina_5
-export async function handleSearch(query, setUsers, setTweets, setError) {
-  const result = await fetchSearchResults(query);
-
-  if (result.success) {
-    setUsers(result.data.users);
-    setTweets(result.data.tweets);
-    setError("");
-  } else {
-    setError(result.message);
-    setUsers([]);
-    setTweets([]);
   }
 }
