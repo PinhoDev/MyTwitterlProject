@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import "../styles/Home.css";
-import FooterUser from "../components/FooterUser.jsx";
+import FooterUser from "../Components/FooterUser.jsx";
 import Trend from "../Components/Trend.jsx";
 import Header from "../Components/Header.jsx";
 import Tweet from "../Components/Tweet.jsx";
-import SearchBar from "../Components/SearchBar.jsx"; // NYTT: import  Karolina_5
-import SearchOverlay from "../Components/SearchOverlay.jsx"; // NYTT: import   Karolina_5
+import SearchBar from "../Components/SearchBar.jsx";
+import SearchOverlay from "../Components/SearchOverlay.jsx";
 import {
   loadHomeTweets,
   postTweet,
   postComment,
-  fetchSearchResults, // NYTT: import  ///Karolina_5
+  fetchSearchResults,
 } from "../Controllers/HomeController.js";
 import { useParams } from "react-router-dom";
 
@@ -37,7 +37,7 @@ const Home = () => {
   const [searchResults, setSearchResults] = useState({ users: [], tweets: [] });
   const [searchError, setSearchError] = useState("");
 
-  useEffect(() => {
+  /* useEffect(() => {
     // const username = localStorage.getItem("username"); // Hämtar användarnamn från localStorage
     // Om användarnamn finns i localStorage, sätt currentUser och hämta tweets
     const username = user;
@@ -48,8 +48,20 @@ const Home = () => {
       });
       loadHomeTweets(username, setTweets, console.error, setUserImage);
     }
+  }, []); */
+  //Testar en ny variant av useEffect för att hämta tweets och användarinformation
+  useEffect(() => {
+    const username = user;
+    if (username) {
+      loadHomeTweets(
+        username,
+        setTweets,
+        console.error,
+        setUserImage,
+        setCurrentUser // 👈 viktig!
+      );
+    }
   }, []);
-
   // Extrahera hashtags från text
   const extractHashtags = (text) => {
     return (
@@ -116,13 +128,13 @@ const Home = () => {
     );
   };
 
-  // NYTT: Funktion för att hantera sök
+  // FUNGERAR NU FINAL KAROLINA SECOND TIME AROUND
   const handleSearchSubmit = async (query) => {
     setSearchActive(true);
     setSearchError("");
     await handleSearch(query, setSearchResults, setSearchError);
   };
-  // NYTT: 2. Hämtar data från backend och uppdaterar state
+  //FUNGERAR NU FINAL KAROLINA SECOND TIME AROUND
   const handleSearch = async (query) => {
     await fetchSearchResults(
       query,
@@ -139,11 +151,13 @@ const Home = () => {
 
   // Filtrerar och sorterar tweets: visar endast tweets från personer man följer eller sig själv
   const filteredAndSortedTweets = [...tweets]
-    .filter(
-      (tweet) =>
+    .filter((tweet) => {
+      const usernameWithoutAt = tweet.handle.replace("@", "");
+      return (
         tweet.handle === currentUser.handle ||
-        currentUser.following?.includes(tweet.handle)
-    )
+        currentUser.following?.includes(usernameWithoutAt)
+      );
+    })
     .sort((a, b) => new Date(b.time) - new Date(a.time)); // Sorterar från nyast till äldst
 
   return (
@@ -175,22 +189,17 @@ const Home = () => {
                     key={index}
                     index={index}
                     {...tweet}
+                    name={tweet.name}
                     onAddComment={addComment}
                     userImage={userImage}
                   />
                 ))}
               </div>
             </div>
-            {/* <div>
-              <h3>5 senaste från dina vänner</h3>
-              {latestFiveFriendTweets.map((tweet) => (
-                <TweetCard key={tweet._id} tweet={tweet} />
-              ))}
-            </div> */}
           </div>
 
           <div className="right-sidebar">
-            <SearchBar onSearch={handleSearchSubmit} /> {/* NYTT */}
+            <SearchBar onSearch={handleSearchSubmit} />
             {searchActive && (
               <SearchOverlay
                 users={searchResults.users}
@@ -209,7 +218,7 @@ const Home = () => {
           <FooterUser
             name={currentUser.name}
             handle={currentUser.handle}
-            userImage={userImage}
+            userImage={userImage || "/placeholder/avatar.png"} //Bytte ut profileImage mot image
           />
         </div>
       </div>

@@ -103,4 +103,45 @@ router.get("/tweets", async (req, res) => {
   }
 });
 
+//Final Karolina försöker med den hundrade grejen för att få tweetsen att funka
+// Route to get tweets of a user and their following users
+// Endpoint to display on the Home Page
+router.get("/home/:username", async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username }).select(
+      "_id username image following"
+    );
+
+    if (!user) {
+      return res.status(404).json({ result: false, message: "User not found" });
+    }
+
+    const usersToQuery = [user._id, ...user.following];
+
+    const tweets = await Tweet.find({ author: { $in: usersToQuery } })
+      .select("content createdAt author hashtags comments")
+      .populate("author", "username image") // 🔍 Detta gör att `author.username` och `author.image` kommer med
+      .populate({
+        path: "comments",
+        populate: {
+          path: "userName",
+          select: "username image",
+        },
+      })
+      .sort({ createdAt: -1 });
+
+    return res.json({
+      result: true,
+      username: user.username,
+      image: user.image,
+      homeTweets: tweets,
+    });
+  } catch (error) {
+    console.error("Error fetching tweets:", error);
+    return res
+      .status(500)
+      .json({ result: false, message: "Internal server error" });
+  }
+});
+
 module.exports = router;
