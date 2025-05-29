@@ -55,6 +55,7 @@
   height: 50px;
   border-radius: 50%;
   margin-right: 0.5rem;
+  object-fit: cover;
 }
 
 .tweetbutton {
@@ -195,7 +196,4 @@
 
 .tweet-comments button:hover {
   background-color: #0056b3;
-}
-
-.follow-button {
 }
