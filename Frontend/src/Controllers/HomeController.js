@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// Ladda tweets från backend
+// Ladda tweets från backend !!!!!!! Den här är felaktig Karolinas Final --- HHär ska vi Ha Fredrikas loadhome tweets!s
 export async function loadHomeTweets(
   username,
   setTweets,
@@ -8,12 +8,13 @@ export async function loadHomeTweets(
   setUserImage
 ) {
   try {
-    const response = await axios.get(`http://localhost:3000/home/${username}`);
+    const response = await axios.get("http://localhost:3000/home/tweets/");
     if (response.data.result) {
-      const tweetsFromServer = response.data.homeTweets.map((t) => ({
+      const tweetsFromServer = response.data.tweets.map((t) => ({
         _id: t._id, // LAGT TILL tweetens ID (krävs för kommentarer)
         name: t.author?.username || "Okänd",
         handle: "@" + (t.author?.username || "Okänd"),
+
         time: t.createdAt,
         content: t.content,
         hashtags: t.hashtags || [],
@@ -149,6 +150,7 @@ export async function fetchSearchResults(query) {
   }
 }
 */
+/*
 // Hämtar sökresultat från servern
 export async function fetchSearchResults(query, onSuccess, onError) {
   try {
@@ -174,5 +176,16 @@ export async function handleSearch(query, setUsers, setTweets, setError) {
     setError(result.message);
     setUsers([]);
     setTweets([]);
+  }
+}
+*/
+export async function fetchSearchResults(query, onSuccess, onError) {
+  try {
+    const res = await axios.get(
+      `http://localhost:3000/search/${encodeURIComponent(query)}`
+    );
+    onSuccess(res.data);
+  } catch (error) {
+    onError("Misslyckades att hämta sökresultat.");
   }
 }

@@ -10,7 +10,7 @@ import {
   loadHomeTweets,
   postTweet,
   postComment,
-  handleSearch, // NYTT: import  ///Karolina_5
+  fetchSearchResults, // NYTT: import  ///Karolina_5
 } from "../Controllers/HomeController.js";
 import { useParams } from "react-router-dom";
 
@@ -21,6 +21,7 @@ const Home = () => {
     // Här kan du hämta aktuell användare från en global state eller context
     name: "",
     handle: "",
+    following: [],
   });
 
   // Skapar en lista med exempel-tweets (förifyllda) - ska utgå ifrån de man följer
@@ -121,13 +122,27 @@ const Home = () => {
     setSearchError("");
     await handleSearch(query, setSearchResults, setSearchError);
   };
+  // NYTT: 2. Hämtar data från backend och uppdaterar state
+  const handleSearch = async (query) => {
+    await fetchSearchResults(
+      query,
+      (data) => {
+        setSearchResults({ users: data.users, tweets: data.tweets });
+        setSearchError("");
+      },
+      (errorMsg) => {
+        setSearchError(errorMsg);
+        setSearchResults({ users: [], tweets: [] });
+      }
+    );
+  };
 
   // Filtrerar och sorterar tweets: visar endast tweets från personer man följer eller sig själv
   const filteredAndSortedTweets = [...tweets]
     .filter(
       (tweet) =>
         tweet.handle === currentUser.handle ||
-        tweets.some((t) => t.handle === tweet.handle)
+        currentUser.following?.includes(tweet.handle)
     )
     .sort((a, b) => new Date(b.time) - new Date(a.time)); // Sorterar från nyast till äldst
 
