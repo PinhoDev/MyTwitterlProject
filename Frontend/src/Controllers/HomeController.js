@@ -12,13 +12,13 @@ export async function loadHomeTweets(
     if (response.data.result) {
       const tweetsFromServer = response.data.homeTweets.map((t) => ({
         _id: t._id, // LAGT TILL tweetens ID (krävs för kommentarer)
-        name: t.author.username,
-        handle: "@" + t.author.username,
+        name: t.author?.username || "Okänd",
+        handle: "@" + (t.author?.username || "okänd"),
         time: t.createdAt,
         content: t.content,
         hashtags: t.hashtags || [],
         comments: t.comments.map((c) => ({
-          user: c.userName.username,
+          user: c.userName?.username || "Okänd",
           content: c.content,
           time: c.createdAt,
         })),
@@ -39,13 +39,13 @@ export async function loadAllTweets(setTweets, setError) {
     if (res.data.result) {
       const tweets = res.data.tweets.map((t) => ({
         _id: t._id,
-        name: t.author.username,
-        handle: "@" + t.author.username,
+        name: t.author?.username || "Okänd",
+        handle: "@" + (t.author?.username || "okänd"),
         time: t.createdAt,
         content: t.content,
         hashtags: t.hashtags || [],
         comments: t.comments.map((c) => ({
-          user: c.userName.username,
+          user: c.userName?.username || "Okänd",
           content: c.content,
           time: c.createdAt,
         })),
