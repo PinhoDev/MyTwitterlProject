@@ -29,7 +29,7 @@ h2 {
 }
 
 /* Form innehåller alla input */
-form {
+.writing-fields {
   background-color: white;
   padding: 24px;
   border-radius: 12px;
@@ -102,33 +102,4 @@ input:focus {
 
 .blue-link {
   color: #1a91da;
-}
-
-/* Responsivitet */
-@media (max-width: 480px) {
-  .tweet-logo {
-    width: 80px;
-    margin: 40px auto 20px;
-  }
-
-  form {
-    padding: 16px;
-  }
-
-  input {
-    font-size: 12px;
-    padding: 10px;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-    text-align: center;
-  }
-
-  button {
-    font-size: 14px;
-    padding: 10px;
-    max-width: 100%;
-    margin: 30px auto;
-  }
 }

@@ -72,7 +72,7 @@ const SignUp = () => {
 
   return (
     <div className="auth-container">
-      <form onSubmit={handleSignup}>
+      <form className="writing-fields" onSubmit={handleSignup}>
         <img src={Twitterbird} alt="Toppbild" className="tweet-logo-signin" />
         <h1>Skapa ett konto</h1>
 

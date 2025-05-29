@@ -85,83 +85,108 @@ const ProfilePage = () => {
   return (
     <div className="sidebars">
       <div className="home-container">
-        <div className="profile-page-container">
-          <div className="topBox">
-            <div className="back-arrow-box">
-              <Link to={`/home/${currentUser.username}`}>
-                <div className="back-arrow">&#8592;</div>
-              </Link>
-              <div className="user-info">
-                <div className="name">{userDetails?.name}</div>
-                <div className="tweets">
-                  {userDetails?.tweets?.length || 0} Tweets
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="profile-header">
-            <img
-              className="cover-photo"
-              src={userDetails?.imageBackground || "/placeholder/banner.jpg"}
-              alt="Bakgrundsbild"
-            />
-            <img
-              className="profile-pic"
-              src={userDetails?.image || "/placeholder/avatar.png"}
-              alt="Profilbild"
-            />
-            {!isOwnProfile && (
-              <FollowButton
-                profileUsername={username}
-                currentUser={currentUser}
-              />
-            )}
-          </div>
-
-          <div className="profile-container">
-            <div className="name">{userDetails?.name}</div>
-            <div className="handle">@{userDetails?.username}</div>
-            <div className="bio">{userDetails?.about}</div>
-
-            <div className="meta">
-              {userDetails?.occupation && (
-                <div>💼 {userDetails.occupation}</div>
-              )}
-              {userDetails?.location && <div>🏠 {userDetails.location}</div>}
-              {userDetails?.website && <div>🔗 {userDetails.website}</div>}
-              {userDetails?.joinDate && <div>🗓️ {userDetails.joinDate}</div>}
-            </div>
-
-            <div className="stats">
-              <span>{userDetails?.following?.length || 0} följer</span>
-              <span>{userDetails?.followers?.length || 0} följare</span>
-            </div>
-          </div>
-        </div>
-
         <div className="left-sidebar">
           <div className="left-sidebar-position">
-            {error && <p>{error}</p>}
-            <div className="tweet-list">
-              {sortedTweets?.map((tweet, index) => (
-                <Tweet
-                  key={index}
-                  index={index}
-                  name={userDetails.name || "Okänd"} //Fredrica la till
-                  handle={"@" + userDetails.username} //Fredrica la till
-                  content={tweet.content}
-                  time={tweet.createdAt}
-                  comments={(tweet.comments || []).map((c) => ({
-                    //Fredrica la till för att visa kommentarer
-                    user: c.userName?.username || "Okänd",
-                    content: c.content,
-                    time: c.createdAt,
-                  }))}
-                  userImage={userDetails.image || "/placeholder/avatar.png"} //Fredrica la till
-                  onAddComment={addCommentToTweet} //Fredrica la till
+            <div className="profile-page-container">
+              <div className="banner-wrapper">
+                <div className="profile-header">
+                  <Link
+                    to={`/home/${currentUser.username}`}
+                    className="back-arrow"
+                  >
+                    ←
+                  </Link>
+                </div>
+
+                <div className="tweet-count">
+                  <h3 className="name">{userDetails?.name}</h3>
+                  <span className="counter">
+                    {userDetails?.tweets?.length || 0} Tweets
+                  </span>
+                </div>
+              </div>
+              <div className="photo-box">
+                <img
+                  className="cover-photo"
+                  src={
+                    userDetails?.imageBackground || "/placeholder/banner.jpg"
+                  }
+                  alt="Bakgrundsbild"
                 />
-              ))}
+                <img
+                  className="profile-pic"
+                  src={userDetails?.image || "/placeholder/avatar.png"}
+                  alt="Profilbild"
+                />
+              </div>
+              <div className="profile-details">
+                <div className="profile-actions">
+                  <h3 className="name">{userDetails?.name}</h3>
+                  {!isOwnProfile && (
+                    <FollowButton
+                      profileUsername={username}
+                      currentUser={currentUser}
+                    />
+                  )}
+                </div>
+
+                <div className="handle">@{userDetails?.username}</div>
+                <div className="bio">{userDetails?.about}</div>
+
+                <div className="meta">
+                  {userDetails?.occupation && (
+                    <div>💼 {userDetails.occupation}</div>
+                  )}
+                  {userDetails?.location && (
+                    <div>🏠 {userDetails.location}</div>
+                  )}
+                  {userDetails?.website && (
+                    <div>
+                      <a
+                        href={userDetails.website}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        🔗 {userDetails.website}
+                      </a>
+                    </div>
+                  )}
+                  {userDetails?.joinDate && (
+                    <div>🗓️ Joined {userDetails.joinDate}</div>
+                  )}
+                </div>
+
+                <div className="stats">
+                  <span>
+                    <strong>{userDetails?.following?.length || 0}</strong>{" "}
+                    Följer
+                  </span>
+                  <span>
+                    <strong>{userDetails?.followers?.length || 0}</strong>{" "}
+                    Följare
+                  </span>
+                </div>
+              </div>
+
+              <div className="tweet-list">
+                {sortedTweets?.map((tweet, index) => (
+                  <Tweet
+                    key={index}
+                    index={index}
+                    name={userDetails.name || "Okänd"}
+                    handle={"@" + userDetails.username}
+                    content={tweet.content}
+                    time={tweet.createdAt}
+                    comments={(tweet.comments || []).map((c) => ({
+                      user: c.userName?.username || "Okänd",
+                      content: c.content,
+                      time: c.createdAt,
+                    }))}
+                    userImage={userDetails.image || "/placeholder/avatar.png"}
+                    onAddComment={addCommentToTweet}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>

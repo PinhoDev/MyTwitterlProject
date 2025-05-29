@@ -38,34 +38,38 @@ a {
 }
 
 .profile-header {
-  position: relative;
-  width: 100%;
+  display: flex;
 }
 .cover-photo {
   width: 100%;
-  height: 230px;
+  height: 200px;
   object-fit: cover;
+  display: block;
 }
 .profile-pic {
   position: absolute;
-  bottom: -50px;
+  bottom: -60px; /* justera för hur mycket den ska sticka ut */
   left: 20px;
-  border: 4px solid white;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
+  border: 4px solid white;
+  background-color: white;
+  z-index: 10;
 }
 .profile-container {
-  padding: 60px 20px 20px 20px;
+  margin-top: 80px; /* utrymme för profilbild */
+  padding: 20px;
 }
 .name {
+  margin: auto;
   font-size: 22px;
   font-weight: bold;
 }
 .handle {
   color: gray;
   margin-bottom: 10px;
+  font-size: 16px;
 }
 .bio {
   margin: 10px 0;
@@ -73,16 +77,17 @@ a {
 .meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
-  color: gray;
-  font-size: 14px;
+  gap: 10px;
+  color: #555;
 }
 .meta i {
   margin-right: 5px;
 }
 .stats {
   margin-top: 10px;
-  font-weight: bold;
+  font-weight: 500;
+  display: flex;
+  gap: 20px;
 }
 .stats span {
   margin-right: 15px;
@@ -97,4 +102,29 @@ a {
   border-radius: 9999px;
   border: none;
   cursor: pointer;
+}
+
+.banner-wrapper {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.profile-details {
+  margin-top: 80px;
+  padding: 20px;
+}
+
+.tweet-count {
+  margin-bottom: 20px;
+}
+.counter {
+  font-size: 15px;
+}
+
+.photo-box {
+  position: relative; /* viktigt! */
+  width: 100%;
+  height: auto;
 }

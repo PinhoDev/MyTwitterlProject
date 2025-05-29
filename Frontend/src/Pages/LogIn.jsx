@@ -26,7 +26,7 @@ function LogIn() {
   return (
     <>
       <div className="auth-container">
-        <form onSubmit={handleSubmit}>
+        <form className="writing-fields" onSubmit={handleSubmit}>
           <img className="tweet-logo-login" src={Twitterbird} alt="bild" />
           <h1>Logga in på Twitter</h1>
           <div className="input-wrapper">

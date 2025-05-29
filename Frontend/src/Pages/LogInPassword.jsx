@@ -32,7 +32,7 @@ function LogInPassword() {
 
   return (
     <div className="auth-container">
-      <form onSubmit={handleSubmit}>
+      <form className="writing-fields" onSubmit={handleSubmit}>
         <img className="tweet-logo-login" src={Twitterbird} alt="Logotyp" />
         <h1>Ange ditt lösenord</h1>
 
