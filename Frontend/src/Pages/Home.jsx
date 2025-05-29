@@ -62,7 +62,7 @@ const Home = () => {
       );
     }
   }, []);
-  console.log("currentUser in Home:", currentUser);
+  console.log("Current user:", tweets);
   // Extrahera hashtags från text
   const extractHashtags = (text) => {
     return (
@@ -181,7 +181,7 @@ const Home = () => {
                     index={index}
                     {...tweet}
                     onAddComment={addComment}
-                    userImage={userImage}
+                    userImage={tweet.image}
                   />
                 ))}
               </div>

@@ -56,6 +56,7 @@ export async function loadHomeTweets(
         name: t.author?.name || "Okänd",
         handle: "@" + (t.author?.username || "Okänd"),
         time: t.createdAt,
+        image: t.author?.image || "",
         content: t.content,
         hashtags: t.hashtags || [],
         comments: t.comments.map((c) => ({
