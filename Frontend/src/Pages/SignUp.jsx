@@ -43,6 +43,7 @@ const SignUp = () => {
     setError("");
     setLoading(true);
 
+    console.log("User data", newUser);
     const result = await createNewUser(newUser, setError);
     if (result.success) {
       setLoading(false);
@@ -51,8 +52,8 @@ const SignUp = () => {
         setSuccess(false);
         setTimeout(() => {
           navigate("/");
-        }, 1000);
-      }, 1000);
+        }, 800);
+      }, 800);
     } else {
       setLoading(false);
       setError(result.message || "Registrering misslyckades");
@@ -66,7 +67,7 @@ const SignUp = () => {
     { name: "name", placeholder: "Namn" },
     { name: "about", placeholder: "Om" },
     { name: "occupation", placeholder: "Sysselsättning" },
-    { name: "hometown", placeholder: "Stad" },
+    { name: "location", placeholder: "Stad" },
     { name: "website", placeholder: "Hemsida" },
   ];
 

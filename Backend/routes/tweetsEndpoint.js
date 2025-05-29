@@ -24,8 +24,8 @@ router.post("/:username/tweet", async (req, res) => {
       content,
       author: userId,
       hashtags,
-      createdAt: new Date(),
       comments: [],
+      createdAt: new Date(),
     });
     await newTweet.save();
 

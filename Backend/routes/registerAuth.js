@@ -7,7 +7,17 @@ const User = require("../models/userSchema");
 // The request body should contain the username, email, password, and name
 router.post("/register", async (req, res) => {
   try {
-    const { username, email, password, name } = req.body;
+    const {
+      username,
+      email,
+      name,
+      about,
+      occupation,
+      location,
+      website,
+      password,
+      image,
+    } = req.body;
 
     // Check that all required fields are provided
     if (!username || !email || !password || !name) {
@@ -37,8 +47,13 @@ router.post("/register", async (req, res) => {
     const newUser = new User({
       username,
       email,
-      password: hashedPassword,
       name,
+      about,
+      occupation,
+      location,
+      website,
+      password: hashedPassword,
+      createdAt: new Date(),
     });
 
     // Save the new user to the database and respond with success
