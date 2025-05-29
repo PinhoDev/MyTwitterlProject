@@ -9,8 +9,10 @@ import FollowButton from "../Components/FollowButton.jsx";
 import SearchBar from "../Components/SearchBar.jsx";
 import SearchOverlay from "../Components/SearchOverlay.jsx";
 import { loadUserDetails } from "../Controllers/ProfileController.js";
-import { fetchSearchResults } from "../Controllers/HomeController.js";
-import { postComment } from "../Controllers/HomeController.js"; ///Fredrica la till
+import {
+  fetchSearchResults,
+  postComment,
+} from "../Controllers/HomeController.js";
 
 const Profile = () => {
   const { user } = useParams();
@@ -19,27 +21,48 @@ const Profile = () => {
   const [error, setError] = useState("");
   const [refreshTrendTrigger, setRefreshTrendTrigger] = useState(0);
   const [currentUser, setCurrentUser] = useState({
-    name: "Karo",
-    handle: "@Karo",
-    username: "Karo",
-    following: ["gudrun"], // för att testa FollowButton-logik
+    name: "",
+    handle: "",
+    username: "",
+    following: [],
   });
 
-  // Samma sökfunktionalitet som i Home
   const [searchActive, setSearchActive] = useState(false);
   const [searchResults, setSearchResults] = useState({ users: [], tweets: [] });
   const [searchError, setSearchError] = useState("");
 
   useEffect(() => {
+    console.log("localUsername:", localStorage.getItem("username"));
     const localUsername = localStorage.getItem("username");
-    if (localUsername) {
-      setCurrentUser({
-        name: localUsername,
-        handle: "@" + localUsername,
-        username: localUsername,
-      });
-    }
+    if (!localUsername) return;
 
+    // Hämta nuvarande användare från backend (inkl. following)
+    fetch(`/profile/${localUsername}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) {
+          const u = data.userDetails;
+          setCurrentUser({
+            name: u.name,
+            username: u.username,
+            handle: "@" + u.username,
+            following: u.following.map((f) => f.username), // Bara usernames
+          });
+          console.log("currentUser after fetch:", {
+            name: u.name,
+            username: u.username,
+            handle: "@" + u.username,
+            following: u.following.map((f) => f.username),
+          });
+        } else {
+          setError("Kunde inte hämta aktuell användare");
+        }
+      })
+      .catch(() => {
+        setError("Fel vid hämtning av användare");
+      });
+
+    // Ladda användaren som profilen visar
     loadUserDetails(user, setUserDetails, setError);
   }, [user]);
 
@@ -50,6 +73,18 @@ const Profile = () => {
   const handleSearchSubmit = async (query) => {
     setSearchActive(true);
     setSearchError("");
+
+    await fetchSearchResults(
+      query,
+      (data) => {
+        setSearchResults({ users: data.users, tweets: data.tweets });
+        setSearchError("");
+      },
+      (errorMsg) => {
+        setSearchError(errorMsg);
+        setSearchResults({ users: [], tweets: [] });
+      }
+    );
   };
 
   const addCommentToTweet = (index, commentText) => {
@@ -65,20 +100,6 @@ const Profile = () => {
         loadUserDetails(user, setUserDetails, setError);
       },
       console.error
-    );
-  };
-
-  const handleSearch = async (query) => {
-    await fetchSearchResults(
-      query,
-      (data) => {
-        setSearchResults({ users: data.users, tweets: data.tweets });
-        setSearchError("");
-      },
-      (errorMsg) => {
-        setSearchError(errorMsg);
-        setSearchResults({ users: [], tweets: [] });
-      }
     );
   };
 
@@ -111,9 +132,6 @@ const Profile = () => {
               src={userDetails?.image || "/placeholder/avatar.png"}
               alt="Profilbild"
             />
-          </div>
-          <div className="wanttosee-button">
-            {/* ✅ FollowButton visas här, om det inte är din egen profil */}
             {currentUser.username && user !== currentUser.username && (
               <FollowButton
                 profileUsername={username}
@@ -122,6 +140,7 @@ const Profile = () => {
               />
             )}
           </div>
+
           <div className="profile-container">
             <div className="name">{userDetails?.name}</div>
             <div className="handle">@{userDetails?.username}</div>
