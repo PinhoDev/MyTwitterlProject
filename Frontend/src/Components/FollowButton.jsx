@@ -17,9 +17,12 @@ function FollowButton({ profileUsername, currentUser, onToggle }) {
 
   async function toggleFollow() {
     try {
-      await axios.post(`/api/users/${currentUser.username}/following`, {
-        following: profileUsername,
-      });
+      await axios.post(
+        `http://localhost:3000/${currentUser.username}/following`,
+        {
+          following: profileUsername,
+        }
+      );
 
       setIsFollowing(!isFollowing);
 
