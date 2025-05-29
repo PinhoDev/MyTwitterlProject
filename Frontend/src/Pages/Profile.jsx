@@ -19,9 +19,10 @@ const Profile = () => {
   const [error, setError] = useState("");
   const [refreshTrendTrigger, setRefreshTrendTrigger] = useState(0);
   const [currentUser, setCurrentUser] = useState({
-    name: "",
-    handle: "",
-    username: "",
+    name: "Karo",
+    handle: "@Karo",
+    username: "Karo",
+    following: ["gudrun"], // för att testa FollowButton-logik
   });
 
   // Samma sökfunktionalitet som i Home
@@ -42,8 +43,6 @@ const Profile = () => {
     loadUserDetails(user, setUserDetails, setError);
   }, [user]);
 
-  const isOwnProfile = user === currentUser.username;
-
   const sortedTweets = userDetails?.tweets?.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
@@ -53,8 +52,6 @@ const Profile = () => {
     setSearchError("");
   };
 
-  //Fredrica la till för att lägga till kommentarer
-  // Funktion för att lägga till en kommentar på en tweet
   const addCommentToTweet = (index, commentText) => {
     const tweet = userDetails.tweets[index];
     const username = currentUser.username;
@@ -65,7 +62,7 @@ const Profile = () => {
       tweet._id,
       commentText,
       () => {
-        loadUserDetails(user, setUserDetails, setError); // Ladda om för att visa nya kommentaren
+        loadUserDetails(user, setUserDetails, setError);
       },
       console.error
     );
@@ -114,14 +111,17 @@ const Profile = () => {
               src={userDetails?.image || "/placeholder/avatar.png"}
               alt="Profilbild"
             />
-            {!isOwnProfile && (
+          </div>
+          <div className="wanttosee-button">
+            {/* ✅ FollowButton visas här, om det inte är din egen profil */}
+            {currentUser.username && user !== currentUser.username && (
               <FollowButton
                 profileUsername={username}
                 currentUser={currentUser}
+                onToggle={() => loadUserDetails(user, setUserDetails, setError)}
               />
             )}
           </div>
-
           <div className="profile-container">
             <div className="name">{userDetails?.name}</div>
             <div className="handle">@{userDetails?.username}</div>
@@ -151,18 +151,17 @@ const Profile = () => {
                 <Tweet
                   key={index}
                   index={index}
-                  name={userDetails.name || "Okänd"} //Fredrica la till
-                  handle={"@" + userDetails.username} //Fredrica la till
+                  name={userDetails.name || "Okänd"}
+                  handle={"@" + userDetails.username}
                   content={tweet.content}
                   time={tweet.createdAt}
                   comments={(tweet.comments || []).map((c) => ({
-                    //Fredrica la till för att visa kommentarer
                     user: c.userName?.username || "Okänd",
                     content: c.content,
                     time: c.createdAt,
                   }))}
-                  userImage={userDetails.image || "/placeholder/avatar.png"} //Fredrica la till
-                  onAddComment={addCommentToTweet} //Fredrica la till
+                  userImage={userDetails.image || "/placeholder/avatar.png"}
+                  onAddComment={addCommentToTweet}
                 />
               ))}
             </div>
@@ -188,10 +187,11 @@ const Profile = () => {
         <FooterUser
           name={currentUser.name}
           handle={currentUser.handle}
-          userImage={userDetails?.image || "/placeholder/avatar.png"} //Bytte ut profileImage mot image
+          userImage={userDetails?.image || "/placeholder/avatar.png"}
         />
       </div>
     </div>
   );
 };
+
 export default Profile;
