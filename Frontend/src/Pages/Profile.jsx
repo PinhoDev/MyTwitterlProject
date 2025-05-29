@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import "../styles/Home.css";
 import "../styles/ProfileComponents.css";
-import FooterUser from "../components/FooterUser.jsx";
+import FooterUser from "../Components/FooterUser.jsx";
 import Trend from "../Components/Trend.jsx";
 import Tweet from "../Components/Tweet.jsx";
 import FollowButton from "../Components/FollowButton.jsx";
@@ -11,7 +11,6 @@ import SearchOverlay from "../Components/SearchOverlay.jsx";
 import { loadUserDetails } from "../Controllers/ProfileController.js";
 import { fetchSearchResults } from "../Controllers/HomeController.js";
 import { postComment } from "../Controllers/HomeController.js"; ///Fredrica la till
-
 
 const Profile = () => {
   const { user } = useParams();
@@ -49,8 +48,11 @@ const Profile = () => {
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
-
   const handleSearchSubmit = async (query) => {
+    setSearchActive(true);
+    setSearchError("");
+    await handleSearch(query, setSearchResults, setSearchError);
+  };
 
   //Fredrica la till för att lägga till kommentarer
   // Funktion för att lägga till en kommentar på en tweet
@@ -68,12 +70,6 @@ const Profile = () => {
       },
       console.error
     );
-  };
-
-  const handleSearchQuery = async (query) => {
-    setSearchActive(true);
-    setSearchError("");
-    await handleSearch(query);
   };
 
   const handleSearch = async (query) => {

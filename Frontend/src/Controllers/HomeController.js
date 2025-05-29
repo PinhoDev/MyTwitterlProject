@@ -5,16 +5,17 @@ export async function loadHomeTweets(
   username,
   setTweets,
   setError,
-  setUserImage
+  setUserImage,
+  setCurrentUser
 ) {
   try {
-    const response = await axios.get("http://localhost:3000/home/tweets/");
+    const response = await axios.get(`http://localhost:3000/home/${username}`); ///HÄr stod förut felaktigt axios.get("http://localhost:3000/tweets/");
     if (response.data.result) {
-      const tweetsFromServer = response.data.tweets.map((t) => ({
+      const tweetsFromServer = response.data.homeTweets.map((t) => ({
+        //// HÄr stod felaktigt  response.data.tweets.map(...)
         _id: t._id, // LAGT TILL tweetens ID (krävs för kommentarer)
         name: t.author?.username || "Okänd",
         handle: "@" + (t.author?.username || "Okänd"),
-
         time: t.createdAt,
         content: t.content,
         hashtags: t.hashtags || [],
@@ -26,6 +27,12 @@ export async function loadHomeTweets(
       }));
       setTweets(tweetsFromServer);
       setUserImage(response.data.image);
+      // ⬅️ Lägg till denna rad!
+      setCurrentUser({
+        name: response.data.username,
+        handle: "@" + response.data.username,
+        following: response.data.following || [],
+      });
     }
   } catch (error) {
     console.error("Kunde inte hämta tweets:", error);
