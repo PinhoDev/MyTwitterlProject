@@ -32,9 +32,7 @@ function LogInPassword() {
 
   return (
     <div className="auth-container">
-      {error && <p className="error-message">{error}</p>}
-
-      <form onSubmit={handleSubmit}>
+      <form className="writing-fields" onSubmit={handleSubmit}>
         <img className="tweet-logo-login" src={Twitterbird} alt="Logotyp" />
         <h1>Ange ditt lösenord</h1>
 
@@ -52,6 +50,9 @@ function LogInPassword() {
             onChange={handleAuthentication}
           />
         </div>
+
+        {error && <p className="error-message">{error}</p>}
+
         <button className="authbutton" type="submit">
           Logga in
         </button>

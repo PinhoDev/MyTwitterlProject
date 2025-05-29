@@ -26,8 +26,7 @@ function LogIn() {
   return (
     <>
       <div className="auth-container">
-        {error && <p>{error}</p>}
-        <form onSubmit={handleSubmit}>
+        <form className="writing-fields" onSubmit={handleSubmit}>
           <img className="tweet-logo-login" src={Twitterbird} alt="bild" />
           <h1>Logga in på Twitter</h1>
           <div className="input-wrapper">
@@ -39,6 +38,9 @@ function LogIn() {
               placeholder="E-postadress eller användarnamn"
             />
           </div>
+
+          {error && <p className="error-message">{error}</p>}
+
           <button className="authbutton" type="submit">
             Nästa
           </button>

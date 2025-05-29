@@ -41,7 +41,16 @@ export async function navigateToHomePage(
   if (loginResponse.success) {
     navigate(`/home/${identifier}`);
   } else {
-    setError(loginResponse.message);
+    let msg = loginResponse.message?.toLowerCase();
+
+    if (msg?.includes("invalid") && msg?.includes("password")) {
+      msg = "Felaktigt lösenord";
+    } else if (msg?.includes("user not found")) {
+      msg = "Användare hittades inte";
+    } else {
+      msg = "Fel lösenord";
+    }
+    setError(msg);
   }
 }
 
@@ -73,7 +82,9 @@ export async function navigateToLoginPassword(
         state: { emailOrUsername }, // skickar med till nästa sida om du behöver det där
       });
     } else {
-      setError(result.message);
+      let msg = result.message;
+      if (msg === "User not found") msg = "Användare hittades inte";
+      setError(msg);
     }
   } catch (error) {
     console.error("Error in navigateToLoginPassword:", error);
