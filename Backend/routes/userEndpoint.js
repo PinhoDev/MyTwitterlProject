@@ -10,19 +10,19 @@ const Tweet = require("../models/tweetSchema");
 // The request parameter should contain the username of the user
 router.get("/home/:username", async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username }).select(
-      "_id username image following"
-    );
+    const user = await User.findOne({ username: req.params.username })
+      .select("_id username image following")
+      .populate("following", "_id username name image"); //// Testar för att få upp mina och vänners tweets på Home Karolina Final
     if (!user) {
       return res.status(404).json({ result: false, message: "User not found" });
     }
 
-    const usersToQuery = [user._id, ...user.following];
+    const usersToQuery = [user._id, ...user.following.map((u) => u._id)]; /// Lägger till detta  för att skicka med followings tweet     user.following.map((u) => u._id)];
     console.log("Users to query:", usersToQuery);
 
     const tweets = await Tweet.find({ author: { $in: usersToQuery } })
       .select("content createdAt")
-      .populate("author", "username image")
+      .populate("author", "username name image") // Behövdes name mellan username och image Karolina Final,
       .populate({
         path: "comments",
         populate: {
@@ -37,6 +37,7 @@ router.get("/home/:username", async (req, res) => {
       result: true,
       username: user.username,
       image: user.image,
+      following: user.following, ///Needed to add following to the response Karolina Final
       homeTweets: tweets,
     });
 

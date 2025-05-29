@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-//Fråga till team --- ska det stå follow /unfollow eller på svenska??
-function FollowButton({ profileUsername, currentUser }) {
+import axios from "axios";
+
+function FollowButton({ profileUsername, currentUser, onToggle }) {
   const [isFollowing, setIsFollowing] = useState(false);
-  //ska vi kolla här om usern är follower eller skulle det vara i backendanrop/API-respons? Bättre i backend kanske
+
   useEffect(() => {
     if (currentUser && currentUser.following) {
       const follows = currentUser.following.some((user) =>
@@ -16,26 +17,28 @@ function FollowButton({ profileUsername, currentUser }) {
 
   async function toggleFollow() {
     try {
-      const response = await fetch(`/api/users/${currentUsername}/following`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ following: profileUsername }),
-      });
-      if (response.ok) {
-        setIsFollowing(!isFollowing);
-      } else {
-        console.error("Något gick fel med följarhanteringen");
+      await axios.post(
+        `http://localhost:3000/${currentUser.username}/following`,
+        {
+          following: profileUsername,
+        }
+      );
+
+      setIsFollowing(!isFollowing);
+
+      if (onToggle) {
+        onToggle(); // 🔁 Hämta ny användardata utan att ladda om sidan
       }
     } catch (error) {
       console.error("Fel vid follow/unfollow:", error);
     }
   }
+
   return (
     <button className="follow-button" onClick={toggleFollow}>
       {isFollowing ? "Sluta följa" : "Följ"}
     </button>
   );
 }
+
 export default FollowButton;

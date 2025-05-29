@@ -16,22 +16,6 @@ export async function loadUserDetails(username, setUser, setError) {
 }
 
 //Function to get tweets
-/* export async function loadUserTweets(username, setTweets, setError) {
-  try {
-    const result = await getUserOwnTweets(username);
-    if (result.success) {
-      setTweets(result.tweets);
-    } else {
-      setError(result.message);
-    }
-  } catch (error) {
-    console.error("Error loading user's tweets:", error);
-    setError("Något gick fel när tweets skulle hämtas.");
-  }
-}
- */
-
-//Function to get tweets
 export async function loadUserTweets(username, setTweets, setError) {
   try {
     const userDetailsResult = await getUserdetails(username);
