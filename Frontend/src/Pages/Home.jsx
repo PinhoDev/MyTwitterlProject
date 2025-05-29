@@ -21,6 +21,7 @@ const Home = () => {
     // Här kan du hämta aktuell användare från en global state eller context
     name: "",
     handle: "",
+    following: [],
   });
 
   // Skapar en lista med exempel-tweets (förifyllda) - ska utgå ifrån de man följer
@@ -123,14 +124,12 @@ const Home = () => {
     await fetchSearchResults(
       query,
       (data) => {
-        setUsers(data.users);
-        setTweets(data.tweets);
+        setSearchResults({ users: data.users, tweets: data.tweets });
         setSearchError("");
       },
       (errorMsg) => {
         setSearchError(errorMsg);
-        setUsers([]);
-        setTweets([]);
+        setSearchResults({ users: [], tweets: [] });
       }
     );
   };
@@ -140,7 +139,7 @@ const Home = () => {
     .filter(
       (tweet) =>
         tweet.handle === currentUser.handle ||
-        tweets.some((t) => t.handle === tweet.handle)
+        currentUser.following?.includes(tweet.handle)
     )
     .sort((a, b) => new Date(b.time) - new Date(a.time)); // Sorterar från nyast till äldst
 

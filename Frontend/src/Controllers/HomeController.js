@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// Ladda tweets från backend
+// Ladda tweets från backend !!!!!!! Den här är felaktig Karolinas Final --- HHär ska vi Ha Fredrikas loadhome tweets!s
 export async function loadHomeTweets(
   username,
   setTweets,
@@ -8,9 +8,9 @@ export async function loadHomeTweets(
   setUserImage
 ) {
   try {
-    const response = await axios.get(`http://localhost:3000/home/${username}`);
+    const response = await axios.get("http://localhost:3000/home/tweets/");
     if (response.data.result) {
-      const tweetsFromServer = response.data.homeTweets.map((t) => ({
+      const tweetsFromServer = response.data.tweets.map((t) => ({
         _id: t._id, // LAGT TILL tweetens ID (krävs för kommentarer)
         name: t.author?.username || "Okänd",
         handle: "@" + (t.author?.username || "okänd"),
