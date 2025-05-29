@@ -10,14 +10,14 @@ const Tweet = require("../models/tweetSchema");
 // The request parameter should contain the username of the user
 router.get("/home/:username", async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username }).select(
-      "_id username image following"
-    );
+    const user = await User.findOne({ username: req.params.username })
+      .select("_id username image following")
+      .populate("following", "_id username name image"); //// Testar för att få upp mina och vänners tweets på Home Karolina Final
     if (!user) {
       return res.status(404).json({ result: false, message: "User not found" });
     }
 
-    const usersToQuery = [user._id, ...user.following];
+    const usersToQuery = [user._id, ...user.following.map((u) => u._id)]; /// Lägger till detta  för att skicka med followings tweet     user.following.map((u) => u._id)];
     console.log("Users to query:", usersToQuery);
 
     const tweets = await Tweet.find({ author: { $in: usersToQuery } })
@@ -33,8 +33,6 @@ router.get("/home/:username", async (req, res) => {
       .sort({ createdAt: -1 });
 
     // Respond with success and the username, image, and tweets of the user and their following users
-    console.log("Följer dessa användare:", user.following); // ✅ detta är rätt
-
     return res.json({
       result: true,
       username: user.username,
