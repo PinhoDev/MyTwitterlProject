@@ -88,24 +88,9 @@ router.post("/:username/tweet/comment", async (req, res) => {
   }
 });
 
-// Hämta alla tweets i databasen (för trender) var tvungen att ha denna route
-// så att trenderna kan visas på startsidan
-router.get("/tweets", async (req, res) => {
-  try {
-    const tweets = await Tweet.find({})
-      .populate("author", "username")
-      .populate("comments.userName", "username");
-
-    return res.json({ result: true, tweets });
-  } catch (error) {
-    console.error("Fel vid hämtning av alla tweets:", error);
-    return res.status(500).json({ result: false, message: "Serverfel" });
-  }
-});
-
-//Final Karolina försöker med den hundrade grejen för att få tweetsen att funka
 // Route to get tweets of a user and their following users
 // Endpoint to display on the Home Page
+// The request parameter should contain the username of the user
 router.get("/home/:username", async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username }).select(
@@ -141,6 +126,22 @@ router.get("/home/:username", async (req, res) => {
     return res
       .status(500)
       .json({ result: false, message: "Internal server error" });
+  }
+});
+
+// Route to get all tweets
+// Endpoint to get all tweets and it use in the Home Page
+// This endpoint is used to display all tweets on the Home Page
+router.get("/tweets", async (req, res) => {
+  try {
+    const tweets = await Tweet.find({})
+      .populate("author", "username")
+      .populate("comments.userName", "username");
+
+    return res.json({ result: true, tweets });
+  } catch (error) {
+    console.error("Fel vid hämtning av alla tweets:", error);
+    return res.status(500).json({ result: false, message: "Serverfel" });
   }
 });
 
