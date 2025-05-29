@@ -11,6 +11,11 @@
   z-index: 1000;
 }
 
+.overlay-position-info {
+  margin-top: 15px;
+  margin-left: 20px;
+}
+
 .overlay-content {
   background: white;
   padding: 2rem;
@@ -22,13 +27,13 @@
   flex-direction: column;
 }
 
-h2 {
+h4 {
   font-size: 20px;
 }
 
 .overlay-content .footer-userimg-logout {
-  width: 50px;
-  height: auto;
+  width: 70px;
+  height: 70px;
   align-self: center;
   margin-bottom: 1rem;
 }
@@ -36,7 +41,7 @@ h2 {
 .dots-button {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 30px;
   cursor: pointer;
   color: #333;
   padding: 0 10px;

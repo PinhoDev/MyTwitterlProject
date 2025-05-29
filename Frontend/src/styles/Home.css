@@ -1,3 +1,9 @@
+.home-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .home-container {
   display: flex;
   background-color: white;
@@ -38,6 +44,20 @@
 .hashtag {
   color: #1da1f2;
   cursor: pointer;
+}
+
+.tweet-header {
+  display: flex;
+}
+
+.user-image-tweet-container {
+}
+
+.user-image-tweet {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
 }
 
 .tweetbutton {

@@ -58,10 +58,16 @@ const Tweet = ({
       </div>
         */}
       <div className="tweet-header">
-        <div className="user-imagecontainer">
+        <div className="user-image-tweet-container">
           <Link to={`/profile/${handle.replace("@", "")}`}>
-            <img src={userImage} alt="Profilbild" className="user-image" />
+            <img
+              src={userImage}
+              alt="Profilbild"
+              className="user-image-tweet"
+            />
           </Link>
+        </div>
+        <div className="tweet-header-text">
           <Link
             to={`/profile/${handle.replace("@", "")}`}
             className="tweet-author-link"
@@ -71,35 +77,34 @@ const Tweet = ({
               {handle} · {formatRelativeTime(time)}
             </span>
           </Link>
+
+          <div className="tweet-content">{formatTweetContent(content)}</div>
+          <button
+            onClick={() => setShowComments((prev) => !prev)}
+            className="comment-toggle"
+          >
+            💬 {comments.length}
+          </button>
         </div>
-
-        <div className="tweet-content">{formatTweetContent(content)}</div>
-        <button
-          onClick={() => setShowComments((prev) => !prev)}
-          className="comment-toggle"
-        >
-          💬 {comments.length}
-        </button>
-
-        {showComments && (
-          <div ref={commentRef} className="tweet-comments">
-            <textarea
-              placeholder="Skriv en kommentar..."
-              value={commentText}
-              onChange={(e) => setCommentText(e.target.value)}
-            />
-            <button onClick={handleComment}>Skicka</button>
-            {comments.map((comment, i) => (
-              <div key={i} className="comment-bubble">
-                <strong>{comment.user}</strong>: •{" "}
-                {formatRelativeTime(comment.time)}
-                <br /> {formatTweetContent(comment.content)}
-                {/*Fredrica la till för att hashtags ska kunna fungera för kommentarer */}
-              </div>
-            ))}
-          </div>
-        )}
       </div>
+      {showComments && (
+        <div ref={commentRef} className="tweet-comments">
+          <textarea
+            placeholder="Skriv en kommentar..."
+            value={commentText}
+            onChange={(e) => setCommentText(e.target.value)}
+          />
+          <button onClick={handleComment}>Skicka</button>
+          {comments.map((comment, i) => (
+            <div key={i} className="comment-bubble">
+              <strong>{comment.user}</strong>: •{" "}
+              {formatRelativeTime(comment.time)}
+              <br /> {formatTweetContent(comment.content)}
+              {/*Fredrica la till för att hashtags ska kunna fungera för kommentarer */}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

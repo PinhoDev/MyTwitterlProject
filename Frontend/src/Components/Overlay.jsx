@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles/Overlay.css";
 
-const Overlay = () => {
+const Overlay = ({ userImage }) => {
   const [visible, setVisible] = useState(false);
 
   const openOverlay = () => setVisible(true);
@@ -17,11 +17,11 @@ const Overlay = () => {
         <div className="overlay">
           <div className="overlay-content">
             <img
-              src="https://randomuser.me/api/portraits/men/75.jpg"
+              src={userImage || "/placeholder/avatar.png"}
               alt="Profilbild"
               className="footer-userimg-logout"
             />
-            <h2>Logga ut från TwitterClone?</h2>
+            <h4>Logga ut från TwitterClone?</h4>
             <div className="button-group">
               <button
                 className="logout-button"

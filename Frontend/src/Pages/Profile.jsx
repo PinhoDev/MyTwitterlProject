@@ -104,141 +104,148 @@ const Profile = () => {
   };
 
   return (
-    <div className="sidebars">
-      <div className="home-container">
-        <div className="left-sidebar">
-          <div className="left-sidebar-position">
-            <div className="profile-page-container">
-              <div className="banner-wrapper">
-                <div className="profile-header">
-                  <Link
-                    to={`/home/${currentUser.username}`}
-                    className="back-arrow"
-                  >
-                    ←
-                  </Link>
-                </div>
-
-                <div className="tweet-count">
-                  <h3 className="name">{userDetails?.name}</h3>
-                  <span className="counter">
-                    {userDetails?.tweets?.length || 0} Tweets
-                  </span>
-                </div>
-              </div>
-              <div className="photo-box">
-                <img
-                  className="cover-photo"
-                  src={
-                    userDetails?.imageBackground || "/placeholder/banner.jpg"
-                  }
-                  alt="Bakgrundsbild"
-                />
-                <img
-                  className="profile-pic"
-                  src={userDetails?.image || "/placeholder/avatar.png"}
-                  alt="Profilbild"
-                />
-              </div>
-              <div className="profile-details">
-                <div className="profile-actions">
-                  <h3 className="name">{userDetails?.name}</h3>
-
-                  {currentUser.username && user !== currentUser.username && (
-                    <FollowButton
-                      profileUsername={username}
-                      currentUser={currentUser}
-                      onToggle={() =>
-                        loadUserDetails(user, setUserDetails, setError)
-                      }
-                    />
-                  )}
-                </div>
-                <div className="handle">@{userDetails?.username}</div>
-                <div className="bio">{userDetails?.about}</div>
-
-                <div className="meta">
-                  {userDetails?.occupation && (
-                    <div>💼 {userDetails.occupation}</div>
-                  )}
-                  {userDetails?.location && (
-                    <div>🏠 {userDetails.location}</div>
-                  )}
-                  {userDetails?.website && (
-                    <div>
-                      <a
-                        href={userDetails.website}
-                        target="_blank"
-                        rel="noreferrer"
+    <>
+      <div className="home-page">
+        <div className="sidebars">
+          <div className="home-container">
+            <div className="left-sidebar">
+              <div className="left-sidebar-position">
+                <div className="profile-page-container">
+                  <div className="banner-wrapper">
+                    <div className="profile-header">
+                      <Link
+                        to={`/home/${currentUser.username}`}
+                        className="back-arrow"
                       >
-                        🔗 {userDetails.website}
-                      </a>
+                        ←
+                      </Link>
                     </div>
-                  )}
-                  {userDetails?.joinDate && (
-                    <div>🗓️ Joined {userDetails.joinDate}</div>
-                  )}
-                </div>
 
-                <div className="stats">
-                  <span>
-                    <strong>{userDetails?.following?.length || 0}</strong>{" "}
-                    Följer
-                  </span>
-                  <span>
-                    <strong>{userDetails?.followers?.length || 0}</strong>{" "}
-                    Följare
-                  </span>
+                    <div className="tweet-count">
+                      <h3 className="name">{userDetails?.name}</h3>
+                      <span className="counter">
+                        {userDetails?.tweets?.length || 0} Tweets
+                      </span>
+                    </div>
+                  </div>
+                  <div className="photo-box">
+                    <img
+                      className="cover-photo"
+                      src={
+                        userDetails?.imageBackground ||
+                        "/placeholder/banner.jpg"
+                      }
+                      alt="Bakgrundsbild"
+                    />
+                    <img
+                      className="profile-pic"
+                      src={userDetails?.image || "/placeholder/avatar.png"}
+                      alt="Profilbild"
+                    />
+                  </div>
+                  <div className="profile-details">
+                    <div className="profile-actions">
+                      <h3 className="name">{userDetails?.name}</h3>
+
+                      {currentUser.username &&
+                        user !== currentUser.username && (
+                          <FollowButton
+                            profileUsername={username}
+                            currentUser={currentUser}
+                            onToggle={() =>
+                              loadUserDetails(user, setUserDetails, setError)
+                            }
+                          />
+                        )}
+                    </div>
+                    <div className="handle">@{userDetails?.username}</div>
+                    <div className="bio">{userDetails?.about}</div>
+
+                    <div className="meta">
+                      {userDetails?.occupation && (
+                        <div>💼 {userDetails.occupation}</div>
+                      )}
+                      {userDetails?.location && (
+                        <div>🏠 {userDetails.location}</div>
+                      )}
+                      {userDetails?.website && (
+                        <div>
+                          <a
+                            href={userDetails.website}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            🔗 {userDetails.website}
+                          </a>
+                        </div>
+                      )}
+                      {userDetails?.joinDate && (
+                        <div>🗓️ Joined {userDetails.joinDate}</div>
+                      )}
+                    </div>
+
+                    <div className="stats">
+                      <span>
+                        <strong>{userDetails?.following?.length || 0}</strong>{" "}
+                        Följer
+                      </span>
+                      <span>
+                        <strong>{userDetails?.followers?.length || 0}</strong>{" "}
+                        Följare
+                      </span>
+                    </div>
+                  </div>
+
+                  {error && <p>{error}</p>}
+                  <div className="tweet-list">
+                    {sortedTweets?.map((tweet, index) => (
+                      <Tweet
+                        key={index}
+                        index={index}
+                        name={userDetails.name || "Okänd"}
+                        handle={"@" + userDetails.username}
+                        content={tweet.content}
+                        time={tweet.createdAt}
+                        comments={(tweet.comments || []).map((c) => ({
+                          user: c.userName?.username || "Okänd",
+                          content: c.content,
+                          time: c.createdAt,
+                        }))}
+                        userImage={
+                          userDetails.image || "/placeholder/avatar.png"
+                        }
+                        onAddComment={addCommentToTweet}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
-
-              {error && <p>{error}</p>}
-              <div className="tweet-list">
-                {sortedTweets?.map((tweet, index) => (
-                  <Tweet
-                    key={index}
-                    index={index}
-                    name={userDetails.name || "Okänd"}
-                    handle={"@" + userDetails.username}
-                    content={tweet.content}
-                    time={tweet.createdAt}
-                    comments={(tweet.comments || []).map((c) => ({
-                      user: c.userName?.username || "Okänd",
-                      content: c.content,
-                      time: c.createdAt,
-                    }))}
-                    userImage={userDetails.image || "/placeholder/avatar.png"}
-                    onAddComment={addCommentToTweet}
-                  />
-                ))}
+            </div>
+            <div className="right-sidebar">
+              <SearchBar onSearch={handleSearchSubmit} />
+              {searchActive && (
+                <SearchOverlay
+                  users={searchResults.users}
+                  tweets={searchResults.tweets}
+                  onClose={() => setSearchActive(false)}
+                />
+              )}
+              <div className="trends-section">
+                <h2>Populärt för dig</h2>
+                <Trend refreshTrendTrigger={refreshTrendTrigger} />
               </div>
             </div>
           </div>
-
-          <div className="right-sidebar">
-            <SearchBar onSearch={handleSearchSubmit} />
-            {searchActive && (
-              <SearchOverlay
-                users={searchResults.users}
-                tweets={searchResults.tweets}
-                onClose={() => setSearchActive(false)}
-              />
-            )}
-            <div className="trends-section">
-              <h2>Populärt för dig</h2>
-              <Trend refreshTrendTrigger={refreshTrendTrigger} />
-            </div>
-          </div>
-        </div>
-        <div className="footer-wrapper">
-          <FooterUser
-            name={currentUser.name}
-            handle={currentUser.handle}
-            userImage={userDetails?.image || "/placeholder/avatar.png"}
-          />
         </div>
       </div>
-    </div>
+      <div className="footer-wrapper">
+        <FooterUser
+          name={currentUser.name}
+          handle={currentUser.handle}
+          userImage={userDetails?.image || "/placeholder/avatar.png"}
+        />
+      </div>
+    </>
   );
 };
 

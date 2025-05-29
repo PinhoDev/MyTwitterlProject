@@ -153,64 +153,65 @@ const Home = () => {
 
   return (
     <>
-      <Header user={user} userImage={userImage} />
-      <div className="sidebars">
-        <div className="home-container">
-          <div className="left-sidebar">
-            <div className="left-sidebar-position">
-              <div className="tweet-input">
-                <textarea
-                  placeholder="Vad vill du säga?"
-                  value={newTweet}
-                  onChange={(e) => setNewTweet(e.target.value)}
-                  maxLength={140}
-                />
-
-                <div className="char-counter">
-                  {140 - newTweet.length} tecken kvar
-                </div>
-                <button className="tweetbutton" onClick={handleTweet}>
-                  Tweet
-                </button>
-              </div>
-
-              <div className="tweet-list">
-                {filteredAndSortedTweets.map((tweet, index) => (
-                  <Tweet
-                    key={index}
-                    index={index}
-                    {...tweet}
-                    onAddComment={addComment}
-                    userImage={tweet.image}
+      <div className="home-page">
+        <Header user={user} userImage={userImage} />
+        <div className="sidebars">
+          <div className="home-container">
+            <div className="left-sidebar">
+              <div className="left-sidebar-position">
+                <div className="tweet-input">
+                  <textarea
+                    placeholder="Vad vill du säga?"
+                    value={newTweet}
+                    onChange={(e) => setNewTweet(e.target.value)}
+                    maxLength={140}
                   />
-                ))}
+
+                  <div className="char-counter">
+                    {140 - newTweet.length} tecken kvar
+                  </div>
+                  <button className="tweetbutton" onClick={handleTweet}>
+                    Tweet
+                  </button>
+                </div>
+
+                <div className="tweet-list">
+                  {filteredAndSortedTweets.map((tweet, index) => (
+                    <Tweet
+                      key={index}
+                      index={index}
+                      {...tweet}
+                      onAddComment={addComment}
+                      userImage={tweet.image}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="right-sidebar">
+              <SearchBar onSearch={handleSearchSubmit} />
+              {searchActive && (
+                <SearchOverlay
+                  users={searchResults.users}
+                  tweets={searchResults.tweets}
+                  onClose={() => setSearchActive(false)}
+                />
+              )}
+              <div className="trends-section">
+                <h2>Populärt för dig</h2>
+                <Trend refreshTrendTrigger={refreshTrendTrigger} />
               </div>
             </div>
           </div>
-
-          <div className="right-sidebar">
-            <SearchBar onSearch={handleSearchSubmit} />
-            {searchActive && (
-              <SearchOverlay
-                users={searchResults.users}
-                tweets={searchResults.tweets}
-                onClose={() => setSearchActive(false)}
-              />
-            )}
-            <div className="trends-section">
-              <h2>Populärt för dig</h2>
-              <Trend refreshTrendTrigger={refreshTrendTrigger} />
-            </div>
-          </div>
         </div>
-
-        <div className="footer-wrapper">
-          <FooterUser
-            name={currentUser.name}
-            handle={currentUser.handle}
-            userImage={userImage || "/placeholder/avatar.png"} //Bytte ut profileImage mot image
-          />
-        </div>
+      </div>
+      <div className="footer-wrapper">
+        <FooterUser
+          name={currentUser.name}
+          handle={currentUser.handle}
+          userImage={userImage || "/placeholder/avatar.png"} //Bytte ut profileImage mot image
+        />
       </div>
     </>
   );
