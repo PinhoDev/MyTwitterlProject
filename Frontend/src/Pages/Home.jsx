@@ -158,6 +158,7 @@ const Home = () => {
                     index={index}
                     {...tweet}
                     onAddComment={addComment}
+                    userImage={userImage}
                   />
                 ))}
               </div>
