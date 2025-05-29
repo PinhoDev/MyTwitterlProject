@@ -10,6 +10,8 @@ import SearchBar from "../Components/SearchBar.jsx";
 import SearchOverlay from "../Components/SearchOverlay.jsx";
 import { loadUserDetails } from "../Controllers/ProfileController.js";
 import { fetchSearchResults } from "../Controllers/HomeController.js";
+import { postComment } from "../Controllers/HomeController.js"; ///Fredrica la till
+
 
 const Profile = () => {
   const { user } = useParams();
@@ -47,7 +49,28 @@ const Profile = () => {
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
+
   const handleSearchSubmit = async (query) => {
+
+  //Fredrica la till för att lägga till kommentarer
+  // Funktion för att lägga till en kommentar på en tweet
+  const addCommentToTweet = (index, commentText) => {
+    const tweet = userDetails.tweets[index];
+    const username = currentUser.username;
+
+    if (!tweet || !username) return;
+    postComment(
+      username,
+      tweet._id,
+      commentText,
+      () => {
+        loadUserDetails(user, setUserDetails, setError); // Ladda om för att visa nya kommentaren
+      },
+      console.error
+    );
+  };
+
+  const handleSearchQuery = async (query) => {
     setSearchActive(true);
     setSearchError("");
     await handleSearch(query);
@@ -137,10 +160,18 @@ const Profile = () => {
                 <Tweet
                   key={index}
                   index={index}
+                  name={userDetails.name || "Okänd"} //Fredrica la till
+                  handle={"@" + userDetails.username} //Fredrica la till
                   content={tweet.content}
                   time={tweet.createdAt}
-                  comments={tweet.comments}
-                  handle={"@" + username}
+                  comments={(tweet.comments || []).map((c) => ({
+                    //Fredrica la till för att visa kommentarer
+                    user: c.userName?.username || "Okänd",
+                    content: c.content,
+                    time: c.createdAt,
+                  }))}
+                  userImage={userDetails.image || "/placeholder/avatar.png"} //Fredrica la till
+                  onAddComment={addCommentToTweet} //Fredrica la till
                 />
               ))}
             </div>
@@ -166,7 +197,7 @@ const Profile = () => {
         <FooterUser
           name={currentUser.name}
           handle={currentUser.handle}
-          userImage={userDetails?.image || "/placeholder/avatar.png"}
+          userImage={userDetails?.image || "/placeholder/avatar.png"} //Bytte ut profileImage mot image
         />
       </div>
     </div>

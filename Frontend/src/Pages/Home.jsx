@@ -52,7 +52,10 @@ const Home = () => {
 
   // Extrahera hashtags från text
   const extractHashtags = (text) => {
-    return text.match(/#[a-zA-ZåäöÅÄÖ0-9]+/g) || [];
+    return (
+      /// Ändrade för att matcha hashtags korrekt. En korrekt hashtag kan innehålla bokstäver, siffror och svenska tecken. Inga mellanslag eller specialtecken tillåtna i början.
+      text.match(/(^|\s)(#[a-zA-ZåäöÅÄÖ0-9]+)/g)?.map((s) => s.trim()) || []
+    );
   };
 
   // Funktion för att posta en ny tweet

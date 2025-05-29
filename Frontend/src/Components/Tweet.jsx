@@ -93,7 +93,8 @@ const Tweet = ({
               <div key={i} className="comment-bubble">
                 <strong>{comment.user}</strong>: •{" "}
                 {formatRelativeTime(comment.time)}
-                <br /> {comment.content}
+                <br /> {formatTweetContent(comment.content)}
+                {/*Fredrica la till för att hashtags ska kunna fungera för kommentarer */}
               </div>
             ))}
           </div>
