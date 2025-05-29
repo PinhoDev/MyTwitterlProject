@@ -81,31 +81,21 @@ const Home = () => {
     if (newTweet.trim() !== "") {
       const hashtags = extractHashtags(newTweet);
 
-      /*                          Fredricas ursprungliga kod
-   await postTweet(
-        username,
-        newTweet,
-        hashtags,
-        () => {
-          loadHomeTweets(username, setTweets, console.error, setCurrentUser);
-          setNewTweet("");
-          setRefreshTrendTrigger((prev) => prev + 1); // Uppdatera trender
-        },
-        console.error
-      );
-    }
-  };
-  */
-
-      //testar smått ändrad ände på funktionen handleTweet  ///Karolina_5
+      //Fredricas ursprungliga kod
       await postTweet(
         username,
         newTweet,
         hashtags,
         () => {
-          loadHomeTweets(username, setTweets, console.error, setUserImage);
+          loadHomeTweets(
+            username,
+            setTweets,
+            console.error,
+            setUserImage,
+            setCurrentUser
+          );
           setNewTweet("");
-          setRefreshTrendTrigger((prev) => prev + 1);
+          setRefreshTrendTrigger((prev) => prev + 1); // Uppdatera trender
         },
         console.error
       );
@@ -189,7 +179,6 @@ const Home = () => {
                     key={index}
                     index={index}
                     {...tweet}
-                    name={tweet.name}
                     onAddComment={addComment}
                     userImage={userImage}
                   />

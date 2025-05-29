@@ -22,7 +22,7 @@ router.get("/home/:username", async (req, res) => {
 
     const tweets = await Tweet.find({ author: { $in: usersToQuery } })
       .select("content createdAt")
-      .populate("author", "username image")
+      .populate("author", "username name image") // Behövdes name mellan username och image Karolina Final,
       .populate({
         path: "comments",
         populate: {
@@ -33,10 +33,13 @@ router.get("/home/:username", async (req, res) => {
       .sort({ createdAt: -1 });
 
     // Respond with success and the username, image, and tweets of the user and their following users
+    console.log("Följer dessa användare:", user.following); // ✅ detta är rätt
+
     return res.json({
       result: true,
       username: user.username,
       image: user.image,
+      following: user.following, ///Needed to add following to the response Karolina Final
       homeTweets: tweets,
     });
 

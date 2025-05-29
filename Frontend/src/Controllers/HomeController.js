@@ -45,31 +45,36 @@ export async function loadHomeTweets(
   username,
   setTweets,
   setError,
-  setUserImage
+  setUserImage,
+  setCurrentUser
 ) {
   try {
-    const res = await axios.get(`http://localhost:3000/home/${username}`);
-    if (res.data.result) {
-      const tweets = res.data.homeTweets.map((t) => ({
+    const response = await axios.get(`http://localhost:3000/home/${username}`);
+    if (response.data.result) {
+      const tweetsFromServer = response.data.homeTweets.map((t) => ({
         _id: t._id,
-        name: t.author?.username || "Okänd", // 🧠 används i <Tweet />
-        handle: "@" + (t.author?.username || "okand"),
+        name: t.author?.name || "Okänd",
+        handle: "@" + (t.author?.username || "Okänd"),
         time: t.createdAt,
         content: t.content,
         hashtags: t.hashtags || [],
-        comments: (t.comments || []).map((c) => ({
+        comments: t.comments.map((c) => ({
           user: c.userName?.username || "Okänd",
           content: c.content,
           time: c.createdAt,
         })),
       }));
-
-      setTweets(tweets);
-      setUserImage(res.data.image); // 🔄 visas i header och footer
+      setTweets(tweetsFromServer);
+      setUserImage(response.data.image);
+      setCurrentUser({
+        name: response.data.username,
+        handle: "@" + response.data.username,
+        following: response.data.following || [],
+      });
     }
   } catch (error) {
     console.error("Kunde inte hämta tweets:", error);
-    setError?.("Kunde inte hämta tweets.");
+    setError("Kunde inte hämta tweets.");
   }
 }
 // Hämta alla tweets (för trender)
