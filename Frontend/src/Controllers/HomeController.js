@@ -69,7 +69,7 @@ export async function loadHomeTweets(
       setCurrentUser({
         name: response.data.username,
         handle: "@" + response.data.username,
-        following: response.data.following || [],
+        following: response.data.following?.map((f) => f.username) || [], // bytte ut detta till det som ligger KarolinaFinal following: response.data.following || [],
       });
     }
   } catch (error) {
@@ -167,62 +167,7 @@ export async function postComment(
     onError("Misslyckades att posta kommentaren.");
   }
 }
-
-// Hämta sökresultat för Searchbar.      Karolina har kollat att det inte krockar.
-/*
-export async function fetchSearchResults(query) {
-  try {
-    const response = await fetch(
-      `http://localhost:3000/search/${encodeURIComponent(query)}` //encodeURIComponent(query) skyddar URL från att gå sönder om användaren skriver mellanslag, specialtecken, svenska bokstäver
-    );
-    const data = await response.json();
-
-    if (response.ok) {
-      return { success: true, data };
-    } else {
-      return {
-        success: false,
-        message: data.message || "Misslyckades att hämta sökresultat.",
-      };
-    }
-  } catch (error) {
-    console.error("Error during search:", error);
-    return {
-      success: false,
-      message: "Ett fel uppstod vid sökning.",
-    };
-  }
-}
-*/
-/*
-// Hämtar sökresultat från servern
-export async function fetchSearchResults(query, onSuccess, onError) {
-  try {
-    const res = await axios.get(
-      `http://localhost:3000/search/${encodeURIComponent(query)}`
-    );
-    console.log("Sökresultat från servern:", res.data);
-    onSuccess(res.data);
-  } catch (error) {
-    console.error("Sökfel:", error.response?.data || error.message);
-    onError("Misslyckades att hämta sökresultat.");
-  }
-}
-// Hämta sökresultat från fetchresult ovan --  ny Karolina_5
-export async function handleSearch(query, setUsers, setTweets, setError) {
-  const result = await fetchSearchResults(query);
-
-  if (result.success) {
-    setUsers(result.data.users);
-    setTweets(result.data.tweets);
-    setError("");
-  } else {
-    setError(result.message);
-    setUsers([]);
-    setTweets([]);
-  }
-}
-*/
+// Hämta sökresultat
 export async function fetchSearchResults(query, onSuccess, onError) {
   try {
     const res = await axios.get(
