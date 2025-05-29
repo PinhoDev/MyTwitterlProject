@@ -67,7 +67,7 @@ export async function loadHomeTweets(
       setTweets(tweetsFromServer);
       setUserImage(response.data.image);
       setCurrentUser({
-        name: response.data.username,
+        name: response.data.name,
         handle: "@" + response.data.username,
         following: response.data.following?.map((f) => f.username) || [], // bytte ut detta till det som ligger KarolinaFinal following: response.data.following || [],
       });

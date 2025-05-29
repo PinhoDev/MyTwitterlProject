@@ -62,6 +62,7 @@ const Home = () => {
       );
     }
   }, []);
+  console.log("currentUser in Home:", currentUser);
   // Extrahera hashtags från text
   const extractHashtags = (text) => {
     return (

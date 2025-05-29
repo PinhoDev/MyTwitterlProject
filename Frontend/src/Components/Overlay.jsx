@@ -27,7 +27,7 @@ const Overlay = () => {
                 className="logout-button"
                 onClick={() => {
                   localStorage.removeItem("username");
-                  window.location.href = "/login";
+                  window.location.href = "/";
                 }}
               >
                 Logga ut

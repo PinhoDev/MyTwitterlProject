@@ -119,7 +119,6 @@ const Profile = () => {
                   </Link>
                 </div>
 
-
                 <div className="tweet-count">
                   <h3 className="name">{userDetails?.name}</h3>
                   <span className="counter">
@@ -145,13 +144,15 @@ const Profile = () => {
                 <div className="profile-actions">
                   <h3 className="name">{userDetails?.name}</h3>
 
-            {currentUser.username && user !== currentUser.username && (
-              <FollowButton
-                profileUsername={username}
-                currentUser={currentUser}
-                onToggle={() => loadUserDetails(user, setUserDetails, setError)}
-              />
-            )}
+                  {currentUser.username && user !== currentUser.username && (
+                    <FollowButton
+                      profileUsername={username}
+                      currentUser={currentUser}
+                      onToggle={() =>
+                        loadUserDetails(user, setUserDetails, setError)
+                      }
+                    />
+                  )}
                 </div>
                 <div className="handle">@{userDetails?.username}</div>
                 <div className="bio">{userDetails?.about}</div>
@@ -191,53 +192,51 @@ const Profile = () => {
                 </div>
               </div>
 
-        <div className="left-sidebar">
-          <div className="left-sidebar-position">
-            {error && <p>{error}</p>}
-            <div className="tweet-list">
-              {sortedTweets?.map((tweet, index) => (
-                <Tweet
-                  key={index}
-                  index={index}
-                  name={userDetails.name || "Okänd"}
-                  handle={"@" + userDetails.username}
-                  content={tweet.content}
-                  time={tweet.createdAt}
-                  comments={(tweet.comments || []).map((c) => ({
-                    user: c.userName?.username || "Okänd",
-                    content: c.content,
-                    time: c.createdAt,
-                  }))}
-                  userImage={userDetails.image || "/placeholder/avatar.png"}
-                  onAddComment={addCommentToTweet}
-                />
-              ))}
+              {error && <p>{error}</p>}
+              <div className="tweet-list">
+                {sortedTweets?.map((tweet, index) => (
+                  <Tweet
+                    key={index}
+                    index={index}
+                    name={userDetails.name || "Okänd"}
+                    handle={"@" + userDetails.username}
+                    content={tweet.content}
+                    time={tweet.createdAt}
+                    comments={(tweet.comments || []).map((c) => ({
+                      user: c.userName?.username || "Okänd",
+                      content: c.content,
+                      time: c.createdAt,
+                    }))}
+                    userImage={userDetails.image || "/placeholder/avatar.png"}
+                    onAddComment={addCommentToTweet}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
 
+          <div className="right-sidebar">
+            <SearchBar onSearch={handleSearchSubmit} />
+            {searchActive && (
+              <SearchOverlay
+                users={searchResults.users}
+                tweets={searchResults.tweets}
+                onClose={() => setSearchActive(false)}
+              />
+            )}
+            <div className="trends-section">
+              <h2>Populärt för dig</h2>
+              <Trend refreshTrendTrigger={refreshTrendTrigger} />
             </div>
           </div>
         </div>
-
-        <div className="right-sidebar">
-          <SearchBar onSearch={handleSearchSubmit} />
-          {searchActive && (
-            <SearchOverlay
-              users={searchResults.users}
-              tweets={searchResults.tweets}
-              onClose={() => setSearchActive(false)}
-            />
-          )}
-          <div className="trends-section">
-            <h2>Populärt för dig</h2>
-            <Trend refreshTrendTrigger={refreshTrendTrigger} />
-          </div>
+        <div className="footer-wrapper">
+          <FooterUser
+            name={currentUser.name}
+            handle={currentUser.handle}
+            userImage={userDetails?.image || "/placeholder/avatar.png"}
+          />
         </div>
-      </div>
-      <div className="footer-wrapper">
-        <FooterUser
-          name={currentUser.name}
-          handle={currentUser.handle}
-          userImage={userDetails?.image || "/placeholder/avatar.png"}
-        />
       </div>
     </div>
   );
