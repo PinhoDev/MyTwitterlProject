@@ -50,9 +50,6 @@
   display: flex;
 }
 
-.user-image-tweet-container {
-}
-
 .user-image-tweet {
   width: 50px;
   height: 50px;
@@ -198,4 +195,7 @@
 
 .tweet-comments button:hover {
   background-color: #0056b3;
+}
+
+.follow-button {
 }
