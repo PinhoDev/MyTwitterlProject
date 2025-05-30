@@ -1,46 +1,5 @@
 import axios from "axios";
 
-// Ladda tweets från backend !!!!!!! Den här är felaktig Karolinas Final --- HHär ska vi Ha Fredrikas loadhome tweets!s
-/* export async function loadHomeTweets(
-  username,
-  setTweets,
-  setError,
-  setUserImage,
-  setCurrentUser
-) {
-  try {
-    const response = await axios.get(`http://localhost:3000/home/${username}`); ///HÄr stod förut felaktigt axios.get("http://localhost:3000/tweets/");
-    if (response.data.result) {
-      const tweetsFromServer = response.data.homeTweets.map((t) => ({
-        //// HÄr stod felaktigt  response.data.tweets.map(...)
-        _id: t._id, // LAGT TILL tweetens ID (krävs för kommentarer)
-        name: t.author?.username || "Okänd",
-        handle: "@" + (t.author?.username || "Okänd"),
-        time: t.createdAt,
-        content: t.content,
-        hashtags: t.hashtags || [],
-        comments: t.comments.map((c) => ({
-          user: c.userName?.username || "Okänd",
-          content: c.content,
-          time: c.createdAt,
-        })),
-      }));
-      setTweets(tweetsFromServer);
-      setUserImage(response.data.image);
-      // ⬅️ Lägg till denna rad!
-      setCurrentUser({
-        name: response.data.username,
-        handle: "@" + response.data.username,
-        following: response.data.following || [],
-      });
-    }
-  } catch (error) {
-    console.error("Kunde inte hämta tweets:", error);
-    setError("Kunde inte hämta tweets.");
-  }
-}
- */
-
 export async function loadHomeTweets(
   username,
   setTweets,

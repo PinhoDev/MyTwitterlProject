@@ -64,11 +64,46 @@ export async function createNewUser(newUser, setError) {
 export async function uploadUserImage(image, username) {
   const response = await postUserImage(image, username);
   if (response.success) {
-    return { success: true, message: "Bilden har laddats upp" };
+    return {
+      success: true,
+      message: "Bilden har laddats upp",
+      imageUrl: response.imageUrl, // Fortsätter rutten från uploadendpoints för att skicka tillbaka bilden
+    };
   } else {
     return {
       success: false,
       message: response.message || "Bilduppladdningen misslyckades",
+    };
+  }
+}
+///Ska kolla om jag hittar den här någonannanstans annars lägger jag den här Karolina 30 maj
+export async function postUserBackground(image, username) {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/${username}/background`,
+      {
+        method: "POST",
+        body: image, // ← formData
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return {
+        success: true,
+        imageUrl: data.imageUrl, // ✅ se till att backend skickar detta
+      };
+    } else {
+      return {
+        success: false,
+        message: data.message || "Något gick fel vid uppladdning",
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: "Serverfel vid uppladdning",
     };
   }
 }

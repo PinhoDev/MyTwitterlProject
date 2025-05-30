@@ -141,13 +141,13 @@ const Profile = () => {
                     />
                     {user === currentUser.username && (
                       <ChangeBackgroundButton
-                        currentImage={userDetails?.image} /////!!!! kolla backgroundImage
+                        currentImage={userDetails?.imageBackground} /////!!!! kolla backgroundImage
                         username={currentUser.username}
                         onImageChange={(newUrl) => {
                           // Uppdatera bilden i UI:t om du vill direkt
                           const updatedUser = {
                             ...userDetails,
-                            image: newUrl,
+                            imageBackground: newUrl,
                           };
                           setUserDetails(updatedUser);
                         }}

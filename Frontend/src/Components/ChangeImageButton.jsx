@@ -14,7 +14,7 @@ const ChangeImageButton = ({ currentImage, username, onImageChange }) => {
     const result = await uploadUserImage(formData, username);
 
     if (result.success) {
-      const newImageUrl = `/userImage/${file.name}`; // justera om backend returnerar annan path
+      const newImageUrl = result.imageUrl;
       onImageChange(newImageUrl); // lyfter upp ny bild till parent-komponent
       setStatusMessage("Bild uppdaterad!");
     } else {
