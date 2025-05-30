@@ -46,7 +46,8 @@ const Profile = () => {
             name: u.name,
             username: u.username,
             handle: "@" + u.username,
-            following: u.following.map((f) => f.username), // Bara usernames
+            following: u.following.map((f) => f.username),
+            image: u.image, // Bara usernames
           });
           console.log("currentUser after fetch:", {
             name: u.name,
@@ -242,7 +243,7 @@ const Profile = () => {
         <FooterUser
           name={currentUser.name}
           handle={currentUser.handle}
-          userImage={userDetails?.image || "/placeholder/avatar.png"}
+          userImage={currentUser.image || "/placeholder/avatar.png"}
         />
       </div>
     </>
