@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import "../Styles/ProfileComponents.css"; // Importera CSS-stil för knappen
 
 function FollowButton({ profileUsername, currentUser, onToggle }) {
   const [isFollowing, setIsFollowing] = useState(false);

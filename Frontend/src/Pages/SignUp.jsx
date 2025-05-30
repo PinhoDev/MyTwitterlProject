@@ -119,8 +119,8 @@ const SignUp = () => {
           onChange={handleChange}
         />
         {error && <div className="error-message">{error}</div>}
-        {loading && <div className="loading-message">Registering...</div>}
-        {success && <div className="success-message">Account created!</div>}
+        {loading && <div className="loading-message">Registrerar...</div>}
+        {success && <div className="success-message">Konto skapat!</div>}
 
         <button className="authbutton" type="submit" disabled={loading}>
           Skapa konto

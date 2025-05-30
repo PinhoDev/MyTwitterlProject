@@ -8,16 +8,20 @@
   gap: 0.5rem;
 }
 
+.footer-user-wrapper {
+  display: flex;
+}
+
 .footer-user img {
   width: 32px;
   height: 32px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .footer-user .user-info {
   display: flex;
   flex-direction: column;
-  text-align: right;
 }
 
 .footer-user .user-info .name {
