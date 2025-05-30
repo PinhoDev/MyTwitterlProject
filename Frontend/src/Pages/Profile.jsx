@@ -6,6 +6,8 @@ import FooterUser from "../Components/FooterUser.jsx";
 import Trend from "../Components/Trend.jsx";
 import Tweet from "../Components/Tweet.jsx";
 import FollowButton from "../Components/FollowButton.jsx";
+import ChangeBackgroundButton from "../Components/ChangeBackgroundButton.jsx";
+import ChangeImageButton from "../Components/ChangeImageButton.jsx";
 import SearchBar from "../Components/SearchBar.jsx";
 import SearchOverlay from "../Components/SearchOverlay.jsx";
 import { loadUserDetails } from "../Controllers/ProfileController.js";
@@ -137,12 +139,15 @@ const Profile = () => {
                       }
                       alt="Bakgrundsbild"
                     />
+                    <ChangeBackgroundButton />
                     <img
                       className="profile-pic"
                       src={userDetails?.image || "/placeholder/avatar.png"}
                       alt="Profilbild"
                     />
+                    <ChangeImageButton />
                   </div>
+
                   <div className="profile-details">
                     <div className="profile-actions">
                       <h3 className="name">{userDetails?.name}</h3>
