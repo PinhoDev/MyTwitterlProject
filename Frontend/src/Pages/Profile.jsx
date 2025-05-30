@@ -139,29 +139,44 @@ const Profile = () => {
                       }
                       alt="Bakgrundsbild"
                     />
-                    <ChangeBackgroundButton />
+                    {user === currentUser.username && (
+                      <ChangeBackgroundButton
+                        currentImage={userDetails?.image} /////!!!! kolla backgroundImage
+                        username={currentUser.username}
+                        onImageChange={(newUrl) => {
+                          // Uppdatera bilden i UI:t om du vill direkt
+                          const updatedUser = {
+                            ...userDetails,
+                            image: newUrl,
+                          };
+                          setUserDetails(updatedUser);
+                        }}
+                      />
+                    )}
                     <img
                       className="profile-pic"
                       src={userDetails?.image || "/placeholder/avatar.png"}
                       alt="Profilbild"
                     />
-                    <ChangeImageButton />
+                    {user === currentUser.username && (
+                      <ChangeImageButton
+                        currentImage={userDetails?.image}
+                        username={currentUser.username}
+                        onImageChange={(newUrl) => {
+                          // Uppdatera bilden i UI:t om du vill direkt
+                          const updatedUser = {
+                            ...userDetails,
+                            image: newUrl,
+                          };
+                          setUserDetails(updatedUser);
+                        }}
+                      />
+                    )}
                   </div>
 
                   <div className="profile-details">
                     <div className="profile-actions">
                       <h3 className="name">{userDetails?.name}</h3>
-
-                      {currentUser.username &&
-                        user !== currentUser.username && (
-                          <FollowButton
-                            profileUsername={username}
-                            currentUser={currentUser}
-                            onToggle={() =>
-                              loadUserDetails(user, setUserDetails, setError)
-                            }
-                          />
-                        )}
                     </div>
                     <div className="handle">@{userDetails?.username}</div>
                     <div className="bio">{userDetails?.about}</div>

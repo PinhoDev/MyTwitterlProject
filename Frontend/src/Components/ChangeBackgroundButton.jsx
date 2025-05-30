@@ -1,6 +1,6 @@
 function ChangeBackgroundButton({ onChange }) {
   return (
-    <button>
+    <button style={{ marginLeft: "auto", display: "block" }}>
       <h1>📷</h1>
     </button>
   );

@@ -61,7 +61,7 @@ export async function createNewUser(newUser, setError) {
   }
 }
 
-async function uploadUserImage(image, username) {
+export async function uploadUserImage(image, username) {
   const response = await postUserImage(image, username);
   if (response.success) {
     return { success: true, message: "Bilden har laddats upp" };
