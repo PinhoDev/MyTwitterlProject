@@ -55,10 +55,13 @@ const Home = () => {
     if (username) {
       loadHomeTweets(
         username,
-        setTweets,
+        (tweets) => {
+          console.log("🔍 Kontrollera kommentarsdata:", tweets);
+          setTweets(tweets);
+        },
         console.error,
         setUserImage,
-        setCurrentUser // 👈 viktig!
+        setCurrentUser
       );
     }
   }, []);

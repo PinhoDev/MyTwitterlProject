@@ -50,6 +50,7 @@ export async function loadHomeTweets(
 ) {
   try {
     const response = await axios.get(`http://localhost:3000/home/${username}`);
+
     if (response.data.result) {
       const tweetsFromServer = response.data.homeTweets.map((t) => ({
         _id: t._id,
@@ -59,16 +60,21 @@ export async function loadHomeTweets(
         image: t.author?.image || "",
         content: t.content,
         hashtags: t.hashtags || [],
-        comments: t.comments.map((c) => ({
-          user: c.userName?.username || "Okänd",
-          content: c.content,
-          time: c.createdAt,
-        })),
+        comments: t.comments.map((c) => {
+          console.log("💬 Kommentar:", c); // 👈 LÄGG TILL DENNA
+          return {
+            name: response.data.name,
+            handle: "@" + response.data.username,
+            image: c.userName?.image || "/placeholder/avatar.png",
+            content: c.content,
+            time: c.createdAt,
+          };
+        }),
       }));
       setTweets(tweetsFromServer);
       setUserImage(response.data.image);
       setCurrentUser({
-        name: response.data.name,
+        name: response.data.username,
         handle: "@" + response.data.username,
         following: response.data.following?.map((f) => f.username) || [], // bytte ut detta till det som ligger KarolinaFinal following: response.data.following || [],
       });
@@ -91,7 +97,10 @@ export async function loadAllTweets(setTweets, setError) {
         content: t.content,
         hashtags: t.hashtags || [],
         comments: t.comments.map((c) => ({
-          user: c.userName?.username || "Okänd",
+          userName: {
+            name: c.userName?.name || "Okänd",
+            username: c.userName?.username || "okänd",
+          },
           content: c.content,
           time: c.createdAt,
         })),
