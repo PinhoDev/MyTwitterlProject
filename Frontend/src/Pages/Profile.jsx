@@ -177,6 +177,16 @@ const Profile = () => {
                   <div className="profile-details">
                     <div className="profile-actions">
                       <h3 className="name">{userDetails?.name}</h3>
+
+                      {user !== currentUser.username && (
+                        <FollowButton
+                          profileUsername={username}
+                          currentUser={currentUser}
+                          onToggle={() =>
+                            loadUserDetails(user, setUserDetails, setError)
+                          }
+                        />
+                      )}
                     </div>
                     <div className="handle">@{userDetails?.username}</div>
                     <div className="bio">{userDetails?.about}</div>
