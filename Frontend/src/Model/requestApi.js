@@ -124,11 +124,7 @@ export async function postUserImage(imageFile, username) {
     const dataResponse = await response.json();
 
     if (response.ok) {
-      return {
-        success: true,
-        message: dataResponse.message,
-        imageUrl: dataResponse.imageUrl, // Lagt till detta! Karolina final final
-      };
+      return { success: true, message: dataResponse.message };
     } else {
       return { success: false, message: dataResponse.message };
     }
@@ -152,11 +148,7 @@ export async function postUserBackground(imageFile, username) {
     const dataResponse = await response.json();
 
     if (response.ok) {
-      return {
-        success: true,
-        message: dataResponse.message,
-        imageUrl: dataResponse.imageUrl, // Lagt till detta! Karolina final final
-      };
+      return { success: true, message: dataResponse.message };
     } else {
       return { success: false, message: dataResponse.message };
     }
