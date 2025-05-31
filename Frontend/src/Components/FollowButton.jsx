@@ -6,7 +6,7 @@ function FollowButton({ profileUsername, currentUser, onToggle }) {
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
-    if (currentUser && currentUser.following) {
+    if (currentUser?.following?.length) {
       const follows = currentUser.following.some((user) =>
         typeof user === "string"
           ? user === profileUsername
@@ -17,7 +17,15 @@ function FollowButton({ profileUsername, currentUser, onToggle }) {
   }, [currentUser, profileUsername]);
 
   async function toggleFollow() {
+    if (!currentUser?.username || !profileUsername) {
+      console.error("❌ Kan inte toggla följning – saknar användarnamn.");
+      return;
+    }
+
     try {
+      console.log("🔁 Trying to follow:", profileUsername);
+      console.log("🔁 From user:", currentUser.username);
+
       await axios.post(
         `http://localhost:3000/${currentUser.username}/following`,
         {
@@ -36,7 +44,11 @@ function FollowButton({ profileUsername, currentUser, onToggle }) {
   }
 
   return (
-    <button className="follow-button" onClick={toggleFollow}>
+    <button
+      className="follow-button"
+      onClick={toggleFollow}
+      disabled={!currentUser?.username || !profileUsername}
+    >
       {isFollowing ? "Sluta följa" : "Följ"}
     </button>
   );

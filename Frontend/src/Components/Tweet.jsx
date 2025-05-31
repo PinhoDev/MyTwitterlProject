@@ -19,6 +19,10 @@ const Tweet = ({
   const [showComments, setShowComments] = useState(false);
   const commentRef = useRef(null); // <== referens till kommentarsruta
 
+  const currentUsername = localStorage.getItem("username"); // Hämtar det inloggade användarnamnet från localStorage
+  const tweetUsername = handle.replace("@", ""); // De här tre är tillagda efter vi splitade profile till två sidor
+  const isOwnTweet = tweetUsername === currentUsername; //   // Kollar om tweeten är från den inloggade användaren
+
   // Stänger kommentarsrutan om man klickar utanför
   useEffect(() => {
     function handleClickOutside(event) {
@@ -59,7 +63,7 @@ const Tweet = ({
         */}
       <div className="tweet-header">
         <div className="user-image-tweet-container">
-          <Link to={`/profile/${handle.replace("@", "")}`}>
+          <Link to={isOwnTweet ? "/profile" : `/profile/${tweetUsername}`}>
             <img
               src={userImage}
               alt="Profilbild"
@@ -69,7 +73,7 @@ const Tweet = ({
         </div>
         <div className="tweet-header-text">
           <Link
-            to={`/profile/${handle.replace("@", "")}`}
+            to={isOwnTweet ? "/profile" : `/profile/${tweetUsername}`}
             className="tweet-author-link"
           >
             <strong>{name}</strong>{" "}
