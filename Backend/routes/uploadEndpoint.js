@@ -54,9 +54,7 @@ router.post(
       );
 
       res.json({
-        success: true, // // 👈 detta är det nya!
-        message: "Image uploaded successfully", // // 👈 detta är det nya!
-        imageUrl: imagePath, // 👈 detta är det nya!                             //Detta var innan: message: "Image uploaded successfully",
+        message: "Image uploaded successfully",
       });
     } catch (err) {
       res.status(500).json({ result: false, message: "Internal server error" });
@@ -84,9 +82,7 @@ router.post(
       );
 
       res.json({
-        success: true, // 👈 detta är det nya!
-        message: "Image uploaded successfully", // detta är det nya!
-        imageUrl: backgroundPath, // 👈 detta skickas till frontend                       //message: "Image uploaded successfully",
+        message: "Image uploaded successfully",
       });
     } catch (err) {
       res.status(500).json({ result: false, message: "Internal server error" });

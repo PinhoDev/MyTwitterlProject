@@ -1,36 +1,39 @@
 import { useState } from "react";
-import { postUserBackground } from "../Controllers/SignUpController.js";
+import { postUserBackground } from "../Model/requestApi.js";
 
-const ChangeBackgroundButton = ({ currentImage, username, onImageChange }) => {
+const ChangeBackgroundButton = ({ username, onImageChange }) => {
   const [statusMessage, setStatusMessage] = useState("");
 
   const handleBackgroundChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append("image", file);
+    const result = await postUserBackground(file, username);
 
-    const result = await postUserBackground(formData, username); // ✅ här!
     if (result.success) {
-      const ext = file.name.split(".").pop(); // hämta filändelse från filen
-      const newBackgroundUrl = `/background/${username}.${ext}`;
+      const ext = file.name.split(".").pop();
+      const newBackgroundUrl = `/background/${username}.${ext}?t=${Date.now()}`;
       onImageChange(newBackgroundUrl);
       setStatusMessage("Bakgrundsbild uppdaterad!");
     } else {
       setStatusMessage(result.message || "Uppladdning misslyckades");
     }
   };
+
   return (
     <div>
       <input
+        id="upload-background-input"
         type="file"
         accept="image/*"
         onChange={handleBackgroundChange}
         style={{ display: "none" }}
-        id="upload-background-input"
       />
-      <label htmlFor="upload-background-input" className="upload-button">
+      <label
+        htmlFor="upload-background-input"
+        className="upload-button"
+        style={{ cursor: "pointer" }}
+      >
         <h1>🖼️</h1>
       </label>
       {statusMessage && <p>{statusMessage}</p>}

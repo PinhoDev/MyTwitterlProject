@@ -12,5 +12,6 @@ export default defineConfig({
       "/profile": "http://localhost:3000", // ✅ behövs
       "/follow": "http://localhost:3000",
     },
+    historyApiFallback: true, // Lägger till den här för att vi ska kunna uppdatera utan att få upp en json fil
   },
 });

@@ -1,22 +1,18 @@
 import { useState } from "react";
-import { uploadUserImage } from "../Controllers/SignUpController.js"; // Importera uploadUserImage-funktionen
+import { postUserImage } from "../Model/requestApi.js";
 
-const ChangeImageButton = ({ currentImage, username, onImageChange }) => {
+const ChangeImageButton = ({ username, onImageChange }) => {
   const [statusMessage, setStatusMessage] = useState("");
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append("image", file);
-
-    const result = await uploadUserImage(formData, username);
+    const result = await postUserImage(file, username);
 
     if (result.success) {
-      // Bygg URL baserat på användarnamn och filändelse (som sparats i backend)
-      const ext = file.name.split(".").pop(); // hämta filändelse från uppladdad fil
-      const newImageUrl = `/userImage/${username}.${ext}`;
+      const ext = file.name.split(".").pop();
+      const newImageUrl = `/userImage/${username}.${ext}?t=${Date.now()}`;
       onImageChange(newImageUrl);
       setStatusMessage("Bild uppdaterad!");
     } else {
@@ -27,13 +23,17 @@ const ChangeImageButton = ({ currentImage, username, onImageChange }) => {
   return (
     <div>
       <input
+        id="upload-image-input"
         type="file"
         accept="image/*"
         onChange={handleImageChange}
         style={{ display: "none" }}
-        id="upload-image-input"
       />
-      <label htmlFor="upload-image-input" className="upload-button">
+      <label
+        htmlFor="upload-image-input"
+        className="upload-button"
+        style={{ cursor: "pointer" }}
+      >
         <h1>📷</h1>
       </label>
       {statusMessage && <p>{statusMessage}</p>}
