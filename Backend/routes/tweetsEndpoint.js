@@ -105,12 +105,12 @@ router.get("/home/:username", async (req, res) => {
 
     const tweets = await Tweet.find({ author: { $in: usersToQuery } })
       .select("content createdAt author hashtags comments")
-      .populate("author", "username image") // 🔍 Detta gör att `author.username` och `author.image` kommer med
+      .populate("author", "name username image") // 🔍 Detta gör att `author.username` och `author.image` kommer med
       .populate({
         path: "comments",
         populate: {
           path: "userName",
-          select: "username image",
+          select: "name username image",
         },
       })
       .sort({ createdAt: -1 });
@@ -118,6 +118,7 @@ router.get("/home/:username", async (req, res) => {
     return res.json({
       result: true,
       username: user.username,
+      name: user.name,
       image: user.image,
       homeTweets: tweets,
     });
@@ -135,8 +136,8 @@ router.get("/home/:username", async (req, res) => {
 router.get("/tweets", async (req, res) => {
   try {
     const tweets = await Tweet.find({})
-      .populate("author", "username")
-      .populate("comments.userName", "username");
+      .populate("author", "name username image")
+      .populate("comments.userName", "name username image");
 
     return res.json({ result: true, tweets });
   } catch (error) {
