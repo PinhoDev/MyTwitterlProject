@@ -14,8 +14,10 @@ const ChangeImageButton = ({ currentImage, username, onImageChange }) => {
     const result = await uploadUserImage(formData, username);
 
     if (result.success) {
-      const newImageUrl = result.imageUrl;
-      onImageChange(newImageUrl); // lyfter upp ny bild till parent-komponent
+      // Bygg URL baserat på användarnamn och filändelse (som sparats i backend)
+      const ext = file.name.split(".").pop(); // hämta filändelse från uppladdad fil
+      const newImageUrl = `/userImage/${username}.${ext}`;
+      onImageChange(newImageUrl);
       setStatusMessage("Bild uppdaterad!");
     } else {
       setStatusMessage(result.message || "Uppladdning misslyckades");

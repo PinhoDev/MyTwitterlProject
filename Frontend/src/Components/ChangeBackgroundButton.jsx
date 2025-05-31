@@ -12,15 +12,15 @@ const ChangeBackgroundButton = ({ currentImage, username, onImageChange }) => {
     formData.append("image", file);
 
     const result = await postUserBackground(formData, username); // ✅ här!
-
-    if (result.success && result.imageUrl) {
-      onImageChange(result.imageUrl);
+    if (result.success) {
+      const ext = file.name.split(".").pop(); // hämta filändelse från filen
+      const newBackgroundUrl = `/background/${username}.${ext}`;
+      onImageChange(newBackgroundUrl);
       setStatusMessage("Bakgrundsbild uppdaterad!");
     } else {
       setStatusMessage(result.message || "Uppladdning misslyckades");
     }
   };
-
   return (
     <div>
       <input
