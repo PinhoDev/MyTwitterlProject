@@ -6,6 +6,8 @@ import FooterUser from "../Components/FooterUser.jsx";
 import Trend from "../Components/Trend.jsx";
 import Tweet from "../Components/Tweet.jsx";
 import FollowButton from "../Components/FollowButton.jsx";
+import ChangeBackgroundButton from "../Components/ChangeBackgroundButton.jsx";
+import ChangeImageButton from "../Components/ChangeImageButton.jsx";
 import SearchBar from "../Components/SearchBar.jsx";
 import SearchOverlay from "../Components/SearchOverlay.jsx";
 import { loadUserDetails } from "../Controllers/ProfileController.js";
@@ -137,26 +139,44 @@ const Profile = () => {
                       }
                       alt="Bakgrundsbild"
                     />
+                    {user === currentUser.username && (
+                      <ChangeBackgroundButton
+                        currentImage={userDetails?.imageBackground} /////!!!! kolla backgroundImage
+                        username={currentUser.username}
+                        onImageChange={(newUrl) => {
+                          // Uppdatera bilden i UI:t om du vill direkt
+                          const updatedUser = {
+                            ...userDetails,
+                            imageBackground: newUrl,
+                          };
+                          setUserDetails(updatedUser);
+                        }}
+                      />
+                    )}
                     <img
                       className="profile-pic"
                       src={userDetails?.image || "/placeholder/avatar.png"}
                       alt="Profilbild"
                     />
+                    {user === currentUser.username && (
+                      <ChangeImageButton
+                        currentImage={userDetails?.image}
+                        username={currentUser.username}
+                        onImageChange={(newUrl) => {
+                          // Uppdatera bilden i UI:t om du vill direkt
+                          const updatedUser = {
+                            ...userDetails,
+                            image: newUrl,
+                          };
+                          setUserDetails(updatedUser);
+                        }}
+                      />
+                    )}
                   </div>
+
                   <div className="profile-details">
                     <div className="profile-actions">
                       <h3 className="name">{userDetails?.name}</h3>
-
-                      {currentUser.username &&
-                        user !== currentUser.username && (
-                          <FollowButton
-                            profileUsername={username}
-                            currentUser={currentUser}
-                            onToggle={() =>
-                              loadUserDetails(user, setUserDetails, setError)
-                            }
-                          />
-                        )}
                     </div>
                     <div className="handle">@{userDetails?.username}</div>
                     <div className="bio">{userDetails?.about}</div>
