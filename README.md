@@ -76,3 +76,79 @@ Run tests with:
 ```sh
 npm test
 ```
+
+#### Run E2E (End-to-End) Tests
+
+To run Playwright E2E tests for the Frontend:
+
+1. Make sure your Frontend server is running (for example, on http://localhost:5173 or the port you use):
+   ```sh
+   npm run dev
+   ```
+2. In another terminal, run the E2E tests:
+   ```sh
+   npx playwright test
+   ```
+   To see a detailed HTML report after running tests:
+   ```sh
+   npx playwright show-report
+   ```
+
+### Important E2E Dependencies and Their Purpose
+
+- **@playwright/test**: Main library for running E2E browser tests. Simulates user actions and checks UI behavior.
+- **playwright**: Provides browser automation for Chromium, Firefox, and WebKit. Required for running tests in real browsers.
+
+#### Other Useful Playwright Features
+
+- **playwright.config.ts**: Configuration file where you set the base URL, test directory, and other options for Playwright.
+- **playwright-report/**: Folder where Playwright saves HTML reports of test runs.
+
+### Main Project Dependencies and Their Purpose
+
+#### Backend
+
+- **express**: Framework to create the server and API routes.
+- **cors**: Enables requests between frontend and backend (CORS).
+- **mongoose**: Data modeling and connection with MongoDB.
+- **dotenv**: Loads environment variables from a `.env` file.
+- **bcryptjs**: Password encryption and verification.
+- **jsonwebtoken**: Creation and verification of JWT tokens for authentication.
+- **multer**: Handles file uploads (profile images, etc).
+- **nodemon** (dev): Automatically restarts the server during development.
+- **jest** (dev): Testing framework for the backend.
+- **supertest** (dev): Allows HTTP endpoint testing.
+- **mongodb-memory-server** (dev): In-memory MongoDB for automated tests.
+
+#### Frontend
+
+- **react**: Main library for building the user interface.
+- **react-dom**: Renders React components in the DOM.
+- **react-router-dom**: Navigation and routing in the SPA.
+- **axios**: HTTP client to consume the backend API.
+- **vite**: Fast development and build tool for React.
+- **@vitejs/plugin-react**: Plugin for React support in Vite.
+- **@testing-library/react** (dev): Utilities for testing React components.
+- **@testing-library/jest-dom** (dev): Custom matchers for DOM tests.
+- **jest** (dev): Testing framework for the frontend.
+- **babel-jest** (dev): Allows using Babel with Jest to support JSX and ES6+ in tests.
+- **eslint** (dev): Linter to maintain code quality.
+- **@babel/preset-env** (dev): Babel preset for modern JS.
+- **@babel/preset-react** (dev): Babel preset for JSX.
+- **@eslint/js** (dev): ESLint configuration for JS.
+- **eslint-plugin-react-hooks** (dev): ESLint rules for React hooks.
+- **eslint-plugin-react-refresh** (dev): ESLint rules for React Fast Refresh.
+- **globals** (dev): Global variables for ESLint.
+- **jest-environment-jsdom** (dev): Jest environment that simulates the browser.
+- **jest-transform-stub** (dev): Transforms static assets in tests.
+- **@types/react** (dev): Types for React (useful for autocompletion and editors).
+- **@types/react-dom** (dev): Types for ReactDOM.
+
+---
+
+**MyTweet**
+Contributors:
+
+- Andre
+- Karolina
+- Fredrica
