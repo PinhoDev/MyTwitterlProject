@@ -1,10 +1,10 @@
-name: Run Backend Tests
+name: Run Backend Tests and Frontend Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
@@ -33,4 +33,18 @@ jobs:
       - name: Run Backend tests
         working-directory: ./Backend
         run: ./node_modules/.bin/jest --ci
+      # ---------------------
+      # FRONTEND
+      # ---------------------
+      - name: Install Frontend dependencies
+        working-directory: ./Frontend
+        run: npm ci
 
+      - name: Make jest executable (fix permission denied)
+        working-directory: ./Frontend
+        run: chmod +x ./node_modules/.bin/jest
+
+      - name: Run Frontend tests
+        working-directory: ./Frontend
+        run: ./node_modules/.bin/jest --ci
+    # ---------------------
