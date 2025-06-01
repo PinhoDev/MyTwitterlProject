@@ -6,6 +6,8 @@ const userData = {
   about: "",
   image: " /images/placeHolder_img.png",
   imageBackground: "",
+  password: "",
+  confirmPassword: "",
   location: "",
   website: "",
   occupation: "",

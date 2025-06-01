@@ -75,7 +75,11 @@ const SignUp = () => {
   return (
     <div className="auth-container">
       <form className="writing-fields" onSubmit={handleSignup}>
-        <img src={Twitterbird} alt="Toppbild" className="tweet-logo-signin" />
+        <img
+          src={Twitterbird || "../../public/images/placeHolder_img.png"}
+          alt="Toppbild"
+          className="tweet-logo-signin"
+        />
         <h1>Skapa ett konto</h1>
 
         {/* Bilduppladdning, används bara för förhandsvisning */}

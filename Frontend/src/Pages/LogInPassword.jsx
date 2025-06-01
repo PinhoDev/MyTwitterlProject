@@ -34,7 +34,11 @@ function LogInPassword() {
   return (
     <div className="auth-container">
       <form className="writing-fields" onSubmit={handleSubmit}>
-        <img className="tweet-logo-login" src={Twitterbird} alt="Logotyp" />
+        <img
+          className="tweet-logo-login"
+          src={Twitterbird || "../../public/images/placeHolder_img.png"}
+          alt="Logotyp"
+        />
         <h1>Ange ditt lösenord</h1>
 
         <div className="input-wrapper">

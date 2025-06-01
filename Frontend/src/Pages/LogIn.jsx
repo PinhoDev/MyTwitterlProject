@@ -28,7 +28,12 @@ function LogIn() {
     <>
       <div className="auth-container">
         <form className="writing-fields" onSubmit={handleSubmit}>
-          <img className="tweet-logo-login" src={Twitterbird} alt="bild" />
+          <img
+            className="tweet-logo-login"
+            src={Twitterbird || "../../public/images/placeHolder_img.png"}
+            alt="bild"
+          />
+
           <h1>Logga in på Twitter</h1>
           <div className="input-wrapper">
             <input
