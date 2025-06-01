@@ -22,3 +22,57 @@ Till höger i applikationen finns - Populärt för dig - där finns de #hashtags
 Genom att klicka på ett användarnamn i flödet kommer man till den personens profil, där man kan se en sammanställning av deras tweets samt deras användarinformation. På sin egen profil kan man även redigera sina bilder, profilbild samt bakgrundsbild.
 
 Vill man komma tillbaka till flödet klickar man på tillbaka-pilen längst upp i vänstra hörnet.
+
+## Instructions to Run and Test the Application
+
+### Backend
+
+#### Installation and Start
+
+1. Go to the Backend folder:
+   ```sh
+   cd Backend
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Start the server:
+   ```sh
+   npm run dev
+   ```
+   The server will run at http://localhost:3000
+
+#### Test the Backend
+
+Run tests with:
+
+```sh
+npm test
+```
+
+### Frontend
+
+#### Installation and Start
+
+1. Go to the Frontend folder:
+   ```sh
+   cd Frontend
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Start the development server:
+   ```sh
+   npm run dev
+   ```
+   The frontend will run at http://localhost:5173 (or the port shown in the terminal).
+
+#### Test the Frontend
+
+Run tests with:
+
+```sh
+npm test
+```
