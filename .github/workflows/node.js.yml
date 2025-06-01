@@ -1,6 +1,3 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Run Backend and Frontend Tests
 
 on:
@@ -10,35 +7,41 @@ on:
     branches: [ main ]
 
 jobs:
-  run-tests:
+  test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18]  # o la versión que uses
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js ${{ matrix.node-version }}
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18
 
-      # Backend
-      - name: Install dependencies (Backend)
+      # ---------------------
+      # BACKEND
+      # ---------------------
+      - name: Install Backend dependencies
         working-directory: ./Backend
-        run: npm install
+        run: npm ci
 
-      - name: Run tests (Backend)
+      - name: Make jest executable (fix permission denied)
+        working-directory: ./Backend
+        run: chmod +x ./node_modules/.bin/jest
+
+      - name: Run Backend tests
         working-directory: ./Backend
         run: ./node_modules/.bin/jest --ci
 
-      # Frontend
-      - name: Install dependencies (Frontend)
+      # ---------------------
+      # FRONTEND (opcional, solo si tienes tests)
+      # ---------------------
+      - name: Install Frontend dependencies
         working-directory: ./Frontend
-        run: npm install
+        run: npm ci
 
-      - name: Run tests (Frontend)
+      - name: Run Frontend tests
         working-directory: ./Frontend
-        run: ./node_modules/.bin/jest --ci
+        run: npm test
+
