@@ -37,12 +37,6 @@ jest.mock("../src/Components/FooterUser", () => () => (
 ));
 jest.mock("../src/Components/Trend", () => () => <div data-testid="trend" />);
 jest.mock("../src/Components/Tweet", () => () => <div data-testid="tweet" />);
-jest.mock("../src/Components/SearchBar", () => ({ onSearch }) => (
-  <div data-testid="searchbar" />
-));
-jest.mock("../src/Components/SearchOverlay", () => () => (
-  <div data-testid="searchoverlay" />
-));
 jest.mock("../src/Components/FollowButton", () => () => (
   <div data-testid="follow-button" />
 ));
@@ -94,7 +88,6 @@ describe("Profile Component", () => {
     await waitFor(() => {
       expect(screen.getByTestId("footer")).toBeInTheDocument();
       expect(screen.getByTestId("trend")).toBeInTheDocument();
-      expect(screen.getByTestId("searchbar")).toBeInTheDocument();
       expect(screen.getByTestId("tweet")).toBeInTheDocument();
       expect(screen.getByTestId("follow-button")).toBeInTheDocument();
     });

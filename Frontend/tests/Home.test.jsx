@@ -15,12 +15,6 @@ jest.mock("../src/Components/FooterUser", () => () => (
 jest.mock("../src/Components/Trend", () => () => <div data-testid="trend" />);
 jest.mock("../src/Components/Header", () => () => <div data-testid="header" />);
 jest.mock("../src/Components/Tweet", () => () => <div data-testid="tweet" />);
-jest.mock("../src/Components/SearchBar", () => ({ onSearch }) => (
-  <div data-testid="searchbar" />
-));
-jest.mock("../src/Components/SearchOverlay", () => () => (
-  <div data-testid="searchoverlay" />
-));
 
 // Mock HomeController methods
 jest.mock("../src/Controllers/HomeController", () => ({
@@ -50,7 +44,6 @@ describe("Home Component", () => {
       screen.getByPlaceholderText("Vad vill du säga?")
     ).toBeInTheDocument();
     expect(screen.getByTestId("trend")).toBeInTheDocument();
-    expect(screen.getByTestId("searchbar")).toBeInTheDocument();
     const tweets = screen.queryAllByTestId("tweet");
     expect(Array.isArray(tweets)).toBe(true);
   });
