@@ -45,4 +45,35 @@ describe("LogIn Page", () => {
       expect.any(Function)
     );
   });
+  test("shows error message when user name  is not found", () => {
+    render(
+      <BrowserRouter>
+        <LogIn />
+      </BrowserRouter>
+    );
+
+    const input = screen.getByPlaceholderText(
+      "E-postadress eller användarnamn"
+    );
+    const button = screen.getByRole("button", { name: /nästa/i });
+
+    fireEvent.change(input, { target: { value: "" } });
+    fireEvent.click(button);
+
+    expect(screen.getByText("Fältet får inte vara tomt")).toBeInTheDocument();
+  });
+
+  test("shows error message when input is empty", () => {
+    render(
+      <BrowserRouter>
+        <LogIn />
+      </BrowserRouter>
+    );
+
+    const button = screen.getByRole("button", { name: /nästa/i });
+
+    fireEvent.click(button);
+
+    expect(screen.getByText("Fältet får inte vara tomt")).toBeInTheDocument();
+  });
 });

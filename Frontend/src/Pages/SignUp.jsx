@@ -79,7 +79,12 @@ const SignUp = () => {
         <h1>Skapa ett konto</h1>
 
         {/* Bilduppladdning, används bara för förhandsvisning */}
-        <input type="file" accept="image/*" onChange={handleImageChange} />
+        <input
+          name="image"
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
         {preview && (
           <img
             src={preview}

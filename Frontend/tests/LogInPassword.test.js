@@ -6,7 +6,11 @@ import { navigateToHomePage } from "../src/Controllers/LoginController.js";
 
 // Mock the controller function
 jest.mock("../src/Controllers/LoginController.js", () => ({
-  navigateToHomePage: jest.fn(),
+  navigateToHomePage: jest.fn((identifier, password, navigate, setError) => {
+    if (password === "wrongPassword") {
+      setError("Felaktigt lösenord");
+    }
+  }),
 }));
 
 describe("LogInPassword Page", () => {
@@ -28,6 +32,53 @@ describe("LogInPassword Page", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /logga in/i }));
 
+    expect(screen.getByText("Du måste ange lösenord")).toBeInTheDocument();
+  });
+
+  test("show error when password is not matched", () => {
+    render(
+      <MemoryRouter
+        initialEntries={[
+          {
+            pathname: "/password",
+            state: { emailOrUsername: "test@example.com" },
+          },
+        ]}
+      >
+        <Routes>
+          <Route path="/password" element={<LogInPassword />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    // Simulate entering a wrong password
+    const passwordInput = screen.getByPlaceholderText("Lösenord");
+    fireEvent.change(passwordInput, { target: { value: "wrongPassword" } });
+
+    fireEvent.click(screen.getByRole("button", { name: /logga in/i }));
+
+    // You should adapt the error message below to match what your component actually renders
+    expect(screen.getByText("Felaktigt lösenord")).toBeInTheDocument();
+  });
+
+  test("show error when password is not provided", () => {
+    render(
+      <MemoryRouter
+        initialEntries={[
+          {
+            pathname: "/password",
+            state: { emailOrUsername: "test@example.com" },
+          },
+        ]}
+      >
+        <Routes>
+          <Route path="/password" element={<LogInPassword />} />
+        </Routes>
+      </MemoryRouter>
+    );
+    const passwordInput = screen.getByPlaceholderText("Lösenord");
+    fireEvent.change(passwordInput, { target: { value: "" } });
+    fireEvent.click(screen.getByRole("button", { name: /logga in/i }));
     expect(screen.getByText("Du måste ange lösenord")).toBeInTheDocument();
   });
 
