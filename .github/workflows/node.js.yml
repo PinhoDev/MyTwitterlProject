@@ -32,7 +32,7 @@ jobs:
 
       - name: Run tests (Backend)
         working-directory: ./Backend
-        run: npm test
+        run: npx test
 
       # Frontend
       - name: Install dependencies (Frontend)
@@ -41,4 +41,4 @@ jobs:
 
       - name: Run tests (Frontend)
         working-directory: ./Frontend
-        run: npm test
+        run: npx test
