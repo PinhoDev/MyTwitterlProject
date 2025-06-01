@@ -88,10 +88,24 @@ const renderWithRouter = (component, route = "/profile/testuser") => {
 
 describe("Profile Component", () => {
   test("renders basic UI components", async () => {
+    Storage.prototype.getItem = jest.fn(() => "currentUser");
+    renderWithRouter(<Profile />, "/profile/otheruser");
+
+    await waitFor(() => {
+      expect(screen.getByTestId("footer")).toBeInTheDocument();
+      expect(screen.getByTestId("trend")).toBeInTheDocument();
+      expect(screen.getByTestId("searchbar")).toBeInTheDocument();
+      expect(screen.getByTestId("tweet")).toBeInTheDocument();
+      expect(screen.getByTestId("follow-button")).toBeInTheDocument();
+    });
+  });
+
+  test("loads and displays user details", async () => {
     renderWithRouter(<Profile />);
-    expect(screen.getByTestId("footer")).toBeInTheDocument();
-    expect(screen.getByTestId("searchbar")).toBeInTheDocument();
-    expect(screen.getByTestId("trend")).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getAllByText("Test User").length).toBeGreaterThan(0)
+    );
+    expect(screen.getByText("@testuser")).toBeInTheDocument();
   });
 
   test("loads and displays user tweet count", async () => {

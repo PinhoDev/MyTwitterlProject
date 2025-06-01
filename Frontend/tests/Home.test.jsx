@@ -49,6 +49,16 @@ describe("Home Component", () => {
     expect(
       screen.getByPlaceholderText("Vad vill du säga?")
     ).toBeInTheDocument();
+    expect(screen.getByTestId("trend")).toBeInTheDocument();
+    expect(screen.getByTestId("searchbar")).toBeInTheDocument();
+    const tweets = screen.queryAllByTestId("tweet");
+    expect(Array.isArray(tweets)).toBe(true);
+  });
+
+  test("loads tweets on initial render", () => {
+    const { loadHomeTweets } = require("../src/Controllers/HomeController");
+    renderWithRouter(<Home />);
+    expect(loadHomeTweets).toHaveBeenCalled();
   });
 
   test("updates tweet input on user typing", () => {
