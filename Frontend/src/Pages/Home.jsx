@@ -5,7 +5,7 @@ import FooterUser from "../Components/FooterUser.jsx";
 import Trend from "../Components/Trend.jsx";
 import Header from "../Components/Header.jsx";
 import Tweet from "../Components/Tweet.jsx";
-import SearchBar from "../Components/SearchBar.jsx";
+import SearchBar from "../Components/Searchbar.jsx";
 import SearchOverlay from "../Components/SearchOverlay.jsx";
 import {
   loadHomeTweets,
