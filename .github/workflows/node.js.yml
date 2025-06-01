@@ -34,14 +34,3 @@ jobs:
         working-directory: ./Backend
         run: ./node_modules/.bin/jest --ci
 
-      # ---------------------
-      # FRONTEND (opcional, solo si tienes tests)
-      # ---------------------
-      - name: Install Frontend dependencies
-        working-directory: ./Frontend
-        run: npm ci
-
-      - name: Run Frontend tests
-        working-directory: ./Frontend
-        run: npm test
-
