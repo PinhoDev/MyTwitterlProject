@@ -7,7 +7,7 @@ import FooterUser from "../Components/FooterUser.jsx";
 import Trend from "../Components/Trend.jsx";
 import Tweet from "../Components/Tweet.jsx";
 import FollowButton from "../Components/FollowButton.jsx";
-import SearchBar from "../Components/SearchBar.jsx";
+import SearchBar from "../Components/Searchbar.jsx";
 import SearchOverlay from "../Components/SearchOverlay.jsx";
 import { loadUserDetails } from "../Controllers/ProfileController.js";
 import {
