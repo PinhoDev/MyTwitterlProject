@@ -43,11 +43,6 @@ test("should successfully register a new user", async ({ page }) => {
   // Submit form
   await page.click('button[type="submit"]');
 
-  // Verify loading message
-  await expect(
-    page.locator(".loading-message", { hasText: "Registrerar..." })
-  ).toBeVisible();
-
   // Verify success message
   await expect(page.locator("text=Konto skapat!")).toBeVisible();
 

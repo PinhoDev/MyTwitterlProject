@@ -5,8 +5,11 @@ export default defineConfig({
   reporter: [["html", { open: "never" }]],
   use: {
     baseURL: "http://localhost:5173",
-    headless: true,
+    headless: false,
     video: "on",
     screenshot: "only-on-failure",
+    launchOptions: {
+      slowMo: 1000,
+    },
   },
 });
