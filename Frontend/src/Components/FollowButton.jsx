@@ -1,54 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
-import "../Styles/ProfileComponents.css"; // Importera CSS-stil för knappen
+import "../Styles/ProfileComponents.css";
 
-function FollowButton({ profileUsername, currentUser, onToggle }) {
+function FollowButton({ myUsername, otherUsername }) {
   const [isFollowing, setIsFollowing] = useState(false);
 
-  useEffect(() => {
-    if (currentUser?.following?.length) {
-      const follows = currentUser.following.some((user) =>
-        typeof user === "string"
-          ? user === profileUsername
-          : user.username === profileUsername
-      );
-      setIsFollowing(follows);
-    }
-  }, [currentUser, profileUsername]);
-
-  async function toggleFollow() {
-    if (!currentUser?.username || !profileUsername) {
-      console.error("❌ Kan inte toggla följning – saknar användarnamn.");
-      return;
-    }
-
+  const toggleFollow = async () => {
     try {
-      console.log("🔁 Trying to follow:", profileUsername);
-      console.log("🔁 From user:", currentUser.username);
+      await axios.post(`http://localhost:3000/${myUsername}/following`, {
+        following: otherUsername,
+      });
 
-      await axios.post(
-        `http://localhost:3000/${currentUser.username}/following`,
-        {
-          following: profileUsername,
-        }
-      );
-
-      setIsFollowing(!isFollowing);
-
-      if (onToggle) {
-        onToggle(); // 🔁 Hämta ny användardata utan att ladda om sidan
-      }
-    } catch (error) {
-      console.error("Fel vid follow/unfollow:", error);
+      // Växla knappens tillstånd
+      setIsFollowing((prev) => !prev);
+    } catch (err) {
+      console.error("❌ Gick inte att toggla följning:", err);
     }
-  }
+  };
 
   return (
-    <button
-      className="follow-button"
-      onClick={toggleFollow}
-      disabled={!currentUser?.username || !profileUsername}
-    >
+    <button className="follow-button" onClick={toggleFollow}>
       {isFollowing ? "Sluta följa" : "Följ"}
     </button>
   );
